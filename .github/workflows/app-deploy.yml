@@ -55,6 +55,7 @@ jobs:
       - name: Log clean tag
         run: |
           echo ${{ steps.extract_tag.outputs.clean_tag }}
+          echo "${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPOSITORY_APP }}:${{ steps.extract_tag.outputs.clean_tag }}"
 
       - name: Build and push Docker Image
         uses: docker/build-push-action@v5
