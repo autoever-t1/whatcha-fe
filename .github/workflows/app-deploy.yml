@@ -22,8 +22,6 @@ jobs:
       - name: Install Dependencies
         run: |
           npm i
-          cd packages/whatcha-app
-          npm i
 
       - name: Create .env file
         run: |
@@ -53,6 +51,10 @@ jobs:
           RAW_TAG=${{ github.event.release.tag_name }}
           CLEAN_TAG=${RAW_TAG#app-}
           echo "clean_tag=${CLEAN_TAG}" >> $GITHUB_ENV
+
+      - name: Log clean tag
+        run: |
+          echo ${{ steps.extract_tag.outputs.clean_tag }}
 
       - name: Build and push Docker Image
         uses: docker/build-push-action@v5
