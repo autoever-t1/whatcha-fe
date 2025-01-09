@@ -60,7 +60,7 @@ jobs:
       - name: Build and push Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./packages/whatcha-app
           platforms: linux/amd64/v3
           push: true
           tags: |
