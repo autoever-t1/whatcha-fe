@@ -1,32 +1,32 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 :root {
-  --color-gray-50: #fff9d6;
-  --color-gray-100: #f4eccc;
-  --color-gray-200: #dad2b7;
-  --color-gray-300: #c0b8a2;
-  --color-gray-400: #a69e8d;
-  --color-gray-500: #8c8478;
-  --color-gray-600: #726a63;
-  --color-gray-700: #58504e;
-  --color-gray-800: #3e3639;
-  --color-gray-900: #241c24;
+  --color-gray-50: #f8fafc;
+  --color-gray-100: #f1f5f9;
+  --color-gray-200: #e2e8f0;
+  --color-gray-300: #cbd5e1;
+  --color-gray-400: #94a3b8;
+  --color-gray-500: #64748b;
+  --color-gray-600: #475569;
+  --color-gray-700: #334155;
+  --color-gray-800: #1e293b;
+  --color-gray-900: #0f172a;
 
-  --color-gray-900-50: #241c2480;
-  --color-gray-900-75: #241c24c0;
+  --color-gray-900-50: #0f172a80;
+  --color-gray-900-75: #0f172ac0;
 
   --color-error: #fe5d26;
   --color-success: #358600;
   --color-info: #0075f2;
   --color-warning: #e28413;
 
-  --color-primary: #f3bb4b;
-  --color-primary-light: #f6cc79;
-  --color-primary-dark: #f0a819;
+  --color-primary: #024caa;
+  --color-primary-light: #0363de;
+  --color-primary-dark: #013679;
 
-  --color-sub: #a72608;
-  --color-sub-light: #d6310a;
-  --color-sub-dark: #751b06;
+  --color-secondary: #ec8305;
+  --color-secondary-light: #fa9b28;
+  --color-secondary-dark: #b96704;
 
   /* Font Size and Line Height */
   --font-xs: 10px;
