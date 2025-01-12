@@ -1,2 +1,12 @@
 .container {
 }
+
+.content {
+  background-color: var(--color-gray-100);
+  width: 100%;
+}
+
+.banner-wrapper {
+  width: 100%;
+  padding: 16px;
+}

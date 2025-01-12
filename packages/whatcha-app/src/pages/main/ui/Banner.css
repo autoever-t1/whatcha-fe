@@ -1,0 +1,17 @@
+.swiper {
+  height: 100%;
+}
+
+.swiper-pagination {
+  left: auto !important;
+  right: 16px !important;
+  display: inline-block;
+  width: auto !important;
+  color: var(--color-gray-50) !important;
+  background-color: var(--color-gray-900-75) !important;
+  padding: 8px;
+  font-size: var(--font-xs);
+  line-height: var(--line-height-xs);
+  font-weight: var(--font-weight-regular);
+  border-radius: 8px;
+}
