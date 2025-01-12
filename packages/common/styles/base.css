@@ -1,0 +1,216 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+:root {
+  --color-gray-50: #fff9d6;
+  --color-gray-100: #f4eccc;
+  --color-gray-200: #dad2b7;
+  --color-gray-300: #c0b8a2;
+  --color-gray-400: #a69e8d;
+  --color-gray-500: #8c8478;
+  --color-gray-600: #726a63;
+  --color-gray-700: #58504e;
+  --color-gray-800: #3e3639;
+  --color-gray-900: #241c24;
+
+  --color-gray-900-50: #241c2480;
+  --color-gray-900-75: #241c24c0;
+
+  --color-error: #fe5d26;
+  --color-success: #358600;
+  --color-info: #0075f2;
+  --color-warning: #e28413;
+
+  --color-primary: #f3bb4b;
+  --color-primary-light: #f6cc79;
+  --color-primary-dark: #f0a819;
+
+  --color-sub: #a72608;
+  --color-sub-light: #d6310a;
+  --color-sub-dark: #751b06;
+
+  /* Font Size and Line Height */
+  --font-xs: 10px;
+  --line-height-xs: 14px;
+
+  --font-sm: 13px;
+  --line-height-sm: 20px;
+
+  --font-md: 16px;
+  --line-height-md: 24px;
+
+  --font-lg: 20px;
+  --line-height-lg: 28px;
+
+  --font-xl: 24px;
+  --line-height-xl: 32px;
+
+  /* Header 스타일 */
+  --font-header-h4: 20px;
+  --line-height-header-h4: 28px;
+
+  --font-header-h3: 24px;
+  --line-height-header-h3: 32px;
+
+  --font-header-h2: 28px;
+  --line-height-header-h2: 40px;
+
+  --font-header-h1: 36px;
+  --line-height-header-h1: 52px;
+
+  /* Font Weight */
+  --font-weight-extralight: 200;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-color: var(--color-gray-900);
+  color: var(--color-gray-100);
+  font-family: "Pretendard", sans-serif;
+  overflow-y: scroll;
+}
+
+ol,
+ul {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  background: none;
+  border: none;
+}
+
+img {
+  pointer-events: none;
+  user-select: none;
+}
+
+.font-l-xs {
+  font-weight: var(--font-weight-extralight);
+  font-size: var(--font-xs);
+  line-height: var(--line-height-xs);
+}
+
+.font-l-sm {
+  font-weight: var(--font-weight-extralight);
+  font-size: var(--font-sm);
+  line-height: var(--line-height-sm);
+}
+
+.font-l-md {
+  font-weight: var(--font-weight-extralight);
+  font-size: var(--font-md);
+  line-height: var(--line-height-md);
+}
+
+.font-l-lg {
+  font-weight: var(--font-weight-extralight);
+  font-size: var(--font-lg);
+  line-height: var(--line-height-lg);
+}
+
+.font-l-xl {
+  font-weight: var(--font-weight-extralight);
+  font-size: var(--font-xl);
+  line-height: var(--line-height-xl);
+}
+
+.font-r-xs {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-xs);
+  line-height: var(--line-height-xs);
+}
+
+.font-r-sm {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-sm);
+  line-height: var(--line-height-sm);
+}
+
+.font-r-md {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-md);
+  line-height: var(--line-height-md);
+}
+
+.font-r-lg {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-lg);
+  line-height: var(--line-height-lg);
+}
+
+.font-r-xl {
+  font-weight: var(--font-weight-regular);
+  font-size: var(--font-xl);
+  line-height: var(--line-height-xl);
+}
+
+.font-b-xs {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-xs);
+  line-height: var(--line-height-xs);
+}
+
+.font-b-sm {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-sm);
+  line-height: var(--line-height-sm);
+}
+
+.font-b-md {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-md);
+  line-height: var(--line-height-md);
+}
+
+.font-b-lg {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-lg);
+  line-height: var(--line-height-lg);
+}
+
+.font-b-xl {
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-xl);
+  line-height: var(--line-height-xl);
+}
+
+.font-h4 {
+  font-size: var(--font-header-h4);
+  line-height: var(--line-height-header-h4);
+  font-weight: var(--font-weight-bold);
+}
+
+.font-h3 {
+  font-size: var(--font-header-h3);
+  line-height: var(--line-height-header-h3);
+  font-weight: var(--font-weight-bold);
+}
+
+.font-h2 {
+  font-size: var(--font-header-h2);
+  line-height: var(--line-height-header-h2);
+  font-weight: var(--font-weight-bold);
+}
+
+.font-h1 {
+  font-size: var(--font-header-h1);
+  line-height: var(--line-height-header-h1);
+  font-weight: var(--font-weight-bold);
+}
