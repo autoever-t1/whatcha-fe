@@ -74,11 +74,15 @@ html::-webkit-scrollbar {
   display: none;
 }
 
+html,
+body {
+  overflow: hidden;
+}
+
 body {
   background-color: var(--color-gray-50);
   color: var(--color-gray-900);
   font-family: "Pretendard", sans-serif;
-  overflow-y: scroll;
 }
 
 ol,
