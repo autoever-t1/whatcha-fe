@@ -59,6 +59,12 @@ export function SearchPage() {
               to={{ value: "12000", unit: "km", suffix: "까지" }}
             />
           </ConditionItem>
+          <ConditionItem title="연식">
+            <RangeInput
+              from={{ value: "2024", unit: "년", suffix: "부터" }}
+              to={{ value: "2025", unit: "년", suffix: "까지" }}
+            />
+          </ConditionItem>
         </div>
       </div>
     </div>
