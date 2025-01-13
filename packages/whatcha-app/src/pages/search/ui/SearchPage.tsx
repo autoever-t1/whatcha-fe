@@ -3,6 +3,7 @@ import { ConditionItem } from "./ConditionItem";
 import { SearchHeader } from "./SearchHeader";
 import styles from "./SearchPage.module.css";
 import { TabItem } from "./TabItem";
+import { RangeInput } from "@shared/range-input";
 
 export function SearchPage() {
   return (
@@ -45,6 +46,18 @@ export function SearchPage() {
               <BadgeButton>펠리세이드</BadgeButton>
               <BadgeButton>스타리아</BadgeButton>
             </div>
+          </ConditionItem>
+          <ConditionItem title="가격">
+            <RangeInput
+              from={{ value: "1000", unit: "만원", suffix: "부터" }}
+              to={{ value: "2000", unit: "만원", suffix: "까지" }}
+            />
+          </ConditionItem>
+          <ConditionItem title="주행거리">
+            <RangeInput
+              from={{ value: "0", unit: "km", suffix: "부터" }}
+              to={{ value: "12000", unit: "km", suffix: "까지" }}
+            />
           </ConditionItem>
         </div>
       </div>
