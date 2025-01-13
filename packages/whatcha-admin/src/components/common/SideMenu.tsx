@@ -22,7 +22,7 @@ function SideMenu() {
     <div className="w-1/6 min-h-screen bg-white border-r border-gray-100">
       <div className="p-6 text-center">
         <span className='text-3xl font-extrabold text-blue-900'>WHAT</span>
-        <span className='text-3xl font-extrabold'>CHA</span>
+        <span className='text-3xl font-extrabold text-gray-900'>CHA</span>
         
         
       </div>

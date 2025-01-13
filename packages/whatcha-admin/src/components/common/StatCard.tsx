@@ -7,7 +7,6 @@
   
   function StatCard({ title, value, percent, icon }: StatCardProps) {
 
-    //숫자 단위 포매팅팅
     const formatNumber = (num: string | number) => {
       if (typeof num === 'number') {
         return num.toLocaleString();
