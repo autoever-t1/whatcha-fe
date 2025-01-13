@@ -1,0 +1,8 @@
+.container {
+  width: 100%;
+  flex: 36px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-gray-400);
+}
