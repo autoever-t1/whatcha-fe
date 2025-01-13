@@ -20,11 +20,23 @@
 .info {
   flex-grow: 1;
 
+  .name.primary {
+    color: var(--color-gray-50);
+  }
+
   .sub-info {
     color: var(--color-gray-600);
   }
 
+  .sub-info.primary {
+    color: var(--color-gray-400);
+  }
+
   .price {
     color: var(--color-primary);
+  }
+
+  .price.primary {
+    color: var(--color-secondary);
   }
 }

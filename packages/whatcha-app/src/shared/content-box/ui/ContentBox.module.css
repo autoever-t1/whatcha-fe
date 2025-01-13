@@ -8,6 +8,14 @@
   gap: 8px;
 }
 
+.container.primary {
+  background-color: var(--color-primary-dark);
+
+  h3 {
+    color: var(--color-gray-50);
+  }
+}
+
 .top {
   border: 8px 8px 0 0;
 }

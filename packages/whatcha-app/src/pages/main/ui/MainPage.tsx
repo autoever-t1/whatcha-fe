@@ -41,6 +41,24 @@ export function MainPage() {
             }}
           />
         </ContentBox>
+        <ContentBox title="TOP 5 매물" color="primary">
+          <div className={styles.list}>
+            {[1, 2, 3, 4, 5].map((item) => (
+              <SmallCarItem
+                key={item}
+                color="primary"
+                car={{
+                  img: SampleImg,
+                  name: "아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼",
+                  date: "23년 11월",
+                  mileage: 10000,
+                  vhclRegNo: "12가1234",
+                  price: 15000000,
+                }}
+              />
+            ))}
+          </div>
+        </ContentBox>
       </div>
     </div>
   );
