@@ -5,6 +5,7 @@ import styles from "./MainPage.module.css";
 import { SmallCarItem } from "@shared/small-car-item";
 import SampleImg from "@assets/sample-image.png";
 import { InstallmentCalculator } from "@widgets/installment-calculator";
+import { Footer } from "@shared/footer";
 
 export function MainPage() {
   return (
@@ -59,6 +60,7 @@ export function MainPage() {
             ))}
           </div>
         </ContentBox>
+        <Footer />
       </div>
     </div>
   );
