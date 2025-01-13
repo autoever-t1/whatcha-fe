@@ -101,6 +101,11 @@ button {
   cursor: pointer;
 }
 
+input {
+  border: none;
+  outline: none;
+}
+
 img {
   pointer-events: none;
   user-select: none;

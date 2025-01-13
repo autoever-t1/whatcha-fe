@@ -4,6 +4,7 @@ import { MainHeader } from "./MainHeader";
 import styles from "./MainPage.module.css";
 import { SmallCarItem } from "@shared/small-car-item";
 import SampleImg from "@assets/sample-image.png";
+import { InstallmentCalculator } from "@widgets/installment-calculator";
 
 export function MainPage() {
   return (
@@ -29,6 +30,16 @@ export function MainPage() {
               />
             ))}
           </div>
+        </ContentBox>
+        <ContentBox title="할부 계산기">
+          <InstallmentCalculator
+            defaultValue={{
+              originalAmount: 1000,
+              advanceAmount: 0,
+              interestRate: 3.5,
+              period: 36,
+            }}
+          />
         </ContentBox>
       </div>
     </div>
