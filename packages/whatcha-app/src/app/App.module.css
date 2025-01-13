@@ -1,7 +1,7 @@
 .container {
-  width: 100dvw;
+  width: 100vw;
   max-width: 800px;
-  height: 100dvh;
+  height: 100vh;
 }
 
 .content-container {
