@@ -12,7 +12,11 @@ export function App() {
 
   return (
     <div className={styles.container}>
-      <div className={styles["content-container"]}>
+      <div
+        className={`${styles["content-container"]} ${
+          hasHeader ? styles["with-header"] : ""
+        }`}
+      >
         <Outlet />
       </div>
       {hasHeader && <BottomNavigation />}
