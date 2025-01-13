@@ -1,10 +1,15 @@
 import { ReactNode } from "react";
 import styles from "./BottomButton.module.css";
 
-interface BottomButton {
+interface BottomButtonProps {
   children: ReactNode;
+  disabled?: boolean;
 }
 
-export function BottomButton() {
-  return <div className={styles.container}></div>;
+export function BottomButton({ children, disabled }: BottomButtonProps) {
+  return (
+    <button className={`${styles.container} font-r-md`} disabled={disabled}>
+      {children}
+    </button>
+  );
 }
