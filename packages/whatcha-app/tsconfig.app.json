@@ -23,9 +23,17 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
+    "baseUrl": ".",
     "paths": {
-      "@common/*": ["./packages/common/*"]
+      "@common/*": ["../common/*"],
+      "@assets/*": ["src/assets/*"],
+      "@app/*": ["src/app/*"],
+      "@pages/*": ["src/pages/*"],
+      "@widgets/*": ["src/widgets/*"],
+      "@features/*": ["src/features/*"],
+      "@entities/*": ["src/entities/*"],
+      "@shared/*": ["src/shared/*"]
     }
   },
-  "include": ["./packages/*/src"]
+  "include": ["src/**/*", "global.d.ts"]
 }

@@ -1,0 +1,11 @@
+.container {
+  padding: 4px 8px;
+  border: 1px solid var(--color-gray-400);
+  border-radius: 8px;
+}
+
+.selected {
+  background-color: var(--color-primary);
+  color: var(--color-gray-50);
+  border-color: var(--color-primary);
+}
