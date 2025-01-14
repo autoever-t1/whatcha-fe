@@ -5,11 +5,7 @@
   flex: 1;
 
   input {
-    flex: 1;
+    flex-grow: 1;
     background-color: #00000000;
-  }
-
-  .unit {
-    flex: auto 0 0;
   }
 }
