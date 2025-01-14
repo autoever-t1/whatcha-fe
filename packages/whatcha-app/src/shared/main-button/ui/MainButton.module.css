@@ -1,0 +1,7 @@
+.container {
+  padding: 8px 32px;
+  border-radius: 8px;
+  background-color: var(--color-primary);
+  color: var(--color-gray-50);
+  text-align: center;
+}
