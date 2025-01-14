@@ -49,7 +49,7 @@ import {
   
   function MonthlyChart() {
     return (
-      <div className="w-full h-[300px]">
+      <div className="w-full h-[300px] flex items-center justify-center">
         <Line options={options} data={data} />
       </div>
     );

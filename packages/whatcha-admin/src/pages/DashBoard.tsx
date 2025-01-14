@@ -47,7 +47,7 @@ function DashBoard() {
         {/* 차트 */}
         <div className="grid grid-cols-1 gap-6 mb-8 lg:grid-cols-5">
           <div className="p-6 bg-white rounded-lg shadow-sm lg:col-span-3">
-            <h2 className="mb-4 text-lg font-semibold">월별 판매 현황</h2>
+            <h2 className="mb-2 text-lg font-semibold">월별 판매 현황</h2>
             <MonthlyChart />
           </div>
           <div className="p-6 bg-white rounded-lg shadow-sm lg:col-span-2">
