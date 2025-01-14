@@ -228,6 +228,14 @@ img {
   font-weight: var(--font-weight-bold);
 }
 
+.color-gray-400 {
+  color: var(--color-gray-400);
+}
+
+.color-gray-600 {
+  color: var(--color-gray-600);
+}
+
 .layout-line {
   width: 100%;
   display: flex;
