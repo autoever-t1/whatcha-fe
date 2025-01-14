@@ -7,6 +7,8 @@ import { ListPage } from "@pages/list";
 import { CarPage } from "@pages/car";
 import { PayPage } from "@pages/pay";
 import { OrderPage } from "@pages/order";
+import { FavoritePage } from "@pages/favorite";
+import { CouponPage } from "@pages/coupon";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,14 @@ const router = createBrowserRouter([
       {
         path: "/mypage",
         element: <MyPage />,
+      },
+      {
+        path: "/mypage/favorite",
+        element: <FavoritePage />,
+      },
+      {
+        path: "/mypage/coupon",
+        element: <CouponPage />,
       },
     ],
   },

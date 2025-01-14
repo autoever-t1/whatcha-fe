@@ -6,8 +6,20 @@ import CarIcon from "@common/assets/icons/car.svg";
 import CouponIcon from "@common/assets/icons/coupon.svg";
 import LogoutIcon from "@common/assets/icons/logout.svg";
 import OrderIcon from "@common/assets/icons/order.svg";
+import { useCallback } from "react";
+import { useNavigate } from "react-router";
 
 export function MyPage() {
+  const navigate = useNavigate();
+
+  const handleClickFavorite = useCallback(() => {
+    navigate("/mypage/favorite");
+  }, [navigate]);
+
+  const handleClickCoupon = useCallback(() => {
+    navigate("/mypage/coupon");
+  }, [navigate]);
+
   return (
     <div className={styles.container}>
       <div className={styles["name-box"]}>
@@ -15,7 +27,10 @@ export function MyPage() {
         <span className="font-r-lg">고객님</span>
       </div>
       <div className={styles["favorite-box"]}>
-        <button className={`${styles["favorite-button"]} font-b-md`}>
+        <button
+          className={`${styles["favorite-button"]} font-b-md`}
+          onClick={handleClickFavorite}
+        >
           선호 매물
           <img src={ArrowRightCircleIcon} alt="arrowRightCircle" />
         </button>
@@ -31,7 +46,9 @@ export function MyPage() {
       <div className={styles["menu-box-wrapper"]}>
         <div className={styles["menu-box"]}>
           <MenuItem icon={CarIcon}>찜한 매물</MenuItem>
-          <MenuItem icon={CouponIcon}>쿠폰함</MenuItem>
+          <MenuItem icon={CouponIcon} onClick={handleClickCoupon}>
+            쿠폰함
+          </MenuItem>
           <MenuItem icon={BellRingingIcon}>입고 알림 신청 내역</MenuItem>
           <MenuItem icon={OrderIcon}>주문 조회</MenuItem>
           <MenuItem icon={LogoutIcon}>로그아웃</MenuItem>

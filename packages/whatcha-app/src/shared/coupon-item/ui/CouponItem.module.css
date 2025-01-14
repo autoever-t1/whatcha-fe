@@ -1,0 +1,19 @@
+.container {
+  width: 100%;
+  flex-shrink: 0;
+  border-radius: 8px;
+  background-color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  display: flex;
+  overflow: hidden;
+}
+
+.info {
+  flex: 90% 0 0;
+  padding: 16px;
+}
+
+.deco {
+  flex: 10% 0 0;
+  background-color: var(--color-gray-700);
+}
