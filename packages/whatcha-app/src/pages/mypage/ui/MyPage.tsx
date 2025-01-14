@@ -1,4 +1,3 @@
-import { MainHeader } from "@shared/main-header";
 import styles from "./MyPage.module.css";
 import ArrowRightCircleIcon from "@common/assets/icons/arrow-right-circle.svg";
 import { MenuItem } from "./MenuItem";
