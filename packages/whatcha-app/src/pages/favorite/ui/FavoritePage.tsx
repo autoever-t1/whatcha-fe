@@ -3,6 +3,8 @@ import styles from "./FavoritePage.module.css";
 import { ContentBox } from "@shared/content-box";
 import { BadgeButton } from "@shared/badge-button";
 import { RangeInput } from "@shared/range-input";
+import { useCallback } from "react";
+import { useNavigate } from "react-router";
 
 const models: string[] = [
   "아반떼",
@@ -16,9 +18,15 @@ const models: string[] = [
 ];
 
 export function FavoritePage() {
+  const navigate = useNavigate();
+
+  const handleClickBack = useCallback(() => {
+    navigate("/mypage");
+  }, [navigate]);
+
   return (
     <div className={styles.container}>
-      <MainHeader title="선호 매물 수정" />
+      <MainHeader title="선호 매물 수정" onClickBack={handleClickBack} />
       <div className={styles.content}>
         <ContentBox title="모델 (0/3)" position="top">
           <div className={styles.grid}>
