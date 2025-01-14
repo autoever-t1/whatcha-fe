@@ -3,6 +3,9 @@ import styles from "./PayPage.module.css";
 import { ContentBox } from "@shared/content-box";
 import { CarInfo } from "./CarInfo";
 import SampleImg from "@assets/sample-image.png";
+import { BillContent } from "@shared/bill-content";
+import { AgreementItem } from "@shared/agreement-item";
+import { BottomButton } from "@shared/bottom-button";
 
 export function PayPage() {
   return (
@@ -37,7 +40,33 @@ export function PayPage() {
             부대비용이 포함되지 않은 차량 가격입니다.
           </p>
         </ContentBox>
+        <ContentBox title="주문금액">
+          <BillContent price={30000000} />
+        </ContentBox>
+        <div className={styles["payment-box"]}>
+          <div className="layout-line">
+            <span className="font-b-md">계약금액</span>
+            <span className="font-r-md">300,000원</span>
+          </div>
+        </div>
+        <ContentBox title="구매 필수 확인사항•동의">
+          <p className="font-b-sm">
+            구매 전 필수 사항을 모두 확인하고, 동의하셔야 계약이 진행됩니다.
+          </p>
+          <div className="div-line" />
+          <AgreementItem
+            label="[필수] 차량의 정보와 주문 및 고지사항 안내 확인"
+            checked
+            onClick={() => {}}
+          />
+          <AgreementItem
+            label="[필수] 차량의 정보와 주문 및 고지사항 안내 확인"
+            checked={false}
+            onClick={() => {}}
+          />
+        </ContentBox>
       </div>
+      <BottomButton>계약금 결제하기</BottomButton>
     </div>
   );
 }

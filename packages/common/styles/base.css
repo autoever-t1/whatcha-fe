@@ -88,10 +88,10 @@ body {
   font-family: "Pretendard", sans-serif;
 }
 
-ol,
+/* ol,
 ul {
   list-style: none;
-}
+} */
 
 a {
   color: inherit;
@@ -228,6 +228,10 @@ img {
   font-weight: var(--font-weight-bold);
 }
 
+.color-primary {
+  color: var(--color-primary);
+}
+
 .color-gray-400 {
   color: var(--color-gray-400);
 }
@@ -243,8 +247,21 @@ img {
   align-items: center;
 }
 
+.layout-vertical {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .div-line {
   width: 100%;
   height: 0;
   border-bottom: 1px solid var(--color-gray-200);
+}
+
+.div-line-400 {
+  width: 100%;
+  height: 0;
+  border-bottom: 1px solid var(--color-gray-400);
 }
