@@ -6,6 +6,7 @@ import SampleImg from "@assets/sample-image.png";
 import { BillContent } from "@shared/bill-content";
 import { AgreementItem } from "@shared/agreement-item";
 import { BottomButton } from "@shared/bottom-button";
+import { PayModal } from "@widgets/pay-modal";
 
 export function PayPage() {
   return (
@@ -67,6 +68,8 @@ export function PayPage() {
         </ContentBox>
       </div>
       <BottomButton>계약금 결제하기</BottomButton>
+
+      <PayModal title="계약금 결제" price={300000} />
     </div>
   );
 }
