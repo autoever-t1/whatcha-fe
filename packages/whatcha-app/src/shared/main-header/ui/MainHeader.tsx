@@ -7,11 +7,11 @@ interface MainHeaderProps {
 
 export function MainHeader({ title }: MainHeaderProps) {
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} font-r-lg`}>
       <button className={styles["icon-button"]}>
         <img src={ArrowBackIcon} alt="Back" />
       </button>
-      <div className={`${styles.title} font-r-lg`}>{title}</div>
+      {title}
     </div>
   );
 }
