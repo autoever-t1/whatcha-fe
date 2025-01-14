@@ -1,2 +1,45 @@
 .container {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-gray-100);
+  overflow-y: auto;
+}
+
+.name-box {
+  padding: 32px;
+}
+
+.favorite-box {
+  width: calc(100% - 32px);
+  margin: 0 auto;
+  background-color: var(--color-gray-50);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.favorite-button {
+  flex: auto 0 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  img {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.favorite-item {
+  width: 100%;
+}
+
+.menu-box-wrapper {
+  padding-top: 16px;
+}
+
+.menu-box {
+  background-color: var(--color-gray-50);
+  padding: 0 16px;
 }
