@@ -1,0 +1,60 @@
+.container {
+  /* display: none; */
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  animation: slideUp 0.5s;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: white;
+}
+
+.content {
+  width: 100%;
+  height: calc(
+    100% - var(--size-main-header-height) - var(--size-bottom-button-height)
+  );
+  overflow-y: auto;
+  background-color: var(--color-gray-100);
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input-box {
+  width: 100%;
+  border: 1px solid var(--color-gray-200);
+
+  input {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--color-gray-50);
+
+    &::placeholder {
+      color: var(--color-gray-200);
+    }
+
+    &:first-of-type {
+      border-bottom: 1px solid var(--color-gray-200);
+    }
+  }
+}
+
+.disabled-input {
+  width: 100%;
+  padding: 16px;
+  background-color: var(--color-gray-300);
+  border-bottom: 1px solid var(--color-gray-200);
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
