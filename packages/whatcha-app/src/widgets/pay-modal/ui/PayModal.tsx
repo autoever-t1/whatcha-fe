@@ -6,12 +6,13 @@ import { AgreementItem } from "@shared/agreement-item";
 interface PayModalProps {
   title: string;
   price: number;
+  onClickBack: () => void;
 }
 
-export function PayModal({ title, price }: PayModalProps) {
+export function PayModal({ title, price, onClickBack }: PayModalProps) {
   return (
     <div className={styles.container}>
-      <MainHeader title={title} />
+      <MainHeader title={title} onClickBack={onClickBack} />
       <div className={styles.content}>
         <div className="layout-line">
           <span className="font-r-md">결제금액</span>

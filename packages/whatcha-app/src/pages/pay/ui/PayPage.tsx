@@ -7,11 +7,22 @@ import { BillContent } from "@shared/bill-content";
 import { AgreementItem } from "@shared/agreement-item";
 import { BottomButton } from "@shared/bottom-button";
 import { PayModal } from "@widgets/pay-modal";
+import { useCallback, useState } from "react";
 
 export function PayPage() {
+  const [isPayModalOpen, setPayModalOpen] = useState(false);
+
+  const handleClickPayButton = useCallback(() => {
+    setPayModalOpen(true);
+  }, []);
+
+  const handleClickPayModalBack = useCallback(() => {
+    setPayModalOpen(false);
+  }, []);
+
   return (
     <div className={styles.container}>
-      <MainHeader title="계약금 결제" />
+      <MainHeader title="주문" />
       <div className={styles.content}>
         <ContentBox title="주문자 정보" position="top">
           <div className="layout-line">
@@ -67,9 +78,15 @@ export function PayPage() {
           />
         </ContentBox>
       </div>
-      <BottomButton>계약금 결제하기</BottomButton>
+      <BottomButton onClick={handleClickPayButton}>계약하기</BottomButton>
 
-      <PayModal title="계약금 결제" price={300000} />
+      {isPayModalOpen && (
+        <PayModal
+          title="계약금 결제"
+          price={300000}
+          onClickBack={handleClickPayModalBack}
+        />
+      )}
     </div>
   );
 }
