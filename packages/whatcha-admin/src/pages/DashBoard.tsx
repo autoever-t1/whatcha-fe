@@ -6,8 +6,7 @@ import { PeopleOutline, DirectionsCar, AttachMoney,Warehouse } from "@mui/icons-
 
 function DashBoard() {
   return (
-    <div className="min-h-screen p-6 bg-gray-50">
-      <div className="mx-auto max-w-7xl">
+    <div>
         {/* 헤더 */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-gray-900">대시보드</h1>
@@ -20,24 +19,28 @@ function DashBoard() {
             value="30000"
             percent={8.4}
             icon={<PeopleOutline sx={{ fontSize: 28 }} />}
+            index={0}
           />
           <StatCard
             title="판매 차량"
             value="2500"
-            percent={8.4}
+            percent={-8.4}
             icon={<DirectionsCar sx={{ fontSize: 28 }} />}
+            index={1}
           />
           <StatCard
             title="판매 금액"
             value="1500000"
             percent={8.4}
             icon={<AttachMoney sx={{ fontSize: 28 }} />}
+            index={2}
           />
           <StatCard
             title="차량 재고"
             value="300"
             percent={5.7}
             icon={<Warehouse sx={{ fontSize: 28 }} />}
+            index={3}
           />
         </div>
 
@@ -61,7 +64,6 @@ function DashBoard() {
           </div>
         </div>
       </div>
-    </div>
   );
 }
 

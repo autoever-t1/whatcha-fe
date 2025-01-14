@@ -12,7 +12,7 @@ const menuItems = [
   { name: '주문 관리', path: '/order', icon: <ShoppingCartIcon className="w-6 h-6" /> },
   { name: '회원 관리', path: '/member', icon: <UserGroupIcon className="w-6 h-6" /> },
   { name: '쿠폰 관리', path: '/coupon', icon: <TicketIcon className="w-6 h-6" /> },
-  { name: '재고 관리', path: '/stock', icon: <TruckIcon className="w-6 h-6" /> },
+  { name: '매물 관리', path: '/stock', icon: <TruckIcon className="w-6 h-6" /> },
 ];
 
 function SideMenu() {

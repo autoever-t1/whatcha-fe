@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 export default {
   content: [
     "./index.html",
@@ -9,6 +8,9 @@ export default {
       colors: {
         primary: '#024caa',
         secondary: '#ec8305',
+      },
+      fontFamily: {
+        sans: ['Pretendard', 'sans-serif'],
       }
     },
   },
