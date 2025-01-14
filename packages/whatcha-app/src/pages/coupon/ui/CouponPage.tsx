@@ -3,11 +3,19 @@ import styles from "./CouponPage.module.css";
 import { MainButton } from "@shared/main-button";
 import { MainHeader } from "@shared/main-header";
 import { CouponItem } from "@shared/coupon-item";
+import { useCallback } from "react";
+import { useNavigate } from "react-router";
 
 export function CouponPage() {
+  const navigate = useNavigate();
+
+  const handleClickBack = useCallback(() => {
+    navigate("/mypage");
+  }, [navigate]);
+
   return (
     <div className={styles.container}>
-      <MainHeader title="쿠폰함" />
+      <MainHeader title="쿠폰함" onClickBack={handleClickBack} />
       <div className={styles.content}>
         <ContentBox title="새 쿠폰 등록" position="top">
           <input className={`${styles["new-input"]} font-r-md`} />
