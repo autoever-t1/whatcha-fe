@@ -7,9 +7,10 @@ import { ProgressBar } from "./ProgressBar";
 import { BottomButton } from "@shared/bottom-button";
 import { PayModal } from "@widgets/pay-modal";
 import { Contract } from "./Contract";
+import { ReceiveMethod } from "./ReceiveMethod";
 
 export function OrderPage() {
-  const [progress, _] = useState(2);
+  const [progress, _] = useState(3);
   const [isPayModalOpen, setPayModalOpen] = useState(false);
 
   useEffect(() => {
@@ -34,12 +35,14 @@ export function OrderPage() {
   const title = useMemo(() => {
     if (progress === 1) return "주문금액";
     else if (progress === 2) return "";
+    else if (progress === 3) return "수령 방법";
     else return "";
   }, [progress]);
 
   const bottomButtonText = useMemo(() => {
     if (progress === 1) return "잔금 결제하기";
     else if (progress === 2) return "계약서 서명하기";
+    else if (progress === 3) return "수령 방법 선택하기";
     else return "";
   }, [progress]);
 
@@ -67,6 +70,8 @@ export function OrderPage() {
                 price: 30000000,
               }}
             />
+          ) : progress === 3 ? (
+            <ReceiveMethod />
           ) : (
             <></>
           )}
