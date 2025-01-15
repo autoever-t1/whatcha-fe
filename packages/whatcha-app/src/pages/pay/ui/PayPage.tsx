@@ -53,7 +53,7 @@ export function PayPage() {
           </p>
         </ContentBox>
         <ContentBox title="주문금액">
-          <BillContent price={30000000} />
+          <BillContent price={30000000} canUpdateCoupon />
         </ContentBox>
         <div className={styles["payment-box"]}>
           <div className="layout-line">

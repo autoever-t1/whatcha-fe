@@ -20,6 +20,10 @@ export function MyPage() {
     navigate("/mypage/coupon");
   }, [navigate]);
 
+  const handleClickOrder = useCallback(() => {
+    navigate("/mypage/orders");
+  }, [navigate]);
+
   return (
     <div className={styles.container}>
       <div className={styles["name-box"]}>
@@ -50,7 +54,9 @@ export function MyPage() {
             쿠폰함
           </MenuItem>
           <MenuItem icon={BellRingingIcon}>입고 알림 신청 내역</MenuItem>
-          <MenuItem icon={OrderIcon}>주문 조회</MenuItem>
+          <MenuItem icon={OrderIcon} onClick={handleClickOrder}>
+            주문 조회
+          </MenuItem>
           <MenuItem icon={LogoutIcon}>로그아웃</MenuItem>
         </div>
       </div>
