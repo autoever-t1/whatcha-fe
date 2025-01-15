@@ -12,11 +12,6 @@ interface ContractProps {
   contract: Contract;
 }
 
-interface ContractItemProps {
-  title: string;
-  children: string;
-}
-
 export function Contract({ contract }: ContractProps) {
   const { name, vhclRegNo, model, date, price } = contract;
   return (

@@ -9,7 +9,7 @@ import { PayModal } from "@widgets/pay-modal";
 import { Contract } from "./Contract";
 
 export function OrderPage() {
-  const [progress, setProgress] = useState(2);
+  const [progress, _] = useState(2);
   const [isPayModalOpen, setPayModalOpen] = useState(false);
 
   useEffect(() => {
