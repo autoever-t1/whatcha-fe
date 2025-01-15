@@ -10,6 +10,7 @@ import { OrderPage } from "@pages/order";
 import { FavoritePage } from "@pages/favorite";
 import { CouponPage } from "@pages/coupon";
 import { OrderListPage } from "@pages/order-list";
+import { AlarmPage } from "@pages/alarm";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/mypage/coupon",
         element: <CouponPage />,
+      },
+      {
+        path: "/mypage/alarm",
+        element: <AlarmPage />,
       },
       {
         path: "/mypage/orders",
