@@ -17,6 +17,15 @@ export default defineConfig(({ mode }) => {
         },
       },
     ],
+    server: {
+      proxy: {
+        "/map-direction": {
+          target: "https://naveropenapi.apigw.ntruss.com",
+          changeOrigin: true,
+          secure: false,
+        },
+      },
+    },
     resolve: {
       alias: {
         "@common": path.resolve(__dirname, "../common"),
