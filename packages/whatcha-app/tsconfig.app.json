@@ -6,7 +6,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "types": ["node"],
+    "types": ["node", "main", "navermaps"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -23,6 +23,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
+    "typeRoots": ["types", "../../node_modules/@types"],
     "baseUrl": ".",
     "paths": {
       "@common/*": ["../common/*"],
@@ -35,5 +36,5 @@
       "@shared/*": ["src/shared/*"]
     }
   },
-  "include": ["src/**/*", "global.d.ts"]
+  "include": ["src/**/*"]
 }
