@@ -1,6 +1,6 @@
 import { MainHeader } from "@shared/main-header";
 import styles from "./OrderPage.module.css";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { ContentBox } from "@shared/content-box";
 import { BillContent } from "@shared/bill-content";
 import { ProgressBar } from "./ProgressBar";
@@ -9,19 +9,17 @@ import { PayModal } from "@widgets/pay-modal";
 import { Contract } from "./Contract";
 import { ReceiveMethod } from "./ReceiveMethod";
 import { OrderResult } from "./OrderResult";
+import { useNavigate } from "react-router";
 
 export function OrderPage() {
+  const navigate = useNavigate();
+
   const [progress, _] = useState(4);
   const [isPayModalOpen, setPayModalOpen] = useState(false);
 
-  useEffect(() => {
-    // const timer = setInterval(() => {
-    //   setProgress((p) => (p + 1) % 5);
-    // }, 1000);
-    // return () => {
-    //   clearInterval(timer);
-    // };
-  }, []);
+  const handleClickBackButton = useCallback(() => {
+    navigate("/mypage/orders");
+  }, [navigate]);
 
   const handleClickPayButton = useCallback(() => {
     if (progress === 1) {
@@ -56,7 +54,7 @@ export function OrderPage() {
 
   return (
     <div className={styles.container}>
-      <MainHeader title="주문 현황" />
+      <MainHeader title="주문 현황" onClickBack={handleClickBackButton} />
       <div
         className={`${styles.content} ${
           progress === 4 ? styles["last-process"] : ""
