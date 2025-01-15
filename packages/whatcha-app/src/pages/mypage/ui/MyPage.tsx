@@ -20,6 +20,10 @@ export function MyPage() {
     navigate("/mypage/coupon");
   }, [navigate]);
 
+  const handleClickAlarm = useCallback(() => {
+    navigate("/mypage/alarm");
+  }, [navigate]);
+
   const handleClickOrder = useCallback(() => {
     navigate("/mypage/orders");
   }, [navigate]);
@@ -53,7 +57,9 @@ export function MyPage() {
           <MenuItem icon={CouponIcon} onClick={handleClickCoupon}>
             쿠폰함
           </MenuItem>
-          <MenuItem icon={BellRingingIcon}>입고 알림 신청 내역</MenuItem>
+          <MenuItem icon={BellRingingIcon} onClick={handleClickAlarm}>
+            입고 알림 신청 내역
+          </MenuItem>
           <MenuItem icon={OrderIcon} onClick={handleClickOrder}>
             주문 조회
           </MenuItem>
