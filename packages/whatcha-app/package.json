@@ -11,5 +11,8 @@
   },
   "dependencies": {
     "@karponents/xmas": "^0.0.0"
+  },
+  "devDependencies": {
+    "@types/navermaps": "^3.7.8"
   }
 }
