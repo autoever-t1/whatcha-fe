@@ -8,9 +8,10 @@ import { BottomButton } from "@shared/bottom-button";
 import { PayModal } from "@widgets/pay-modal";
 import { Contract } from "./Contract";
 import { ReceiveMethod } from "./ReceiveMethod";
+import { OrderResult } from "./OrderResult";
 
 export function OrderPage() {
-  const [progress, _] = useState(3);
+  const [progress, _] = useState(4);
   const [isPayModalOpen, setPayModalOpen] = useState(false);
 
   useEffect(() => {
@@ -36,6 +37,7 @@ export function OrderPage() {
     if (progress === 1) return "주문금액";
     else if (progress === 2) return "";
     else if (progress === 3) return "수령 방법";
+    else if (progress === 4) return "";
     else return "";
   }, [progress]);
 
@@ -55,31 +57,59 @@ export function OrderPage() {
   return (
     <div className={styles.container}>
       <MainHeader title="주문 현황" />
-      <div className={styles.content}>
+      <div
+        className={`${styles.content} ${
+          progress === 4 ? styles["last-process"] : ""
+        }`}
+      >
         <ProgressBar progress={progress} />
-        <ContentBox title={title} position="bottom">
-          {progress === 1 ? (
-            <BillContent price={30000000} canUpdateCoupon />
-          ) : progress === 2 ? (
-            <Contract
-              contract={{
-                name: "김철수",
-                vhclRegNo: "123가4567",
-                date: "2021년 4월",
-                model: "그랜저 하이브리드 르블랑",
-                price: 30000000,
-              }}
-            />
-          ) : progress === 3 ? (
-            <ReceiveMethod />
-          ) : (
-            <></>
+        <div className="layout-vertical">
+          <ContentBox title={title}>
+            {progress === 1 ? (
+              <BillContent price={30000000} canUpdateCoupon={false} />
+            ) : progress === 2 ? (
+              <Contract
+                contract={{
+                  name: "김철수",
+                  vhclRegNo: "123가4567",
+                  date: "2021년 4월",
+                  model: "그랜저 하이브리드 르블랑",
+                  price: 30000000,
+                }}
+              />
+            ) : progress === 3 ? (
+              <ReceiveMethod />
+            ) : progress === 4 ? (
+              <OrderResult />
+            ) : (
+              <></>
+            )}
+          </ContentBox>
+          {progress === 4 && (
+            <>
+              <ContentBox title="주문금액">
+                <BillContent price={30000000} canUpdateCoupon={false} />
+              </ContentBox>
+              <ContentBox title="계약서">
+                <Contract
+                  contract={{
+                    name: "김철수",
+                    vhclRegNo: "123가4567",
+                    date: "2021년 4월",
+                    model: "그랜저 하이브리드 르블랑",
+                    price: 30000000,
+                  }}
+                />
+              </ContentBox>
+            </>
           )}
-        </ContentBox>
+        </div>
       </div>
-      <BottomButton onClick={handleClickBottomButton}>
-        {bottomButtonText}
-      </BottomButton>
+      {progress < 4 && (
+        <BottomButton onClick={handleClickBottomButton}>
+          {bottomButtonText}
+        </BottomButton>
+      )}
 
       {isPayModalOpen && (
         <PayModal
