@@ -18,7 +18,7 @@ export function ListPage() {
   }, [type]);
 
   const headerTitle = useMemo(() => {
-    return type === "search" && keyword ? keyword : "";
+    return type === "search" && keyword ? keyword : "검색 결과";
   }, [type, keyword]);
 
   const handleClickBackButton = useCallback(() => {
@@ -33,6 +33,7 @@ export function ListPage() {
           <div className={styles.list}>
             <CarItem
               car={{
+                carId: 1,
                 img: SampleImg,
                 model: "2020 그랜저 가솔린 2.5 프리미엄 초이스",
                 date: "23년 11월",
@@ -45,6 +46,7 @@ export function ListPage() {
             />
             <CarItem
               car={{
+                carId: 2,
                 img: SampleImg,
                 model: "2020 그랜저 가솔린 2.5 프리미엄 초이스",
                 date: "23년 11월",
@@ -57,6 +59,7 @@ export function ListPage() {
             />
             <CarItem
               car={{
+                carId: 3,
                 img: SampleImg,
                 model: "2020 그랜저 가솔린 2.5 프리미엄 초이스",
                 date: "23년 11월",
