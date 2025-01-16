@@ -6,8 +6,16 @@ import { SmallCarItem } from "@shared/small-car-item";
 import SampleImg from "@assets/sample-image.png";
 import { InstallmentCalculator } from "@widgets/installment-calculator";
 import { Footer } from "@shared/footer";
+import { FavoriteSheet } from "@widgets/favorite-sheet";
+import { useCallback, useState } from "react";
 
 export function MainPage() {
+  const [isFavoriteSheetOpen, setFavoriteSheetOpen] = useState(true);
+
+  const handleCloseSheet = useCallback(() => {
+    setFavoriteSheetOpen(false);
+  }, []);
+
   return (
     <div className={styles.container}>
       <MainHeader />
@@ -62,6 +70,8 @@ export function MainPage() {
         </ContentBox>
         <Footer />
       </div>
+
+      {isFavoriteSheetOpen && <FavoriteSheet onClose={handleCloseSheet} />}
     </div>
   );
 }
