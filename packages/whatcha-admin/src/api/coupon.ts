@@ -10,6 +10,28 @@ export interface Coupon {
   maxDiscountAmount: number;
 }
 
+export interface AddCouponRequest {
+  couponCode: string;
+  couponName: string;
+  discountPercentage: number | null;
+  discountAmount: number | null;
+  maxDiscountAmount: number;
+}
+
+// 쿠폰 등록 API
+export const addCoupon = async (couponData: AddCouponRequest): Promise<void> => {
+  try {
+    await client.post('/admin/coupon', couponData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+  } catch (error) {
+    console.error('쿠폰 등록 실패:', error);
+    throw error;
+  }
+};
+
 interface PaginatedResponse<T> {
   content: T[];
   pageable: {
