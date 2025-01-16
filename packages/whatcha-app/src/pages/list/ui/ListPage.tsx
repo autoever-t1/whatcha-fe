@@ -1,12 +1,13 @@
-import { useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import styles from "./ListPage.module.css";
 import { MainHeader } from "@shared/main-header";
 import { CarItem } from "@shared/car-item";
 import SampleImg from "@assets/sample-image.png";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 
 export function ListPage() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const type = useMemo(() => {
     return searchParams.get("type");
@@ -20,9 +21,13 @@ export function ListPage() {
     return type === "search" && keyword ? keyword : "";
   }, [type, keyword]);
 
+  const handleClickBackButton = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
+
   return (
     <div className={styles.container}>
-      <MainHeader title={headerTitle} />
+      <MainHeader title={headerTitle} onClickBack={handleClickBackButton} />
       {type && (
         <div className={styles.content}>
           <div className={styles.list}>
