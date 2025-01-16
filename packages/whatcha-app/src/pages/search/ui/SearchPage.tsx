@@ -7,6 +7,7 @@ import { RangeInput } from "@shared/range-input";
 import { ColorButton } from "@shared/color-button";
 import { UIEventHandler, useCallback, useRef, useState } from "react";
 import { BottomButton } from "@shared/bottom-button";
+import { useNavigate } from "react-router";
 
 interface Color {
   color: string;
@@ -29,10 +30,17 @@ const colors: Color[] = [
 ];
 
 export function SearchPage() {
+  const navigate = useNavigate();
+
   const [currentTab, setCurrentTab] = useState(0);
+  const [keyword, setKeyword] = useState("");
 
   const conditionBoxRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<(null | HTMLDivElement)[]>([]);
+
+  const handleChangeKeyword = useCallback((value: string) => {
+    setKeyword(value);
+  }, []);
 
   const handleScrollConditionBox: UIEventHandler<HTMLDivElement> = useCallback(
     (e) => {
@@ -57,9 +65,17 @@ export function SearchPage() {
     });
   }, []);
 
+  const handleClickSearch = useCallback(() => {
+    if (keyword) navigate(`/list?type=search&keyword=${keyword}`);
+  }, [navigate, keyword]);
+
   return (
     <div className={styles.container}>
-      <SearchHeader />
+      <SearchHeader
+        onClickSearch={handleClickSearch}
+        onChangeKeyword={handleChangeKeyword}
+        keyword={keyword}
+      />
       <div className={styles.content}>
         <div className={styles["tab-list"]}>
           {[
