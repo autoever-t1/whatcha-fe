@@ -3,12 +3,17 @@ import styles from "./FavoriteSheet.module.css";
 import { useCallback, useState } from "react";
 import GrandeurImg from "@common/assets/grandeur.png";
 
-export function FavoriteSheet() {
+interface FavoriteSheetProps {
+  onClose: () => void;
+}
+
+export function FavoriteSheet({ onClose }: FavoriteSheetProps) {
   const [phase, setPhase] = useState(0);
 
   const handleClickNext = useCallback(() => {
-    setPhase((prev) => (prev === 1 ? 0 : 1));
-  }, []);
+    if (phase === 0) setPhase(1);
+    else onClose();
+  }, [phase, onClose]);
 
   return (
     <div className={styles.wrapper}>
