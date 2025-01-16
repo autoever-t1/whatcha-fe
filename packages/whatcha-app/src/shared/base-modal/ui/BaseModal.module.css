@@ -1,0 +1,20 @@
+.container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  animation: slideUp 0.5s;
+  width: 100dvw;
+  height: 100dvh;
+  background-color: white;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0%);
+  }
+}
