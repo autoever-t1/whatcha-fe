@@ -1,7 +1,7 @@
-import { MainHeader } from "@shared/main-header";
 import styles from "./PayModal.module.css";
 import { BottomButton } from "@shared/bottom-button";
 import { AgreementItem } from "@shared/agreement-item";
+import { BaseModal } from "@shared/base-modal";
 
 interface PayModalProps {
   title: string;
@@ -11,8 +11,7 @@ interface PayModalProps {
 
 export function PayModal({ title, price, onClickBack }: PayModalProps) {
   return (
-    <div className={styles.container}>
-      <MainHeader title={title} onClickBack={onClickBack} />
+    <BaseModal title={title} onClickBack={onClickBack}>
       <div className={styles.content}>
         <div className="layout-line">
           <span className="font-r-md">결제금액</span>
@@ -51,6 +50,6 @@ export function PayModal({ title, price, onClickBack }: PayModalProps) {
         />
       </div>
       <BottomButton>결제하기</BottomButton>
-    </div>
+    </BaseModal>
   );
 }
