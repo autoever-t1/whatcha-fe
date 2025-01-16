@@ -8,9 +8,24 @@ import { AgreementItem } from "@shared/agreement-item";
 import { BottomButton } from "@shared/bottom-button";
 import { PayModal } from "@widgets/pay-modal";
 import { useCallback, useState } from "react";
+import { CouponModal } from "@widgets/coupon-modal";
 
 export function PayPage() {
   const [isPayModalOpen, setPayModalOpen] = useState(false);
+  const [isCouponModalOpen, setCouponModalOpen] = useState(false);
+  const [_, setCurrentCouponId] = useState<number>();
+
+  const handleClickCouponButton = useCallback(() => {
+    setCouponModalOpen(true);
+  }, []);
+
+  const handleClickCouponModalBack = useCallback(() => {
+    setCouponModalOpen(false);
+  }, []);
+
+  const handleClickCouponItem = useCallback((couponId: number) => {
+    setCurrentCouponId(couponId);
+  }, []);
 
   const handleClickPayButton = useCallback(() => {
     setPayModalOpen(true);
@@ -53,7 +68,11 @@ export function PayPage() {
           </p>
         </ContentBox>
         <ContentBox title="주문금액">
-          <BillContent price={30000000} />
+          <BillContent
+            price={30000000}
+            canUpdateCoupon
+            onClickCouponButton={handleClickCouponButton}
+          />
         </ContentBox>
         <div className={styles["payment-box"]}>
           <div className="layout-line">
@@ -85,6 +104,13 @@ export function PayPage() {
           title="계약금 결제"
           price={300000}
           onClickBack={handleClickPayModalBack}
+        />
+      )}
+      {isCouponModalOpen && (
+        <CouponModal
+          title="쿠폰함"
+          onClickBack={handleClickCouponModalBack}
+          onClickCoupon={handleClickCouponItem}
         />
       )}
     </div>

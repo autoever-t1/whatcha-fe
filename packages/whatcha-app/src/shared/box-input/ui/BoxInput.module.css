@@ -4,8 +4,16 @@
   display: flex;
   flex: 1;
 
+  &.dark {
+    border: 1px solid var(--color-gray-600);
+  }
+
   input {
     flex-grow: 1;
     background-color: #00000000;
+  }
+
+  &.dark > input {
+    color: var(--color-gray-50);
   }
 }

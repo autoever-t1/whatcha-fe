@@ -1,0 +1,12 @@
+.container {
+  width: 100%;
+  font-family: "Nanum Myeongjo";
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.strong {
+  text-decoration: underline;
+  color: var(--color-primary);
+}

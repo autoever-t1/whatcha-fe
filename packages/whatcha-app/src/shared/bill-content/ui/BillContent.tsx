@@ -3,6 +3,8 @@ import styles from "./BillContent.module.css";
 
 interface BillContentProps {
   price: number;
+  canUpdateCoupon: boolean;
+  onClickCouponButton?: () => void;
 }
 
 const manageCost = 1000000;
@@ -10,7 +12,11 @@ const deliveryCost = 300000;
 const transferCost = 30000;
 const registerCost = 2500000;
 
-export function BillContent({ price }: BillContentProps) {
+export function BillContent({
+  price,
+  canUpdateCoupon,
+  onClickCouponButton,
+}: BillContentProps) {
   return (
     <>
       <div className="layout-line">
@@ -51,7 +57,11 @@ export function BillContent({ price }: BillContentProps) {
       <div className="layout-line">
         <div className={styles["coupon-title"]}>
           <span className="font-r-md color-gray-600">할인금액</span>
-          <button className="font-r-xs">쿠폰 등록/수정</button>
+          {canUpdateCoupon && (
+            <button className="font-r-xs" onClick={onClickCouponButton}>
+              쿠폰 등록/수정
+            </button>
+          )}
         </div>
         <span className="font-r-md color-gray-600">
           {(100000).toLocaleString()}원

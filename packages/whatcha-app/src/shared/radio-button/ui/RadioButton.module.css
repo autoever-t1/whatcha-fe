@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.circle-wrapper {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-gray-900);
+  border-radius: 8px;
+  position: relative;
+}
+
+.checked::after {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  width: 8px;
+  height: 8px;
+  border-radius: 4px;
+  display: block;
+  content: "";
+  background-color: var(--color-gray-900);
+}
