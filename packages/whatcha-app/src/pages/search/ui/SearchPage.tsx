@@ -5,6 +5,8 @@ import styles from "./SearchPage.module.css";
 import { TabItem } from "./TabItem";
 import { RangeInput } from "@shared/range-input";
 import { ColorButton } from "@shared/color-button";
+import { UIEventHandler, useCallback, useRef, useState } from "react";
+import { BottomButton } from "@shared/bottom-button";
 
 interface Color {
   color: string;
@@ -27,6 +29,34 @@ const colors: Color[] = [
 ];
 
 export function SearchPage() {
+  const [currentTab, setCurrentTab] = useState(0);
+
+  const conditionBoxRef = useRef<HTMLDivElement>(null);
+  const tabsRef = useRef<(null | HTMLDivElement)[]>([]);
+
+  const handleScrollConditionBox: UIEventHandler<HTMLDivElement> = useCallback(
+    (e) => {
+      const scrollTop = (e.target as HTMLDivElement).scrollTop + 40;
+
+      for (let i = tabsRef.current.length - 1; i >= 0; i--) {
+        const top = (tabsRef.current[i] as HTMLDivElement).offsetTop;
+
+        if (scrollTop >= top) {
+          setCurrentTab(i);
+          return;
+        }
+      }
+    },
+    []
+  );
+
+  const handleClickTab = useCallback((tabIdx: number) => {
+    conditionBoxRef.current!.scrollTo({
+      top: tabsRef.current[tabIdx]!.offsetTop - 40,
+      behavior: "smooth",
+    });
+  }, []);
+
   return (
     <div className={styles.container}>
       <SearchHeader />
@@ -42,11 +72,21 @@ export function SearchPage() {
             "색상 계열",
             "옵션",
           ].map((tab, i) => (
-            <TabItem key={i}>{tab}</TabItem>
+            <TabItem
+              key={i}
+              selected={i === currentTab}
+              onClick={() => handleClickTab(i)}
+            >
+              {tab}
+            </TabItem>
           ))}
         </div>
-        <div className={styles["condition-box"]}>
-          <ConditionItem title="차종">
+        <div
+          className={styles["condition-box"]}
+          onScroll={handleScrollConditionBox}
+          ref={conditionBoxRef}
+        >
+          <ConditionItem ref={(e) => (tabsRef.current[0] = e)} title="차종">
             <div className={styles.grid}>
               <BadgeButton>승용</BadgeButton>
               <BadgeButton>승용</BadgeButton>
@@ -56,7 +96,7 @@ export function SearchPage() {
               <BadgeButton selected>SUV</BadgeButton>
             </div>
           </ConditionItem>
-          <ConditionItem title="모델">
+          <ConditionItem ref={(e) => (tabsRef.current[1] = e)} title="모델">
             <div className={styles.grid}>
               <BadgeButton>아반떼</BadgeButton>
               <BadgeButton>쏘나타</BadgeButton>
@@ -68,25 +108,25 @@ export function SearchPage() {
               <BadgeButton>스타리아</BadgeButton>
             </div>
           </ConditionItem>
-          <ConditionItem title="가격">
+          <ConditionItem ref={(e) => (tabsRef.current[2] = e)} title="가격">
             <RangeInput
               from={{ value: "1000", unit: "만원", suffix: "부터" }}
               to={{ value: "2000", unit: "만원", suffix: "까지" }}
             />
           </ConditionItem>
-          <ConditionItem title="주행거리">
+          <ConditionItem ref={(e) => (tabsRef.current[3] = e)} title="주행거리">
             <RangeInput
               from={{ value: "0", unit: "km", suffix: "부터" }}
               to={{ value: "12000", unit: "km", suffix: "까지" }}
             />
           </ConditionItem>
-          <ConditionItem title="연식">
+          <ConditionItem ref={(e) => (tabsRef.current[4] = e)} title="연식">
             <RangeInput
               from={{ value: "2024", unit: "년", suffix: "부터" }}
               to={{ value: "2025", unit: "년", suffix: "까지" }}
             />
           </ConditionItem>
-          <ConditionItem title="연료">
+          <ConditionItem ref={(e) => (tabsRef.current[5] = e)} title="연료">
             <div className={styles.grid}>
               <BadgeButton>가솔린</BadgeButton>
               <BadgeButton>디젤</BadgeButton>
@@ -94,14 +134,21 @@ export function SearchPage() {
               <BadgeButton>전기</BadgeButton>
             </div>
           </ConditionItem>
-          <ConditionItem title="색상 계열">
+          <ConditionItem
+            ref={(e) => (tabsRef.current[6] = e)}
+            title="색상 계열"
+          >
             <div className={styles.grid}>
               {colors.map((color, i) => (
                 <ColorButton color={color.color} label={color.label} key={i} />
               ))}
             </div>
           </ConditionItem>
-          <ConditionItem title="옵션">
+          <ConditionItem
+            ref={(e) => (tabsRef.current[7] = e)}
+            title="옵션"
+            last
+          >
             <div className={styles.grid}>
               {Array.from({ length: 16 }).map((_, i) => (
                 <BadgeButton key={i}>가죽시트</BadgeButton>
@@ -110,6 +157,7 @@ export function SearchPage() {
           </ConditionItem>
         </div>
       </div>
+      <BottomButton>조건 검색</BottomButton>
     </div>
   );
 }
