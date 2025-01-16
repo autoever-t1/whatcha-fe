@@ -1,4 +1,5 @@
 import UserPieChart from '../components/member/UserPieChart';
+import UserTable from '../components/member/UserTable';
 
 function Member() {
   const ageData = {
@@ -39,7 +40,8 @@ function Member() {
         </div>
         <div className="col-span-4 bg-white rounded-lg shadow-sm">
           <div className="p-6">
-            <h2 className="mb-4 text-lg font-semibold">최근 거래 내역</h2>
+            <h2 className="mb-4 text-lg font-semibold">회원 정보</h2>
+            <UserTable />
           </div>
         </div>
       </div>
