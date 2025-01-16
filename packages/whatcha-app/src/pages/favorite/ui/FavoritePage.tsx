@@ -37,8 +37,18 @@ export function FavoritePage() {
         </ContentBox>
         <ContentBox title="예산">
           <RangeInput
-            from={{ value: "1000", unit: "만원", suffix: "부터" }}
-            to={{ value: "2000", unit: "만원", suffix: "까지" }}
+            from={{
+              value: "1000",
+              onChange: () => {},
+              unit: "만원",
+              suffix: "부터",
+            }}
+            to={{
+              value: "2000",
+              onChange: () => {},
+              unit: "만원",
+              suffix: "까지",
+            }}
           />
         </ContentBox>
       </div>
