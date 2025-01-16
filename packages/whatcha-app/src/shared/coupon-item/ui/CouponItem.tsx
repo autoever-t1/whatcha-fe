@@ -11,9 +11,10 @@ interface Coupon {
 
 interface CouponItemProps {
   coupon: Coupon;
+  onClick?: () => void;
 }
 
-export function CouponItem({ coupon }: CouponItemProps) {
+export function CouponItem({ coupon, onClick }: CouponItemProps) {
   const {
     couponName,
     discountPercentage,
@@ -29,7 +30,7 @@ export function CouponItem({ coupon }: CouponItemProps) {
   }, [discountPercentage, discountValue]);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={onClick}>
       <div className={styles.info}>
         <p className="font-b-sm">{couponName}</p>
         <p className="font-b-lg color-primary">{discountMessage}</p>
