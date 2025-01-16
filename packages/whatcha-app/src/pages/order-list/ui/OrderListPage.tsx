@@ -20,6 +20,7 @@ export function OrderListPage() {
           <OrderItem
             key={i}
             order={{
+              orderId: i,
               model: "그랜저 하이브리드 르블랑",
               process: 2,
               date: "2025-01-16",

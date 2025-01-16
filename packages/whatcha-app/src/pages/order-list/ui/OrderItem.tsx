@@ -1,4 +1,6 @@
+import { useNavigate } from "react-router";
 import styles from "./OrderItem.module.css";
+import { useCallback } from "react";
 
 const processMessages: string[] = [
   "",
@@ -9,6 +11,7 @@ const processMessages: string[] = [
 ];
 
 interface Order {
+  orderId: number;
   model: string;
   process: number;
   date: string;
@@ -20,11 +23,17 @@ interface OrderItemProps {
 }
 
 export function OrderItem({ order }: OrderItemProps) {
-  const { model, process, date, img } = order;
+  const { orderId, model, process, date, img } = order;
+
+  const navigate = useNavigate();
+
+  const handleClick = useCallback(() => {
+    navigate(`/order/${orderId}`);
+  }, [orderId, navigate]);
 
   return (
     <div className={styles.container}>
-      <div className={styles.content}>
+      <div className={styles.content} onClick={handleClick}>
         <div className={styles["img-wrapper"]}>
           <img src={img} alt="CarImg" />
         </div>
