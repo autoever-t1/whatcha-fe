@@ -8,7 +8,6 @@ import {
 import styles from "./CarPage.module.css";
 import ArrowBackWhiteIcon from "@common/assets/icons/arrow-back-white.svg";
 import ArrowBackIcon from "@common/assets/icons/arrow-back.svg";
-import SampleImg from "@assets/sample-image.png";
 import { ContentBox } from "@shared/content-box";
 import { InnerBox } from "@shared/inner-box";
 import { BasicInfoContent } from "./BasicInfoContent";
@@ -16,6 +15,7 @@ import { OptionContent } from "./OptionContent";
 import { InstallmentCalculator } from "@widgets/installment-calculator";
 import { Footer } from "@shared/footer";
 import { BottomButton } from "@shared/bottom-button";
+import { RotateView } from "@widgets/rotate-view";
 
 export interface Car {
   vhclRegNo: string;
@@ -115,8 +115,9 @@ export function CarPage() {
           {car?.vhclRegNo}
         </div>
         <div className={styles["car-img"]}>
-          <img src={SampleImg} alt="Car" />
-          <div className={styles.gradient} />
+          {/* <img src={SampleImg} alt="Car" />
+          <div className={styles.gradient} /> */}
+          <RotateView />
         </div>
         {car && (
           <div className={styles["inner-content"]}>
