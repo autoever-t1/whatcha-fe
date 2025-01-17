@@ -60,6 +60,8 @@ export function FavoriteSheet({ onClose }: FavoriteSheetProps) {
   }, [selectedModels, onClose]);
 
   const handleClickNext = useCallback(() => {
+    if (phase === 1 && selectedModels.length < 3) return;
+
     if (phase === 0) submitBudget();
     else submitPreferences();
   }, [phase, submitBudget, submitPreferences]);

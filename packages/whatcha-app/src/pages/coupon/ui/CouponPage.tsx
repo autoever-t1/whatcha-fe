@@ -73,6 +73,7 @@ export function CouponPage() {
   const handleClickSubmitButton = useCallback(async () => {
     try {
       await createCoupon(couponCode);
+      navigate(0);
     } catch (e) {
       const error = e as AxiosError;
       if (error.status === 500) {
@@ -85,7 +86,7 @@ export function CouponPage() {
         });
       }
     }
-  }, [couponCode]);
+  }, [couponCode, navigate]);
 
   return (
     <div className={styles.container}>
