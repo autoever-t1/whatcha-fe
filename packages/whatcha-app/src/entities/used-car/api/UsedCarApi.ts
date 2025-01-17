@@ -1,10 +1,10 @@
-import { authAxios, PageResponse } from "@/shared";
+import { authAxios, PageResponse_ } from "@/shared";
 import { UsedCar } from "../model/types";
 
 export const getUsedCarByKeyword = async (
   keyword: string,
   page: number
-): Promise<PageResponse<UsedCar>> => {
+): Promise<PageResponse_<UsedCar>> => {
   // const response = await authAxios.get<PageResponse<UsedCar>>(
   //   `/api/used-car/search?keyword=${keyword}`
   // );
@@ -45,7 +45,7 @@ export const getUsedCarByKeyword = async (
     },
   ];
 
-  const response: PageResponse<UsedCar> = {
+  const response: PageResponse_<UsedCar> = {
     total: 30,
     page,
     size: 10,
@@ -56,7 +56,7 @@ export const getUsedCarByKeyword = async (
 };
 
 export const getUsedCarByConditions = async (queries: string, page: number) => {
-  const response = await authAxios.get<PageResponse<UsedCar>>(
+  const response = await authAxios.get<PageResponse_<UsedCar>>(
     `/api/used-car?${queries}&page=${page}`
   );
 

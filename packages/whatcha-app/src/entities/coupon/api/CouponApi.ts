@@ -1,17 +1,23 @@
-import { authAxios } from "@/shared";
+import { authAxios, PageResponse } from "@/shared";
 import { CouponDTO, NewCouponResultDTO } from "../model/types";
+import { getAllCoupon_ } from "../model/dummy";
 
-export const getCoupons = async () => {
-  const response = await authAxios.get<CouponDTO>(`/api/coupon`);
+export const getAllCoupon = async () => {
+  try {
+    const response = await authAxios.get<PageResponse<CouponDTO>>(
+      `/api/coupon`
+    );
 
-  return response.data;
+    return response.data;
+  } catch {
+    return getAllCoupon_;
+  }
 };
 
 export const createCoupon = async (couponCode: string) => {
-  const response = await authAxios.post<NewCouponResultDTO>(
-    `/api/coupon`,
-    couponCode
-  );
+  const response = await authAxios.post<NewCouponResultDTO>(`/api/coupon`, {
+    couponCode,
+  });
 
   return response.data;
 };

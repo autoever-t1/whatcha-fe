@@ -8,6 +8,7 @@ export interface NewCouponResultDTO {
 }
 
 export interface CouponDTO {
+  userCouponId: number;
   couponName: string;
   discountPercentage: number | null;
   discountValue: number | null;
