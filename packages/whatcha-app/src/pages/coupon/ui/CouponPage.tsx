@@ -8,6 +8,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { useNavigate } from "react-router";
@@ -19,6 +20,9 @@ export function CouponPage() {
   const navigate = useNavigate();
 
   const [couponList, setCouponList] = useState<CouponDTO[]>([]);
+  const [page, setPage] = useState(0);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const [isLoading, setLoading] = useState(false);
   const [couponCode, setCouponCode] = useState("");
   const [dialog, setDialog] = useState<SimpleDialogProps | null>(null);
 
@@ -26,17 +30,36 @@ export function CouponPage() {
     return couponCode.trim().length > 0;
   }, [couponCode]);
 
-  console.log(couponList);
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastItemRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isLoading) return;
 
-  const getCouponList = useCallback(async () => {
-    const response = await getAllCoupon();
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          setPage((prevPage) => prevPage + 1);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasNextPage]
+  );
+
+  const getCouponList = async () => {
+    const response = await getAllCoupon(page);
 
     setCouponList(response.content);
-  }, []);
+    setHasNextPage(!response.last);
+    setLoading(false);
+  };
 
   useEffect(() => {
+    setLoading(true);
     getCouponList();
-  }, [getCouponList]);
+  }, [page]);
 
   const handleClickBack = useCallback(() => {
     navigate("/mypage");
@@ -90,6 +113,7 @@ export function CouponPage() {
           {couponList.map((coupon) => (
             <CouponItem key={coupon.userCouponId} coupon={coupon} />
           ))}
+          <div ref={lastItemRef} style={{ flex: "10px 0 0" }} />
         </div>
       </div>
 
