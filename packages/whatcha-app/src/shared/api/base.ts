@@ -19,7 +19,7 @@ authAxios.interceptors.request.use((config) => {
   //   }
   // }
 
-  const at = sessionStorage.getItem("at");
+  const at = localStorage.getItem("at");
 
   if (at) {
     config.headers.setAuthorization(`Bearer ${at}`);

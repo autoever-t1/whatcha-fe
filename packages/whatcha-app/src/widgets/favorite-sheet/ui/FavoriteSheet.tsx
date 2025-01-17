@@ -1,7 +1,8 @@
 import { RangeInput } from "@shared/range-input";
 import styles from "./FavoriteSheet.module.css";
 import { useCallback, useState } from "react";
-import GrandeurImg from "@common/assets/grandeur.png";
+import { updateBudget } from "@/entities/user";
+import { models } from "@/entities/used-car";
 
 interface FavoriteSheetProps {
   onClose: () => void;
@@ -9,9 +10,29 @@ interface FavoriteSheetProps {
 
 export function FavoriteSheet({ onClose }: FavoriteSheetProps) {
   const [phase, setPhase] = useState(0);
+  const [priceMin, setPriceMin] = useState("1000");
+  const [priceMax, setPriceMax] = useState("10000");
+
+  const handleChangePriceMin = useCallback((value: string) => {
+    setPriceMin(value);
+  }, []);
+
+  const handleChangePriceMax = useCallback((value: string) => {
+    setPriceMax(value);
+  }, []);
+
+  const submitBudget = useCallback(async () => {
+    const min = parseInt(priceMin);
+    const max = parseInt(priceMax);
+
+    if (isNaN(min) || isNaN(max)) return;
+
+    await updateBudget(min, max);
+    setPhase(1);
+  }, [priceMin, priceMax]);
 
   const handleClickNext = useCallback(() => {
-    if (phase === 0) setPhase(1);
+    if (phase === 0) submitBudget();
     else onClose();
   }, [phase, onClose]);
 
@@ -28,14 +49,14 @@ export function FavoriteSheet({ onClose }: FavoriteSheetProps) {
             <div className="layout-vertical">
               <RangeInput
                 from={{
-                  value: "1000",
-                  onChange: () => {},
+                  value: String(priceMin),
+                  onChange: handleChangePriceMin,
                   unit: "만원",
                   suffix: "부터",
                 }}
                 to={{
-                  value: "1000",
-                  onChange: () => {},
+                  value: String(priceMax),
+                  onChange: handleChangePriceMax,
                   unit: "만원",
                   suffix: "까지",
                 }}
@@ -44,42 +65,11 @@ export function FavoriteSheet({ onClose }: FavoriteSheetProps) {
             </div>
           ) : (
             <div className={styles.grid}>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
+              {models.map((model, i) => (
+                <div key={i} className={styles["car-item"]}>
+                  <img src={model.img} alt="car" />
+                </div>
+              ))}
             </div>
           )}
         </div>
