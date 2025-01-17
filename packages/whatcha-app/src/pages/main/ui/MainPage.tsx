@@ -3,14 +3,39 @@ import { Banner } from "./Banner";
 import { MainHeader } from "./MainHeader";
 import styles from "./MainPage.module.css";
 import { SmallCarItem } from "@shared/small-car-item";
-import SampleImg from "@assets/sample-image.png";
 import { InstallmentCalculator } from "@widgets/installment-calculator";
 import { Footer } from "@shared/footer";
 import { FavoriteSheet } from "@widgets/favorite-sheet";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import {
+  getRecommemdationsApi,
+  getTop5Api,
+  UsedCarSmallListDto,
+} from "@/entities/used-car";
 
 export function MainPage() {
   const [isFavoriteSheetOpen, setFavoriteSheetOpen] = useState(true);
+  const [recommendations, setRecommnedations] = useState<UsedCarSmallListDto[]>(
+    []
+  );
+  const [top5, setTop5] = useState<UsedCarSmallListDto[]>([]);
+
+  const getRecommendations = useCallback(async () => {
+    const response = await getRecommemdationsApi();
+
+    setRecommnedations(response);
+  }, []);
+
+  const getTop5 = useCallback(async () => {
+    const response = await getTop5Api();
+
+    setTop5(response);
+  }, []);
+
+  useEffect(() => {
+    getRecommendations();
+    getTop5();
+  }, []);
 
   const handleCloseSheet = useCallback(() => {
     setFavoriteSheetOpen(false);
@@ -25,19 +50,8 @@ export function MainPage() {
         </div>
         <ContentBox title="이런 차 어때요?">
           <div className={styles.list}>
-            {[1, 2, 3, 4, 5].map((item) => (
-              <SmallCarItem
-                key={item}
-                car={{
-                  carId: item,
-                  img: SampleImg,
-                  name: "아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼",
-                  date: "23년 11월",
-                  mileage: 10000,
-                  vhclRegNo: "12가1234",
-                  price: 15000000,
-                }}
-              />
+            {recommendations.map((car) => (
+              <SmallCarItem key={`r-${car.usedCarId}`} car={car} />
             ))}
           </div>
         </ContentBox>
@@ -53,20 +67,8 @@ export function MainPage() {
         </ContentBox>
         <ContentBox title="TOP 5 매물" color="primary">
           <div className={styles.list}>
-            {[1, 2, 3, 4, 5].map((item) => (
-              <SmallCarItem
-                key={item}
-                color="primary"
-                car={{
-                  carId: item,
-                  img: SampleImg,
-                  name: "아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼",
-                  date: "23년 11월",
-                  mileage: 10000,
-                  vhclRegNo: "12가1234",
-                  price: 15000000,
-                }}
-              />
+            {top5.map((car) => (
+              <SmallCarItem key={`r-${car.usedCarId}`} car={car} />
             ))}
           </div>
         </ContentBox>

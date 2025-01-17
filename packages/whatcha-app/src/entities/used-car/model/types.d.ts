@@ -13,6 +13,16 @@ export interface UsedCarListDto {
   likeCount: number;
 }
 
+export interface UsedCarSmallListDto {
+  usedCarId: number;
+  thumbnailUrl: string;
+  modelName: string;
+  registrationDate: string;
+  mileage: number;
+  vhclRegNo: string;
+  price: number;
+}
+
 export interface Option {
   optionId: number;
   optionName: string;
