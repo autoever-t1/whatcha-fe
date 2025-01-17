@@ -16,6 +16,7 @@ import { InstallmentCalculator } from "@widgets/installment-calculator";
 import { Footer } from "@shared/footer";
 import { BottomButton } from "@shared/bottom-button";
 import { RotateView } from "@widgets/rotate-view";
+import { useNavigate } from "react-router";
 
 export interface Car {
   vhclRegNo: string;
@@ -49,6 +50,8 @@ export interface Car {
 }
 
 export function CarPage() {
+  const navigate = useNavigate();
+
   const [car, setCar] = useState<Car>();
   const [isTop, setTop] = useState(true);
 
@@ -95,6 +98,10 @@ export function CarPage() {
     getCar();
   }, []);
 
+  const handleClickBackButton = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
+
   const handleContentScroll: UIEventHandler<HTMLDivElement> = useCallback(
     (e) => {
       const scrollTop = (e.target as HTMLDivElement).scrollTop;
@@ -109,7 +116,10 @@ export function CarPage() {
     <div className={styles.container}>
       <div className={styles.content} onScroll={handleContentScroll}>
         <div className={`${styles.header} ${isTop ? styles.top : ""}`}>
-          <button className={styles["icon-button"]}>
+          <button
+            className={styles["icon-button"]}
+            onClick={handleClickBackButton}
+          >
             <img src={isTop ? ArrowBackWhiteIcon : ArrowBackIcon} alt="Back" />
           </button>
           {car?.vhclRegNo}

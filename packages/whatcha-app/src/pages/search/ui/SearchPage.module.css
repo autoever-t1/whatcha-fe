@@ -4,7 +4,7 @@
 
 .content {
   display: flex;
-  height: calc(100% - 40px);
+  height: calc(100% - 40px - var(--size-bottom-button-height));
 }
 
 .tab-list {

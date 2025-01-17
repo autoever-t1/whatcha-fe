@@ -1,16 +1,22 @@
-import { ReactNode } from "react";
+import { forwardRef, ReactNode } from "react";
 import styles from "./ConditionItem.module.css";
 
 interface ConditionItemProps {
   title: string;
   children: ReactNode;
+  last?: boolean;
 }
 
-export function ConditionItem({ title, children }: ConditionItemProps) {
-  return (
-    <div className={styles.container}>
-      <div className={`${styles.title} font-b-md`}>{title}</div>
-      {children}
-    </div>
-  );
-}
+export const ConditionItem = forwardRef<HTMLDivElement, ConditionItemProps>(
+  ({ title, children, last }, ref) => {
+    return (
+      <div
+        className={`${styles.container} ${last ? styles.last : ""}`}
+        ref={ref}
+      >
+        <div className={`${styles.title} font-b-md`}>{title}</div>
+        {children}
+      </div>
+    );
+  }
+);

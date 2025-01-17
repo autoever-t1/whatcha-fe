@@ -1,6 +1,9 @@
+import { useCallback } from "react";
 import styles from "./SmallCarItem.module.css";
+import { useNavigate } from "react-router";
 
 interface Car {
+  carId: number;
   img: string;
   name: string;
   date: string;
@@ -15,10 +18,16 @@ interface SmallCarItemProps {
 }
 
 export function SmallCarItem({ car, color = "default" }: SmallCarItemProps) {
-  const { img, name, date, mileage, vhclRegNo, price } = car;
+  const { carId, img, name, date, mileage, vhclRegNo, price } = car;
+
+  const navigate = useNavigate();
+
+  const handleClick = useCallback(() => {
+    navigate(`/car/${carId}`);
+  }, [carId, navigate]);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={handleClick}>
       <div className={styles["img-wrapper"]}>
         <img src={img} alt="car" />
       </div>
