@@ -2,17 +2,20 @@ import { useNavigate, useSearchParams } from "react-router";
 import styles from "./ListPage.module.css";
 import { MainHeader } from "@shared/main-header";
 import { CarItem } from "@shared/car-item";
-import SampleImg from "@assets/sample-image.png";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import {
   getUsedCarByConditions,
   getUsedCarByKeyword,
   options,
+  UsedCarListDto,
 } from "@/entities/used-car";
+import { PageResponse } from "@/shared";
 
 export function ListPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  const [carList, setCarList] = useState<UsedCarListDto[]>([]);
 
   const type = useMemo(() => {
     return searchParams.get("type");
@@ -128,15 +131,16 @@ export function ListPage() {
   }, [type, keyword]);
 
   const getData = useCallback(async () => {
+    let response: PageResponse<UsedCarListDto>;
     if (type === "search") {
       if (keyword) {
-        const response = await getUsedCarByKeyword(keyword, 0);
-
-        console.log(response);
+        response = await getUsedCarByKeyword(keyword, 0);
       } else {
-        await getUsedCarByConditions(queries, 0);
+        response = await getUsedCarByConditions(queries, 0);
       }
     }
+
+    setCarList(response!.content);
   }, [type, keyword, queries]);
 
   useEffect(() => {
@@ -153,45 +157,9 @@ export function ListPage() {
       {type && (
         <div className={styles.content}>
           <div className={styles.list}>
-            <CarItem
-              car={{
-                carId: 1,
-                img: SampleImg,
-                model: "2020 그랜저 가솔린 2.5 프리미엄 초이스",
-                date: "23년 11월",
-                vhclRegNo: "123가4567",
-                mileage: 1000,
-                price: 3450,
-                likeCount: 134,
-              }}
-              liked
-            />
-            <CarItem
-              car={{
-                carId: 2,
-                img: SampleImg,
-                model: "2020 그랜저 가솔린 2.5 프리미엄 초이스",
-                date: "23년 11월",
-                vhclRegNo: "123가4567",
-                mileage: 1000,
-                price: 3450,
-                likeCount: 134,
-              }}
-              liked={false}
-            />
-            <CarItem
-              car={{
-                carId: 3,
-                img: SampleImg,
-                model: "2020 그랜저 가솔린 2.5 프리미엄 초이스",
-                date: "23년 11월",
-                vhclRegNo: "123가4567",
-                mileage: 1000,
-                price: 3450,
-                likeCount: 134,
-              }}
-              liked
-            />
+            {carList.map((car) => (
+              <CarItem car={car} liked />
+            ))}
           </div>
         </div>
       )}

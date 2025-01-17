@@ -65,11 +65,11 @@ export function SearchPage() {
   const [models, setModels] = useState<string[]>([]);
   const [modelValues, setModelValues] = useState<boolean[]>([]);
   const [priceFrom, setPriceFrom] = useState("0");
-  const [priceTo, setPriceTo] = useState("0");
+  const [priceTo, setPriceTo] = useState("5000");
   const [mileageFrom, setMileageFrom] = useState("0");
-  const [mileageTo, setMileageTo] = useState("0");
-  const [yearFrom, setYearFrom] = useState("0");
-  const [yearTo, setYearTo] = useState("0");
+  const [mileageTo, setMileageTo] = useState("100000");
+  const [yearFrom, setYearFrom] = useState("2020");
+  const [yearTo, setYearTo] = useState("2025");
   const [fuels, setFuels] = useState<string[]>([]);
   const [fuelValues, setFuelValues] = useState<boolean[]>([]);
   const [colors, setColors] = useState<Color[]>([]);
@@ -94,7 +94,9 @@ export function SearchPage() {
   const priceQuery = useMemo(() => {
     return priceFrom === "" || priceTo === ""
       ? null
-      : `priceMin=${priceFrom}&priceMax=${priceTo}`;
+      : `priceMin=${parseInt(priceFrom) * 10000}&priceMax=${
+          parseInt(priceTo) * 10000
+        }`;
   }, [priceTo, priceFrom]);
 
   const mileageQuery = useMemo(() => {

@@ -1,11 +1,16 @@
-export interface UsedCar {
+export interface UsedCarListDto {
   usedCarId: number;
   modelName: string;
-  year: number;
   price: number;
-  mileage: number;
-  fuelType: string;
-  exteriorColor: string;
+  registrationDate: string;
+  mileage: string;
+  modelType: string;
+  vhclRegNo: string;
+  years: number;
+  status: string;
+  goodsNo: string;
+  mainImage: string;
+  likeCount: number;
 }
 
 export interface Option {
