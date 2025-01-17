@@ -3,8 +3,11 @@ import MonthlyChart from "../components/dashboard/MonthlyChart";
 import SalesRate from "../components/dashboard/SalesRate";
 import RecentTransaction from "../components/dashboard/RecentlyTransaction";
 import { PeopleOutline, DirectionsCar, AttachMoney,Warehouse } from "@mui/icons-material";
+import { useDashboardStats } from '../hooks/useDashboard';
 
 function DashBoard() {
+  const { data: stats} = useDashboardStats();
+
   return (
     <div>
       <div className="mb-4">
@@ -13,30 +16,30 @@ function DashBoard() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 mb-8 md:grid-cols-2 lg:grid-cols-4">
-        <StatCard
+      <StatCard
           title="회원수"
-          value="30000"
+          value={stats?.userCount ?? 0}
           percent={8.4}
           icon={<PeopleOutline sx={{ fontSize: 28 }} />}
           index={0}
         />
         <StatCard
           title="판매 차량"
-          value="2500"
+          value={stats?.orderCount ?? 0}
           percent={-8.4}
           icon={<DirectionsCar sx={{ fontSize: 28 }} />}
           index={1}
         />
         <StatCard
           title="판매 금액"
-          value="1500000"
+          value={stats?.totalSales ?? 0}
           percent={8.4}
           icon={<AttachMoney sx={{ fontSize: 28 }} />}
           index={2}
         />
         <StatCard
           title="차량 재고"
-          value="300"
+          value={stats?.carStock ?? 0}
           percent={5.7}
           icon={<Warehouse sx={{ fontSize: 28 }} />}
           index={3}
