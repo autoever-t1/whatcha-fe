@@ -1,15 +1,21 @@
-import { useLocation, useNavigate, useSearchParams } from "react-router";
+import { useNavigate, useSearchParams } from "react-router";
 import styles from "./ListPage.module.css";
 import { MainHeader } from "@shared/main-header";
 import { CarItem } from "@shared/car-item";
-import SampleImg from "@assets/sample-image.png";
-import { useCallback, useEffect, useMemo } from "react";
-import { getUsedCarByKeyword } from "@/entities/used-car";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import {
+  getUsedCarByConditions,
+  getUsedCarByKeyword,
+  options,
+  UsedCarListDto,
+} from "@/entities/used-car";
+import { PageResponse } from "@/shared";
 
 export function ListPage() {
   const [searchParams] = useSearchParams();
-  const { search } = useLocation();
   const navigate = useNavigate();
+
+  const [carList, setCarList] = useState<UsedCarListDto[]>([]);
 
   const type = useMemo(() => {
     return searchParams.get("type");
@@ -19,24 +25,122 @@ export function ListPage() {
     return type && type === "search" ? searchParams.get("keyword") : null;
   }, [type, searchParams]);
 
-  const queries = useMemo(() => {
-    if (!type || type !== "search") return null;
+  const modelTypes = useMemo(() => {
+    const modelTypeArr =
+      searchParams
+        .get("modelType")
+        ?.split(",")
+        .map((str) => `modelTypes=${str}`) || [];
 
-    return search.substring(13);
-  }, [type, search]);
+    return modelTypeArr.length === 0 ? null : modelTypeArr.join("&");
+  }, [searchParams]);
+
+  const modelNames = useMemo(() => {
+    const modelNameArr =
+      searchParams
+        .get("modelName")
+        ?.split(",")
+        .map((str) => `modelNames=${str}`) || [];
+
+    return modelNameArr.length === 0 ? null : modelNameArr.join("&");
+  }, [searchParams]);
+
+  const fuelTypes = useMemo(() => {
+    const fuelTypeArr =
+      searchParams
+        .get("fuelType")
+        ?.split(",")
+        .map((str) => `fuelTypes=${str}`) || [];
+
+    return fuelTypeArr.length === 0 ? null : fuelTypeArr.join("&");
+  }, [searchParams]);
+
+  const colorIds = useMemo(() => {
+    const colorIdArr =
+      searchParams
+        .get("colorIds")
+        ?.split(",")
+        .map((str) => `colorIds=${str}`) || [];
+
+    return colorIdArr.length === 0 ? null : colorIdArr.join("&");
+  }, [searchParams]);
+
+  const priceMinMax = useMemo(() => {
+    const priceMin = searchParams.get("priceMin");
+    const priceMax = searchParams.get("priceMax");
+
+    return priceMin === null || priceMax === null
+      ? null
+      : `priceMin=${priceMin}&priceMax=${priceMax}`;
+  }, [searchParams]);
+
+  const mileageMinMax = useMemo(() => {
+    const mileageMin = searchParams.get("mileageMin");
+    const mileageMax = searchParams.get("mileageMax");
+
+    return mileageMin === null || mileageMax === null
+      ? null
+      : `mileageMin=${mileageMin}&mileageMax=${mileageMax}`;
+  }, [searchParams]);
+
+  const yearMinMax = useMemo(() => {
+    const yearMin = searchParams.get("yearMin");
+    const yearMax = searchParams.get("yearMax");
+
+    return yearMin === null || yearMax === null
+      ? null
+      : `yearMin=${yearMin}&yearMax=${yearMax}`;
+  }, [searchParams]);
+
+  const optionIds = useMemo(() => {
+    const optionIds =
+      searchParams
+        .get("optionId")
+        ?.split(",")
+        .map((optionId) => `${options[parseInt(optionId)].label}=true`) || [];
+
+    return optionIds.length === 0 ? null : optionIds.join("&");
+  }, [searchParams]);
+
+  const queries = useMemo(() => {
+    return [
+      modelTypes,
+      modelNames,
+      fuelTypes,
+      colorIds,
+      priceMinMax,
+      mileageMinMax,
+      yearMinMax,
+      optionIds,
+    ]
+      .filter((item) => item !== null)
+      .join("&");
+  }, [
+    modelTypes,
+    modelNames,
+    fuelTypes,
+    colorIds,
+    priceMinMax,
+    mileageMinMax,
+    yearMinMax,
+    optionIds,
+  ]);
 
   const headerTitle = useMemo(() => {
     return type === "search" && keyword ? keyword : "검색 결과";
   }, [type, keyword]);
 
   const getData = useCallback(async () => {
+    let response: PageResponse<UsedCarListDto>;
     if (type === "search") {
       if (keyword) {
-        const response = await getUsedCarByKeyword(keyword, 0);
-
-        console.log(response);
+        response = await getUsedCarByKeyword(keyword, 0);
+      } else {
+        response = await getUsedCarByConditions(queries, 0);
       }
     }
+
+    setCarList(response!.content);
   }, [type, keyword, queries]);
 
   useEffect(() => {
@@ -53,45 +157,9 @@ export function ListPage() {
       {type && (
         <div className={styles.content}>
           <div className={styles.list}>
-            <CarItem
-              car={{
-                carId: 1,
-                img: SampleImg,
-                model: "2020 그랜저 가솔린 2.5 프리미엄 초이스",
-                date: "23년 11월",
-                vhclRegNo: "123가4567",
-                mileage: 1000,
-                price: 3450,
-                likeCount: 134,
-              }}
-              liked
-            />
-            <CarItem
-              car={{
-                carId: 2,
-                img: SampleImg,
-                model: "2020 그랜저 가솔린 2.5 프리미엄 초이스",
-                date: "23년 11월",
-                vhclRegNo: "123가4567",
-                mileage: 1000,
-                price: 3450,
-                likeCount: 134,
-              }}
-              liked={false}
-            />
-            <CarItem
-              car={{
-                carId: 3,
-                img: SampleImg,
-                model: "2020 그랜저 가솔린 2.5 프리미엄 초이스",
-                date: "23년 11월",
-                vhclRegNo: "123가4567",
-                mileage: 1000,
-                price: 3450,
-                likeCount: 134,
-              }}
-              liked
-            />
+            {carList.map((car) => (
+              <CarItem key={car.usedCarId} car={car} liked />
+            ))}
           </div>
         </div>
       )}

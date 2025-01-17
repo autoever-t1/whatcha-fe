@@ -15,16 +15,12 @@ import {
 } from "react";
 import { BottomButton } from "@shared/bottom-button";
 import { useNavigate } from "react-router";
+import { Option, options as optionStr } from "@entities/used-car";
 
 interface Color {
   colorId: number;
   color: string;
   label: string;
-}
-
-interface Option {
-  optionId: number;
-  optionName: string;
 }
 
 const colorStr: Color[] = [
@@ -58,24 +54,6 @@ const modelStr = [
   "벨로스터",
 ];
 const fuelStr = ["가솔린", "디젤", "하이브리드", "전기"];
-const optionStr: Option[] = [
-  { optionId: 0, optionName: "내비게이션" },
-  { optionId: 1, optionName: "하이패스" },
-  { optionId: 2, optionName: "열선 스티어링 휠" },
-  { optionId: 3, optionName: "열선시트(1열/2열)" },
-  { optionId: 4, optionName: "통풍시트(1열)" },
-  { optionId: 5, optionName: "전동시트(1열)" },
-  { optionId: 6, optionName: "가죽 시트" },
-  { optionId: 7, optionName: "전동식 트렁크" },
-  { optionId: 8, optionName: "선루프" },
-  { optionId: 9, optionName: "헤드업 디스플레이" },
-  { optionId: 10, optionName: "서라운드 뷰 모니터" },
-  { optionId: 11, optionName: "후방 모니터" },
-  { optionId: 12, optionName: "후측방 경보 시스템" },
-  { optionId: 13, optionName: "차선 이탈 경보" },
-  { optionId: 14, optionName: "스마트 크루즈 컨트롤" },
-  { optionId: 15, optionName: "전방 주차거리 경고" },
-];
 
 export function SearchPage() {
   const navigate = useNavigate();
@@ -87,11 +65,11 @@ export function SearchPage() {
   const [models, setModels] = useState<string[]>([]);
   const [modelValues, setModelValues] = useState<boolean[]>([]);
   const [priceFrom, setPriceFrom] = useState("0");
-  const [priceTo, setPriceTo] = useState("0");
+  const [priceTo, setPriceTo] = useState("5000");
   const [mileageFrom, setMileageFrom] = useState("0");
-  const [mileageTo, setMileageTo] = useState("0");
-  const [yearFrom, setYearFrom] = useState("0");
-  const [yearTo, setYearTo] = useState("0");
+  const [mileageTo, setMileageTo] = useState("100000");
+  const [yearFrom, setYearFrom] = useState("2020");
+  const [yearTo, setYearTo] = useState("2025");
   const [fuels, setFuels] = useState<string[]>([]);
   const [fuelValues, setFuelValues] = useState<boolean[]>([]);
   const [colors, setColors] = useState<Color[]>([]);
@@ -116,7 +94,9 @@ export function SearchPage() {
   const priceQuery = useMemo(() => {
     return priceFrom === "" || priceTo === ""
       ? null
-      : `priceMin=${priceFrom}&priceMax=${priceTo}`;
+      : `priceMin=${parseInt(priceFrom) * 10000}&priceMax=${
+          parseInt(priceTo) * 10000
+        }`;
   }, [priceTo, priceFrom]);
 
   const mileageQuery = useMemo(() => {
@@ -139,12 +119,12 @@ export function SearchPage() {
   }, [fuelValues, fuels]);
 
   const colorQuery = useMemo(() => {
-    const filtered: string[] = colors
+    const filtered: number[] = colors
       .filter((_, i) => colorValues[i])
-      .map((color) => color.label);
+      .map((color) => color.colorId);
     if (filtered.length === 0) return null;
 
-    return `colorName=${filtered.join(",")}`;
+    return `colorIds=${filtered.join(",")}`;
   }, [colorValues, colors]);
 
   const optionQuery = useMemo(() => {
@@ -153,7 +133,7 @@ export function SearchPage() {
       .map((option) => option.optionId);
     if (filtered.length === 0) return null;
 
-    return `optionId=${filtered.join(",")}`.replaceAll(" ", "_");
+    return `optionId=${filtered.join(",")}`;
   }, [optionValues, options]);
 
   const queries = useMemo(() => {
