@@ -158,7 +158,7 @@ export function ListPage() {
         <div className={styles.content}>
           <div className={styles.list}>
             {carList.map((car) => (
-              <CarItem car={car} liked />
+              <CarItem key={car.usedCarId} car={car} liked />
             ))}
           </div>
         </div>
@@ -166,8 +166,3 @@ export function ListPage() {
     </div>
   );
 }
-
-/**
- * GET /used-car/filter?colorIds={colorIds}&modelTypes={modelTypes}&modelNames={modelNames}&mileageMin={mileageMin}&mileageMax={mileageMax}&yearMin={yearMin}&yearMax={yearMax}&fuelTypes={fuelTypes}&hasNavigation={hasNavigation}&hasHiPass={hasHiPass}&hasHeatedSteeringWheel={hasHeatedSteeringWheel}&hasHeatedSeats={hasHeatedSeats}&hasVentilatedSeats={hasVentilatedSeats}&hasPowerSeats={hasPowerSeats}&hasLeatherSeats={hasLeatherSeats}&hasPowerTrunk={hasPowerTrunk}&hasSunroof={hasSunroof}&hasHUD={hasHUD}&hasSurroundViewMonitor={hasSurroundViewMonitor}&hasRearMonitor={hasRearMonitor}&hasBlindSpotWarning={hasBlindSpotWarning}&hasLaneDepartureWarning={hasLaneDepartureWarning}&hasSmartCruiseControl={hasSmartCruiseControl}&hasFrontParkingWarning={hasFrontParkingWarning}&page={page}
-
- */
