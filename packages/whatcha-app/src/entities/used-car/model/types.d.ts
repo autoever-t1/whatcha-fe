@@ -7,3 +7,9 @@ export interface UsedCar {
   fuelType: string;
   exteriorColor: string;
 }
+
+export interface Option {
+  optionId: number;
+  optionName: string;
+  label: string;
+}

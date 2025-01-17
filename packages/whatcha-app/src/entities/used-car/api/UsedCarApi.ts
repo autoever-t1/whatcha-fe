@@ -56,9 +56,11 @@ export const getUsedCarByKeyword = async (
 };
 
 export const getUsedCarByConditions = async (queries: string, page: number) => {
-  const response = await authAxios.get<PageResponse_<UsedCar>>(
-    `/api/used-car?${queries}&page=${page}`
-  );
+  // const response = await authAxios.get<PageResponse_<UsedCar>>(
+  //   `/api/used-car?${queries}&page=${page}`
+  // );
 
-  return response.data;
+  // return response.data;
+
+  console.log(`/api/used-car?${queries}&page=${page}`);
 };
