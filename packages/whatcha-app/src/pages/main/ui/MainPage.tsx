@@ -8,7 +8,6 @@ import { InstallmentCalculator } from "@widgets/installment-calculator";
 import { Footer } from "@shared/footer";
 import { FavoriteSheet } from "@widgets/favorite-sheet";
 import { useCallback, useState } from "react";
-import { useNavigate } from "react-router";
 
 export function MainPage() {
   const [isFavoriteSheetOpen, setFavoriteSheetOpen] = useState(true);
@@ -17,15 +16,8 @@ export function MainPage() {
     setFavoriteSheetOpen(false);
   }, []);
 
-  const navigate = useNavigate();
-
   return (
-    <div
-      className={styles.container}
-      onClick={() => {
-        navigate("/car/2");
-      }}
-    >
+    <div className={styles.container}>
       <MainHeader />
       <div className={styles.content}>
         <div className={styles["banner-wrapper"]}>
@@ -37,6 +29,7 @@ export function MainPage() {
               <SmallCarItem
                 key={item}
                 car={{
+                  carId: item,
                   img: SampleImg,
                   name: "아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼",
                   date: "23년 11월",
@@ -65,6 +58,7 @@ export function MainPage() {
                 key={item}
                 color="primary"
                 car={{
+                  carId: item,
                   img: SampleImg,
                   name: "아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼",
                   date: "23년 11월",

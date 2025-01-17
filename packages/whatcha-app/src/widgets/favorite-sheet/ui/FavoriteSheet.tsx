@@ -27,8 +27,18 @@ export function FavoriteSheet({ onClose }: FavoriteSheetProps) {
           {phase === 0 ? (
             <div className="layout-vertical">
               <RangeInput
-                from={{ value: "1000", unit: "만원", suffix: "부터" }}
-                to={{ value: "1000", unit: "만원", suffix: "까지" }}
+                from={{
+                  value: "1000",
+                  onChange: () => {},
+                  unit: "만원",
+                  suffix: "부터",
+                }}
+                to={{
+                  value: "1000",
+                  onChange: () => {},
+                  unit: "만원",
+                  suffix: "까지",
+                }}
                 dark
               />
             </div>
