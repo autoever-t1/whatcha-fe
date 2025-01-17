@@ -1,12 +1,14 @@
-import { useNavigate, useSearchParams } from "react-router";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
 import styles from "./ListPage.module.css";
 import { MainHeader } from "@shared/main-header";
 import { CarItem } from "@shared/car-item";
 import SampleImg from "@assets/sample-image.png";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
+import { getUsedCarByKeyword } from "@/entities/used-car";
 
 export function ListPage() {
   const [searchParams] = useSearchParams();
+  const { search } = useLocation();
   const navigate = useNavigate();
 
   const type = useMemo(() => {
@@ -15,11 +17,31 @@ export function ListPage() {
 
   const keyword = useMemo(() => {
     return type && type === "search" ? searchParams.get("keyword") : null;
-  }, [type]);
+  }, [type, searchParams]);
+
+  const queries = useMemo(() => {
+    if (!type || type !== "search") return null;
+
+    return search.substring(13);
+  }, [type, search]);
 
   const headerTitle = useMemo(() => {
     return type === "search" && keyword ? keyword : "검색 결과";
   }, [type, keyword]);
+
+  const getData = useCallback(async () => {
+    if (type === "search") {
+      if (keyword) {
+        const response = await getUsedCarByKeyword(keyword, 0);
+
+        console.log(response);
+      }
+    }
+  }, [type, keyword, queries]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   const handleClickBackButton = useCallback(() => {
     navigate(-1);

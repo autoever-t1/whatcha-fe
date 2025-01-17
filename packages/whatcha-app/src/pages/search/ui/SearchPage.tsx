@@ -22,6 +22,11 @@ interface Color {
   label: string;
 }
 
+interface Option {
+  optionId: number;
+  optionName: string;
+}
+
 const colorStr: Color[] = [
   { colorId: 0, color: "#ffffff", label: "화이트" },
   { colorId: 1, color: "#f5f5dc", label: "베이지" },
@@ -53,23 +58,23 @@ const modelStr = [
   "벨로스터",
 ];
 const fuelStr = ["가솔린", "디젤", "하이브리드", "전기"];
-const optionStr = [
-  "내비게이션",
-  "하이패스",
-  "열선 스티어링 휠",
-  "열선시트(1열/2열)",
-  "통풍시트(1열)",
-  "전동시트(1열)",
-  "가죽 시트",
-  "전동식 트렁크",
-  "선루프",
-  "헤드업 디스플레이",
-  "서라운드 뷰 모니터",
-  "후방 모니터",
-  "후측방 경보 시스템",
-  "차선 이탈 경보",
-  "스마트 크루즈 컨트롤",
-  "전방 주차거리 경고",
+const optionStr: Option[] = [
+  { optionId: 0, optionName: "내비게이션" },
+  { optionId: 1, optionName: "하이패스" },
+  { optionId: 2, optionName: "열선 스티어링 휠" },
+  { optionId: 3, optionName: "열선시트(1열/2열)" },
+  { optionId: 4, optionName: "통풍시트(1열)" },
+  { optionId: 5, optionName: "전동시트(1열)" },
+  { optionId: 6, optionName: "가죽 시트" },
+  { optionId: 7, optionName: "전동식 트렁크" },
+  { optionId: 8, optionName: "선루프" },
+  { optionId: 9, optionName: "헤드업 디스플레이" },
+  { optionId: 10, optionName: "서라운드 뷰 모니터" },
+  { optionId: 11, optionName: "후방 모니터" },
+  { optionId: 12, optionName: "후측방 경보 시스템" },
+  { optionId: 13, optionName: "차선 이탈 경보" },
+  { optionId: 14, optionName: "스마트 크루즈 컨트롤" },
+  { optionId: 15, optionName: "전방 주차거리 경고" },
 ];
 
 export function SearchPage() {
@@ -91,60 +96,64 @@ export function SearchPage() {
   const [fuelValues, setFuelValues] = useState<boolean[]>([]);
   const [colors, setColors] = useState<Color[]>([]);
   const [colorValues, setColorValues] = useState<boolean[]>([]);
-  const [options, setOptions] = useState<string[]>([]);
+  const [options, setOptions] = useState<Option[]>([]);
   const [optionValues, setOptionValues] = useState<boolean[]>([]);
 
   const carTypeQuery = useMemo(() => {
     const filtered: string[] = carTypes.filter((_, i) => carTypeValues[i]);
     if (filtered.length === 0) return null;
 
-    return `ct=${filtered.join(",")}`;
+    return `modelType=${filtered.join(",")}`;
   }, [carTypeValues, carTypes]);
 
   const modelQuery = useMemo(() => {
     const filtered: string[] = models.filter((_, i) => modelValues[i]);
     if (filtered.length === 0) return null;
 
-    return `md=${filtered.join(",")}`;
+    return `modelName=${filtered.join(",")}`;
   }, [modelValues, models]);
 
   const priceQuery = useMemo(() => {
     return priceFrom === "" || priceTo === ""
       ? null
-      : `p=${priceFrom},${priceTo}`;
+      : `priceMin=${priceFrom}&priceMax=${priceTo}`;
   }, [priceTo, priceFrom]);
 
   const mileageQuery = useMemo(() => {
     return mileageFrom === "" || mileageTo === ""
       ? null
-      : `ml=${mileageFrom},${mileageTo}`;
+      : `mileageMin=${mileageFrom}&mileageMax=${mileageTo}`;
   }, [mileageFrom, mileageTo]);
 
   const yearQuery = useMemo(() => {
-    return yearFrom === "" || yearTo === "" ? null : `y=${yearFrom},${yearTo}`;
+    return yearFrom === "" || yearTo === ""
+      ? null
+      : `yearMin=${yearFrom}&yearMax=${yearTo}`;
   }, [yearFrom, yearTo]);
 
   const fuelQuery = useMemo(() => {
     const filtered: string[] = fuels.filter((_, i) => fuelValues[i]);
     if (filtered.length === 0) return null;
 
-    return `f=${filtered.join(",")}`;
+    return `fuelType=${filtered.join(",")}`;
   }, [fuelValues, fuels]);
 
   const colorQuery = useMemo(() => {
-    const filtered: number[] = colors
+    const filtered: string[] = colors
       .filter((_, i) => colorValues[i])
-      .map((color) => color.colorId);
+      .map((color) => color.label);
     if (filtered.length === 0) return null;
 
-    return `c=${filtered.join(",")}`;
+    return `colorName=${filtered.join(",")}`;
   }, [colorValues, colors]);
 
   const optionQuery = useMemo(() => {
-    const filtered: string[] = options.filter((_, i) => optionValues[i]);
+    const filtered: number[] = options
+      .filter((_, i) => optionValues[i])
+      .map((option) => option.optionId);
     if (filtered.length === 0) return null;
 
-    return `o=${filtered.join(",")}`.replaceAll(" ", "_");
+    return `optionId=${filtered.join(",")}`.replaceAll(" ", "_");
   }, [optionValues, options]);
 
   const queries = useMemo(() => {
@@ -426,7 +435,7 @@ export function SearchPage() {
                   selected={optionValues[i]}
                   onClick={() => handleClickOptionItem(i)}
                 >
-                  {option}
+                  {option.optionName}
                 </BadgeButton>
               ))}
             </div>
