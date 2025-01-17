@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL =
   window.location.hostname === "localhost"
-    ? "http://localhost:8080/api"
+    ? "https://api.whatcha.site/api"
     : "https://api.whatcha.site/api";
 
 const client = axios.create({

@@ -1,5 +1,21 @@
 import client from './client';
 
+interface PaginatedResponse<T> {
+  content: T[];
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      sorted: boolean;
+      unsorted: boolean;
+      empty: boolean;
+    };
+  };
+  totalElements: number;
+  totalPages: number;
+}
+
+
 // 쿠폰 타입
 export interface Coupon {
   couponId: number;
@@ -10,6 +26,7 @@ export interface Coupon {
   maxDiscountAmount: number;
 }
 
+// 쿠폰 등록 타입
 export interface AddCouponRequest {
   couponCode: string;
   couponName: string;
@@ -32,30 +49,16 @@ export const addCoupon = async (couponData: AddCouponRequest): Promise<void> => 
   }
 };
 
-interface PaginatedResponse<T> {
-  content: T[];
-  pageable: {
-    pageNumber: number;
-    pageSize: number;
-    sort: {
-      sorted: boolean;
-      unsorted: boolean;
-      empty: boolean;
-    };
-  };
-  totalElements: number;
-  totalPages: number;
-}
 
 // 쿠폰 전체 조회 api
-export const AllCoupon = async (): Promise<Coupon[]> => {
+export const AllCoupon = async (page: number = 0, size: number = 10): Promise<PaginatedResponse<Coupon>> => {
   try {
-    const response = await client.get<PaginatedResponse<Coupon>>('/admin/coupon', {
+    const response = await client.get<PaginatedResponse<Coupon>>(`/admin/coupon?page=${page}&size=${size}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     });
-    return response.data.content; // content 배열만 반환
+    return response.data;
   } catch (error) {
     console.error('쿠폰 목록 조회 실패:', error);
     throw error;
