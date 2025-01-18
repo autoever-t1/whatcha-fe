@@ -1,8 +1,11 @@
 import { InnerBox } from "@shared/inner-box";
 import styles from "./BillContent.module.css";
+import { CouponDTO } from "@/entities/coupon";
+import { useMemo } from "react";
 
 interface BillContentProps {
   price: number;
+  coupon: CouponDTO | null;
   canUpdateCoupon: boolean;
   onClickCouponButton?: () => void;
 }
@@ -14,9 +17,25 @@ const registerCost = 2500000;
 
 export function BillContent({
   price,
+  coupon,
   canUpdateCoupon,
   onClickCouponButton,
 }: BillContentProps) {
+  const discountAmount = useMemo(() => {
+    if (coupon) {
+      const a = coupon.maxDiscountAmount;
+      const b = Math.round((coupon.discountPercentage! / 100) * price);
+
+      console.log(a, b);
+
+      return a !== null ? Math.min(a, b) : b;
+    } else return 0;
+  }, [price, coupon]);
+
+  const usedCouponName = useMemo(() => {
+    return coupon ? coupon.couponName : "사용된 쿠폰이 없습니다.";
+  }, [coupon]);
+
   return (
     <>
       <div className="layout-line">
@@ -64,13 +83,13 @@ export function BillContent({
           )}
         </div>
         <span className="font-r-md color-gray-600">
-          {(100000).toLocaleString()}원
+          {discountAmount.toLocaleString()}원
         </span>
       </div>
       <InnerBox>
         <div className="layout-vertical">
           <p className="font-b-sm">사용 쿠폰</p>
-          <p className="font-r-sm color-gray-600">사용된 쿠폰이 없습니다.</p>
+          <p className="font-r-sm color-gray-600">{usedCouponName}</p>
         </div>
       </InnerBox>
       <InnerBox>
@@ -93,7 +112,9 @@ export function BillContent({
           </div>
           <div className="layout-line">
             <span className="font-b-sm">할인금액</span>
-            <span className="font-b-sm">-{(100000).toLocaleString()}원</span>
+            <span className="font-b-sm">
+              -{discountAmount.toLocaleString()}원
+            </span>
           </div>
           <div className="div-line-400" />
           <div className="layout-line color-primary">
@@ -105,7 +126,7 @@ export function BillContent({
                 deliveryCost +
                 transferCost +
                 registerCost -
-                100000
+                discountAmount
               ).toLocaleString()}
               원
             </span>

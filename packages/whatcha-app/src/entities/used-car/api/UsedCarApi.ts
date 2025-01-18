@@ -2,6 +2,7 @@ import { authAxios, PageResponse } from "@/shared";
 import {
   UsedCarDetailDTO,
   UsedCarListDto,
+  UsedCarPayDTO,
   UsedCarSmallListDto,
 } from "../model/types";
 
@@ -43,6 +44,14 @@ export const getTop5Api = async () => {
 export const getUsedCarDetail = async (usedCarId: number) => {
   const response = await authAxios.get<UsedCarDetailDTO>(
     `/api/used-car/detail/${usedCarId}`
+  );
+
+  return response.data;
+};
+
+export const getUsedCarPay = async (usedCarId: number) => {
+  const response = await authAxios.get<UsedCarPayDTO>(
+    `/api/used-car/order/${usedCarId}`
   );
 
   return response.data;

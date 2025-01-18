@@ -42,6 +42,13 @@ export interface UsedCarDetailDTO {
   hasFrontParkingWarning: boolean;
 }
 
+export interface UsedCarPayDTO {
+  modelName: string;
+  registrationDate: string;
+  mileage: string;
+  price: number;
+}
+
 export interface UsedCarListDto {
   usedCarId: number;
   modelName: string;
