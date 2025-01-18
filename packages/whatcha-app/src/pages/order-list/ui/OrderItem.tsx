@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import styles from "./OrderItem.module.css";
 import { useCallback } from "react";
+import { OrderListItemDTO } from "@/features/order";
 
 const processMessages: string[] = [
   "",
@@ -10,20 +11,12 @@ const processMessages: string[] = [
   "주문 완료",
 ];
 
-interface Order {
-  orderId: number;
-  model: string;
-  process: number;
-  date: string;
-  img: string;
-}
-
 interface OrderItemProps {
-  order: Order;
+  order: OrderListItemDTO;
 }
 
 export function OrderItem({ order }: OrderItemProps) {
-  const { orderId, model, process, date, img } = order;
+  const { orderId, modelName, process, orderDate, mainImage } = order;
 
   const navigate = useNavigate();
 
@@ -35,12 +28,12 @@ export function OrderItem({ order }: OrderItemProps) {
     <div className={styles.container}>
       <div className={styles.content} onClick={handleClick}>
         <div className={styles["img-wrapper"]}>
-          <img src={img} alt="CarImg" />
+          <img src={mainImage} alt="CarImg" />
         </div>
         <div className={styles.info}>
-          <p className="font-b-md">{model}</p>
-          <p className="font-b-lg color-primary">{processMessages[process]}</p>
-          <p className="font-r-sm color-gray-600">{date}</p>
+          <p className="font-b-md">{modelName}</p>
+          <p className="font-b-md color-primary">{processMessages[process]}</p>
+          <p className="font-r-sm color-gray-600">{orderDate}</p>
         </div>
       </div>
     </div>

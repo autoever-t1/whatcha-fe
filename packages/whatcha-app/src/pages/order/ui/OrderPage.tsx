@@ -1,6 +1,6 @@
 import { MainHeader } from "@shared/main-header";
 import styles from "./OrderPage.module.css";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { ContentBox } from "@shared/content-box";
 import { BillContent } from "@shared/bill-content";
 import { ProgressBar } from "./ProgressBar";
@@ -9,13 +9,28 @@ import { PayModal } from "@widgets/pay-modal";
 import { Contract } from "./Contract";
 import { ReceiveMethod } from "./ReceiveMethod";
 import { OrderResult } from "./OrderResult";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { getOrder } from "@/features/order";
 
 export function OrderPage() {
   const navigate = useNavigate();
+  const params = useParams();
+  const orderId = useMemo(() => {
+    return parseInt(params.orderId!);
+  }, [params]);
 
   const [progress, _] = useState(4);
   const [isPayModalOpen, setPayModalOpen] = useState(false);
+
+  const getOrderData = useCallback(async (orderId: number) => {
+    const response = await getOrder(orderId);
+
+    console.log(response);
+  }, []);
+
+  useEffect(() => {
+    getOrderData(orderId);
+  }, [getOrderData, orderId]);
 
   const handleClickBackButton = useCallback(() => {
     navigate("/mypage/orders");
