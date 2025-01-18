@@ -30,7 +30,7 @@ export const getRecommemdationsApi = async () => {
 
 export const getTop5Api = async () => {
   const response = await authAxios.get<UsedCarSmallListDto[]>(
-    `/api/interest/liked-car/most-liked`
+    `/api/interest/liked-cars/most-liked`
   );
 
   return response.data;

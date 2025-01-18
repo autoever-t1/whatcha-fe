@@ -14,7 +14,7 @@ import {
 } from "@/entities/used-car";
 
 export function MainPage() {
-  const [isFavoriteSheetOpen, setFavoriteSheetOpen] = useState(true);
+  const [isFavoriteSheetOpen, setFavoriteSheetOpen] = useState(false);
   const [recommendations, setRecommnedations] = useState<UsedCarSmallListDto[]>(
     []
   );
@@ -33,8 +33,22 @@ export function MainPage() {
   }, []);
 
   useEffect(() => {
+    if (window.AndroidInterface && !Boolean(sessionStorage.getItem("at"))) {
+      const ai = window.AndroidInterface;
+      ai.log("Connect to AndroidInterface");
+
+      sessionStorage.setItem("at", ai.getToken());
+      sessionStorage.setItem("bmin", String(ai.getBudgetMin()));
+      sessionStorage.setItem("bmax", String(ai.getBudgetMax()));
+      sessionStorage.setItem("pm1", ai.getPrefer1());
+      sessionStorage.setItem("pm2", ai.getPrefer2());
+      sessionStorage.setItem("pm3", ai.getPrefer3());
+    }
+
     getRecommendations();
     getTop5();
+
+    if (!sessionStorage.getItem("pm1")) setFavoriteSheetOpen(true);
   }, []);
 
   const handleCloseSheet = useCallback(() => {

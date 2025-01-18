@@ -9,8 +9,8 @@ export const updateBudget = async (budgetMin: number, budgetMax: number) => {
 
 export const updatePreference = async (preferences: string[]) => {
   await authAxios.put<void>(`/api/user/preference`, {
-    preferenceModelName1: preferences[0],
-    preferenceModelName2: preferences[1],
-    preferenceModelName3: preferences[2],
+    preferenceModel1: preferences[0],
+    preferenceModel2: preferences[1],
+    preferenceModel3: preferences[2],
   });
 };

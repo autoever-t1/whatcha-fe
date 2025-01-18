@@ -49,7 +49,7 @@ export function SmallCarItem({ car, color = "default" }: SmallCarItemProps) {
           className={`${styles.price} ${
             color === "primary" ? styles.primary : ""
           } font-b-sm`}
-        >{`${(price / 1000).toLocaleString()}만원`}</p>
+        >{`${(price / 10000).toLocaleString()}만원`}</p>
       </div>
     </div>
   );
