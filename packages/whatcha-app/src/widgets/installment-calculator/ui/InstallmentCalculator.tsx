@@ -1,7 +1,9 @@
-import { ChangeEventHandler, useCallback, useMemo, useState } from "react";
+import { ChangeEventHandler, useCallback, useState } from "react";
 import styles from "./InstallmentCalculator.module.css";
+import { calculateEMI } from "../model/constant";
 
 interface InstallmentCalculatorProps {
+  price?: number;
   defaultValue: {
     originalAmount: number;
     advanceAmount: number;
@@ -11,24 +13,33 @@ interface InstallmentCalculatorProps {
 }
 
 export function InstallmentCalculator({
+  price,
   defaultValue,
 }: InstallmentCalculatorProps) {
-  const [originalAmount, setOriginalAmount] = useState(
-    defaultValue.originalAmount
+  const [originalAmount, setOriginalAmount] = useState<string | number>(
+    (defaultValue.originalAmount - 10000000) / 10000
   );
-  const [advanceAmount, setAdvanceAmount] = useState(
-    defaultValue.advanceAmount
-  );
+  const [advanceAmount, setAdvanceAmount] = useState(1000);
   const [interestRate, setInterestRate] = useState(defaultValue.interestRate);
   const [period, setPeriod] = useState(defaultValue.period);
 
   const handleOriginalAmountChange: ChangeEventHandler<HTMLInputElement> =
-    useCallback((event) => {
-      const value = isNaN(parseInt(event.target.value))
-        ? 0
-        : parseInt(event.target.value);
-      setOriginalAmount(value);
-    }, []);
+    useCallback(
+      (event) => {
+        const value = isNaN(parseInt(event.target.value))
+          ? 0
+          : parseInt(event.target.value);
+
+        if (price) {
+          setAdvanceAmount(
+            parseInt(((price - value * 10000) / 10000).toFixed())
+          );
+        }
+
+        setOriginalAmount(event.target.value);
+      },
+      [price]
+    );
 
   const handleAdvanceAmountChange: ChangeEventHandler<HTMLInputElement> =
     useCallback((event) => {
@@ -56,10 +67,6 @@ export function InstallmentCalculator({
     []
   );
 
-  const result = useMemo(() => {
-    return 2000;
-  }, []);
-
   return (
     <div className={styles.container}>
       <p className="font-r-sm">
@@ -78,6 +85,7 @@ export function InstallmentCalculator({
       <div className={`${styles["input-wrapper"]} font-r-md`}>
         <span>선수금</span>
         <input
+          disabled
           type="number"
           value={advanceAmount}
           onChange={handleAdvanceAmountChange}
@@ -101,7 +109,12 @@ export function InstallmentCalculator({
       <div className={styles.result}>
         <span className="font-b-md">예상 월 납입금액</span>
         <span className={`${styles["result-value"]} font-b-lg`}>
-          {result.toLocaleString()}원
+          {calculateEMI(
+            originalAmount as number,
+            interestRate,
+            period
+          ).toLocaleString()}
+          원
         </span>
       </div>
     </div>

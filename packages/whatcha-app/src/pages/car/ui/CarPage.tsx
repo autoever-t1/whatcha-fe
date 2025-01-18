@@ -11,6 +11,7 @@ import { BasicInfoContent } from "./BasicInfoContent";
 import { OptionContent } from "./OptionContent";
 import { InstallmentCalculator } from "@/widgets/installment-calculator";
 import { Footer } from "@/shared/footer";
+import { calculateEMI } from "@/widgets/installment-calculator/model/constant";
 
 export function CarPage() {
   const navigate = useNavigate();
@@ -74,7 +75,13 @@ export function CarPage() {
                       {car.price / 10000}만원
                     </p>
                     <div className={`${styles.badge} font-r-sm`}>
-                      할부 <span className="font-b-sm">50만원</span>
+                      할부{" "}
+                      <span className="font-b-sm">
+                        {(
+                          calculateEMI(car.price / 10000, 5, 48) / 10000
+                        ).toFixed()}
+                        만원
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -115,11 +122,12 @@ export function CarPage() {
               </ContentBox>
               <ContentBox title="할부 계산기">
                 <InstallmentCalculator
+                  price={car.price}
                   defaultValue={{
-                    originalAmount: 0,
+                    originalAmount: car.price,
                     advanceAmount: 0,
-                    interestRate: 0,
-                    period: 0,
+                    interestRate: 5.0,
+                    period: 48,
                   }}
                 />
                 <p className={`${styles["option-description"]} font-r-sm`}>
