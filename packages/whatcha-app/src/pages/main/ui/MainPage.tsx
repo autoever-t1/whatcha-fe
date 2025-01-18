@@ -72,17 +72,21 @@ export function MainPage() {
         <ContentBox title="할부 계산기">
           <InstallmentCalculator
             defaultValue={{
-              originalAmount: 1000,
+              originalAmount: 50000000,
               advanceAmount: 0,
-              interestRate: 3.5,
-              period: 36,
+              interestRate: 5,
+              period: 48,
             }}
           />
         </ContentBox>
         <ContentBox title="TOP 5 매물" color="primary">
           <div className={styles.list}>
             {top5.map((car) => (
-              <SmallCarItem key={`r-${car.usedCarId}`} car={car} />
+              <SmallCarItem
+                key={`r-${car.usedCarId}`}
+                car={car}
+                color="primary"
+              />
             ))}
           </div>
         </ContentBox>

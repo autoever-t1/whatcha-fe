@@ -17,7 +17,9 @@ export function InstallmentCalculator({
   defaultValue,
 }: InstallmentCalculatorProps) {
   const [originalAmount, setOriginalAmount] = useState<string | number>(
-    (defaultValue.originalAmount - 10000000) / 10000
+    price
+      ? (defaultValue.originalAmount - 10000000) / 10000
+      : defaultValue.originalAmount / 10000
   );
   const [advanceAmount, setAdvanceAmount] = useState(1000);
   const [interestRate, setInterestRate] = useState(defaultValue.interestRate);
@@ -82,16 +84,19 @@ export function InstallmentCalculator({
         />
         <span>만원</span>
       </div>
-      <div className={`${styles["input-wrapper"]} font-r-md`}>
-        <span>선수금</span>
-        <input
-          disabled
-          type="number"
-          value={advanceAmount}
-          onChange={handleAdvanceAmountChange}
-        />
-        <span>만원</span>
-      </div>
+      {price && (
+        <div className={`${styles["input-wrapper"]} font-r-md`}>
+          <span>선수금</span>
+          <input
+            disabled
+            type="number"
+            value={advanceAmount}
+            onChange={handleAdvanceAmountChange}
+          />
+          <span>만원</span>
+        </div>
+      )}
+
       <div className={`${styles["input-wrapper"]} font-r-md`}>
         <span>금리</span>
         <input
