@@ -51,7 +51,7 @@ export const addCoupon = async (couponData: AddCouponRequest): Promise<void> => 
 
 
 // 쿠폰 전체 조회 api
-export const AllCoupon = async (page: number = 0, size: number = 10): Promise<PaginatedResponse<Coupon>> => {
+export const AllCoupon = async (page: number = 0, size: number = 20): Promise<PaginatedResponse<Coupon>> => {
   try {
     const response = await client.get<PaginatedResponse<Coupon>>(`/admin/coupon?page=${page}&size=${size}`, {
       headers: {

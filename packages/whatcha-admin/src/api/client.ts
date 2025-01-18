@@ -14,4 +14,5 @@ const client = axios.create({
   withCredentials: true, // 쿠키 및 인증 정보 전송을 위해 설정
 });
 
+
 export default client;
