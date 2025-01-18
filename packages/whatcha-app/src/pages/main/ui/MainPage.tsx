@@ -3,14 +3,53 @@ import { Banner } from "./Banner";
 import { MainHeader } from "./MainHeader";
 import styles from "./MainPage.module.css";
 import { SmallCarItem } from "@shared/small-car-item";
-import SampleImg from "@assets/sample-image.png";
 import { InstallmentCalculator } from "@widgets/installment-calculator";
 import { Footer } from "@shared/footer";
 import { FavoriteSheet } from "@widgets/favorite-sheet";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import {
+  getRecommemdationsApi,
+  getTop5Api,
+  UsedCarSmallListDto,
+} from "@/entities/used-car";
 
 export function MainPage() {
-  const [isFavoriteSheetOpen, setFavoriteSheetOpen] = useState(true);
+  const [isFavoriteSheetOpen, setFavoriteSheetOpen] = useState(false);
+  const [recommendations, setRecommnedations] = useState<UsedCarSmallListDto[]>(
+    []
+  );
+  const [top5, setTop5] = useState<UsedCarSmallListDto[]>([]);
+
+  const getRecommendations = useCallback(async () => {
+    const response = await getRecommemdationsApi();
+
+    setRecommnedations(response);
+  }, []);
+
+  const getTop5 = useCallback(async () => {
+    const response = await getTop5Api();
+
+    setTop5(response);
+  }, []);
+
+  useEffect(() => {
+    if (window.AndroidInterface && !Boolean(sessionStorage.getItem("at"))) {
+      const ai = window.AndroidInterface;
+      ai.log("Connect to AndroidInterface");
+
+      sessionStorage.setItem("at", ai.getToken());
+      sessionStorage.setItem("bmin", String(ai.getBudgetMin()));
+      sessionStorage.setItem("bmax", String(ai.getBudgetMax()));
+      sessionStorage.setItem("pm1", ai.getPrefer1());
+      sessionStorage.setItem("pm2", ai.getPrefer2());
+      sessionStorage.setItem("pm3", ai.getPrefer3());
+    }
+
+    getRecommendations();
+    getTop5();
+
+    if (!sessionStorage.getItem("pm1")) setFavoriteSheetOpen(true);
+  }, []);
 
   const handleCloseSheet = useCallback(() => {
     setFavoriteSheetOpen(false);
@@ -25,47 +64,28 @@ export function MainPage() {
         </div>
         <ContentBox title="이런 차 어때요?">
           <div className={styles.list}>
-            {[1, 2, 3, 4, 5].map((item) => (
-              <SmallCarItem
-                key={item}
-                car={{
-                  carId: item,
-                  img: SampleImg,
-                  name: "아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼",
-                  date: "23년 11월",
-                  mileage: 10000,
-                  vhclRegNo: "12가1234",
-                  price: 15000000,
-                }}
-              />
+            {recommendations.map((car) => (
+              <SmallCarItem key={`r-${car.usedCarId}`} car={car} />
             ))}
           </div>
         </ContentBox>
         <ContentBox title="할부 계산기">
           <InstallmentCalculator
             defaultValue={{
-              originalAmount: 1000,
+              originalAmount: 50000000,
               advanceAmount: 0,
-              interestRate: 3.5,
-              period: 36,
+              interestRate: 5,
+              period: 48,
             }}
           />
         </ContentBox>
         <ContentBox title="TOP 5 매물" color="primary">
           <div className={styles.list}>
-            {[1, 2, 3, 4, 5].map((item) => (
+            {top5.map((car) => (
               <SmallCarItem
-                key={item}
+                key={`r-${car.usedCarId}`}
+                car={car}
                 color="primary"
-                car={{
-                  carId: item,
-                  img: SampleImg,
-                  name: "아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼아반떼",
-                  date: "23년 11월",
-                  mileage: 10000,
-                  vhclRegNo: "12가1234",
-                  price: 15000000,
-                }}
               />
             ))}
           </div>

@@ -8,8 +8,8 @@ interface InfoGridItemProps {
 export function InfoGridItem({ name, value }: InfoGridItemProps) {
   return (
     <div className={styles.container}>
-      <div className={`${styles.name} font-r-sm`}>{name}</div>
-      <div className="font-b-sm">{value}</div>
+      <div className={`${styles.name} font-r-md`}>{name}</div>
+      <div className="font-b-md">{value}</div>
     </div>
   );
 }

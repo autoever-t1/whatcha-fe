@@ -2,7 +2,7 @@ import { useNavigate, useSearchParams } from "react-router";
 import styles from "./ListPage.module.css";
 import { MainHeader } from "@shared/main-header";
 import { CarItem } from "@shared/car-item";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   getUsedCarByConditions,
   getUsedCarByKeyword,
@@ -16,6 +16,9 @@ export function ListPage() {
   const navigate = useNavigate();
 
   const [carList, setCarList] = useState<UsedCarListDto[]>([]);
+  const [page, setPage] = useState(0);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const [isLoading, setLoading] = useState(false);
 
   const type = useMemo(() => {
     return searchParams.get("type");
@@ -130,22 +133,43 @@ export function ListPage() {
     return type === "search" && keyword ? keyword : "검색 결과";
   }, [type, keyword]);
 
-  const getData = useCallback(async () => {
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastItemRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isLoading) return;
+
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          setPage((prevPage) => prevPage + 1);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasNextPage]
+  );
+
+  const getData = async () => {
     let response: PageResponse<UsedCarListDto>;
     if (type === "search") {
       if (keyword) {
-        response = await getUsedCarByKeyword(keyword, 0);
+        response = await getUsedCarByKeyword(keyword, page);
       } else {
-        response = await getUsedCarByConditions(queries, 0);
+        response = await getUsedCarByConditions(queries, page);
       }
     }
 
-    setCarList(response!.content);
-  }, [type, keyword, queries]);
+    setCarList((prev) => [...prev, ...response!.content]);
+    setLoading(false);
+    setHasNextPage(!response!.last);
+  };
 
   useEffect(() => {
+    setLoading(true);
     getData();
-  }, [getData]);
+  }, [page]);
 
   const handleClickBackButton = useCallback(() => {
     navigate(-1);
@@ -160,6 +184,7 @@ export function ListPage() {
             {carList.map((car) => (
               <CarItem key={car.usedCarId} car={car} liked />
             ))}
+            <div ref={lastItemRef} style={{ height: "1px" }} />
           </div>
         </div>
       )}

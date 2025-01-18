@@ -4,13 +4,17 @@ import "./Banner.css";
 import SampleImage from "@assets/sample-image.png";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 
 export function Banner() {
   return (
     <div className={styles.container}>
       <Swiper
-        modules={[Pagination]}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: false,
+        }}
+        modules={[Pagination, Autoplay]}
         pagination={{ type: "fraction" }}
         loop={true}
       >

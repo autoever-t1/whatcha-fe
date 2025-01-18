@@ -46,20 +46,24 @@ export function FavoriteSheet({ onClose }: FavoriteSheetProps) {
 
     if (isNaN(min) || isNaN(max)) return;
 
-    await updateBudget(min, max);
-    //TODO SharedPrefrence
+    await updateBudget(min * 10000, max * 10000);
+    sessionStorage.setItem("bmin", String(min * 10000));
+    sessionStorage.setItem("bmax", String(max * 10000));
     setPhase(1);
   }, [priceMin, priceMax]);
 
   const submitPreferences = useCallback(async () => {
     if (selectedModels.length < 3) return;
     await updatePreference(selectedModels);
-
-    //TODO SharedPrefrence
+    sessionStorage.setItem("pm1", selectedModels[0]);
+    sessionStorage.setItem("pm2", selectedModels[1]);
+    sessionStorage.setItem("pm3", selectedModels[2]);
     onClose();
   }, [selectedModels, onClose]);
 
   const handleClickNext = useCallback(() => {
+    if (phase === 1 && selectedModels.length < 3) return;
+
     if (phase === 0) submitBudget();
     else submitPreferences();
   }, [phase, submitBudget, submitPreferences]);
