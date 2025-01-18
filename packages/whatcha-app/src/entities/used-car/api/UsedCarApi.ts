@@ -1,5 +1,9 @@
 import { authAxios, PageResponse } from "@/shared";
-import { UsedCarListDto, UsedCarSmallListDto } from "../model/types";
+import {
+  UsedCarDetailDTO,
+  UsedCarListDto,
+  UsedCarSmallListDto,
+} from "../model/types";
 
 export const getUsedCarByKeyword = async (
   keyword: string,
@@ -31,6 +35,14 @@ export const getRecommemdationsApi = async () => {
 export const getTop5Api = async () => {
   const response = await authAxios.get<UsedCarSmallListDto[]>(
     `/api/interest/liked-cars/most-liked`
+  );
+
+  return response.data;
+};
+
+export const getUsedCarDetail = async (usedCarId: number) => {
+  const response = await authAxios.get<UsedCarDetailDTO>(
+    `/api/used-car/detail/${usedCarId}`
   );
 
   return response.data;

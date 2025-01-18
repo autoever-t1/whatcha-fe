@@ -62,11 +62,11 @@ export function InstallmentCalculator({
 
   return (
     <div className={styles.container}>
-      <p className="font-r-xs">
+      <p className="font-r-sm">
         단순 계산기로 사용되며 실제 고객 신용도에 따라
         <br />월 할부 금액은 변경될 수 있습니다.
       </p>
-      <div className={`${styles["input-wrapper"]} font-r-sm`}>
+      <div className={`${styles["input-wrapper"]} font-r-md`}>
         <span>할부원금</span>
         <input
           type="number"
@@ -75,7 +75,7 @@ export function InstallmentCalculator({
         />
         <span>만원</span>
       </div>
-      <div className={`${styles["input-wrapper"]} font-r-sm`}>
+      <div className={`${styles["input-wrapper"]} font-r-md`}>
         <span>선수금</span>
         <input
           type="number"
@@ -84,7 +84,7 @@ export function InstallmentCalculator({
         />
         <span>만원</span>
       </div>
-      <div className={`${styles["input-wrapper"]} font-r-sm`}>
+      <div className={`${styles["input-wrapper"]} font-r-md`}>
         <span>금리</span>
         <input
           type="number"
@@ -93,14 +93,14 @@ export function InstallmentCalculator({
         />
         <span>%</span>
       </div>
-      <div className={`${styles["input-wrapper"]} font-r-sm`}>
+      <div className={`${styles["input-wrapper"]} font-r-md`}>
         <span>기간</span>
         <input type="number" value={period} onChange={handlePeriodChange} />
         <span>개월</span>
       </div>
       <div className={styles.result}>
-        <span className="font-b-sm">예상 월 납입금액</span>
-        <span className={`${styles["result-value"]} font-b-md`}>
+        <span className="font-b-md">예상 월 납입금액</span>
+        <span className={`${styles["result-value"]} font-b-lg`}>
           {result.toLocaleString()}원
         </span>
       </div>

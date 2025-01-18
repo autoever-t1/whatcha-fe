@@ -12,12 +12,15 @@ const startFrame = 201;
 const endFrame = 235;
 const baseUrl =
   "https://certified-static.hyundai.com/contents/goods/shootConts/tobepic/02/exterior/";
-const car_id = "HIG241011009528/";
 const baseName = "PRD602_";
 const crop = "/dims/crop/2871x2473+485+87/resize/900x775/optimize";
 const totalFrames = endFrame - startFrame + 1;
 
-export function RotateView() {
+interface RotateViewProps {
+  goodsNo: string;
+}
+
+export function RotateView({ goodsNo }: RotateViewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const frameImages = useRef<HTMLImageElement[]>([]);
 
@@ -30,12 +33,12 @@ export function RotateView() {
     const images: HTMLImageElement[] = [];
     for (let i = startFrame; i <= endFrame; i++) {
       const img = new Image();
-      img.src = `${baseUrl}${car_id}${baseName}${i}.JPG${crop}`;
+      img.src = `${baseUrl}${goodsNo}/${baseName}${i}.JPG${crop}`;
       images.push(img);
     }
 
     frameImages.current = images;
-  }, []);
+  }, [goodsNo]);
 
   // canvas에 그리기
   useEffect(() => {
