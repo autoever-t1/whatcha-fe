@@ -64,7 +64,11 @@ export function OrderPage() {
         <div className="layout-vertical">
           <ContentBox title={title}>
             {progress === 1 ? (
-              <BillContent price={30000000} canUpdateCoupon={false} />
+              <BillContent
+                price={30000000}
+                canUpdateCoupon={false}
+                coupon={null}
+              />
             ) : progress === 2 ? (
               <Contract
                 contract={{
@@ -86,7 +90,11 @@ export function OrderPage() {
           {progress === 4 && (
             <>
               <ContentBox title="주문금액">
-                <BillContent price={30000000} canUpdateCoupon={false} />
+                <BillContent
+                  price={30000000}
+                  canUpdateCoupon={false}
+                  coupon={null}
+                />
               </ContentBox>
               <ContentBox title="계약서">
                 <Contract
@@ -114,6 +122,7 @@ export function OrderPage() {
           title="잔금 결제"
           price={30000000}
           onClickBack={handleClickPayModalBackButton}
+          onClickNext={() => {}}
         />
       )}
     </div>

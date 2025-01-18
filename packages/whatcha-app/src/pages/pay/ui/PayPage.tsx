@@ -9,10 +9,13 @@ import { PayModal } from "@widgets/pay-modal";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { CouponModal } from "@widgets/coupon-modal";
 import { getUsedCarDetail, UsedCarDetailDTO } from "@/entities/used-car";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { CouponDTO } from "@/entities/coupon";
+import { createOrder, DepositDTO } from "@/features/order";
 
 export function PayPage() {
+  const navigate = useNavigate();
+
   const params = useParams();
   const usedCarId = useMemo(() => {
     return parseInt(params.carId!);
@@ -30,6 +33,10 @@ export function PayPage() {
     false,
   ]);
 
+  const canNext = useMemo(() => {
+    return agreements.every(Boolean);
+  }, [agreements]);
+
   const getCar = useCallback(async () => {
     const response = await getUsedCarDetail(usedCarId);
 
@@ -39,6 +46,10 @@ export function PayPage() {
   useEffect(() => {
     getCar();
   }, [getCar]);
+
+  const handleClickBackButton = useCallback(() => {
+    navigate(`/car/${usedCarId}`);
+  }, [navigate, usedCarId]);
 
   const handleClickCouponButton = useCallback(() => {
     setCouponModalOpen(true);
@@ -69,9 +80,29 @@ export function PayPage() {
     });
   }, []);
 
+  const handleClickPay = useCallback(async () => {
+    if (!car) return;
+    const manageCost = 1000000;
+    const deliveryCost = 300000;
+    const transferCost = 30000;
+    const registerCost = 2500000;
+
+    const depositInfo: DepositDTO = {
+      usedCarId,
+      fullPayment:
+        car.price + manageCost + deliveryCost + transferCost + registerCost,
+      deposit: 300000,
+      userCouponId: selectedCoupon ? selectedCoupon.userCouponId : null,
+    };
+
+    const response = await createOrder(depositInfo);
+
+    navigate(`/order/${response.orderId}`);
+  }, [car, selectedCoupon, navigate]);
+
   return (
     <div className={styles.container}>
-      <MainHeader title="주문" />
+      <MainHeader title="주문" onClickBack={handleClickBackButton} />
       <div className={styles.content}>
         <ContentBox title="주문자 정보" position="top">
           <div className="layout-line">
@@ -159,13 +190,16 @@ export function PayPage() {
           </>
         )}
       </div>
-      <BottomButton onClick={handleClickPayButton}>계약하기</BottomButton>
+      <BottomButton onClick={handleClickPayButton} disabled={!canNext}>
+        계약하기
+      </BottomButton>
 
       {isPayModalOpen && (
         <PayModal
           title="계약금 결제"
           price={300000}
           onClickBack={handleClickPayModalBack}
+          onClickNext={handleClickPay}
         />
       )}
       {isCouponModalOpen && (
