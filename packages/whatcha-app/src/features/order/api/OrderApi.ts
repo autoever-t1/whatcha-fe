@@ -4,6 +4,7 @@ import {
   DepositDTO,
   OrderListItemDTO,
   OrderSheetDTO,
+  PathReqDTO,
 } from "../model/types";
 
 export const createOrder = async (depositInfo: DepositDTO) => {
@@ -49,6 +50,12 @@ export const chooseMethod = async (orderId: number) => {
   const response = await authAxios.put<void>(
     `api/order/${orderId}/deliveryService`
   );
+
+  return response.data;
+};
+
+export const getPathAPI = async (pathData: PathReqDTO) => {
+  const response = await authAxios.post("api/order/path", pathData);
 
   return response.data;
 };
