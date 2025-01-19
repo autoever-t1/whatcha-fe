@@ -34,9 +34,7 @@ function UserTable() {
     const fetchUsers = async () => {
       setLoading(true);
       try {
-        console.log('API 호출 시작');  // 디버깅 로그 1
         const data = await getAllUsers();
-        console.log('받은 데이터:', data);  // 디버깅 로그 2
         setUsers(data);
       } catch (err) {
         console.error('에러 상세:', err);  // 상세 에러 로깅
