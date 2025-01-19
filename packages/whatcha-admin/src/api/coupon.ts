@@ -56,3 +56,8 @@ export const AllCoupon = async (page: number = 0, size: number = 20): Promise<Pa
     throw error;
   }
 };
+
+// 쿠폰 삭제 api
+export const deleteCoupon = async (couponId: number): Promise<void> => {
+  await client.delete(`/admin/coupon/${couponId}`);
+};
