@@ -17,10 +17,10 @@ const columns: GridColDef[] = [
     headerName: '상태', 
     width: 100,
     renderCell: (params) => (
-      <span className={`px-2 py-1 text-xs rounded-full ${
+      <span className={`px-2 py-1.5 text-xs rounded-lg ${
         params.value === '판매중' 
-          ? 'bg-blue-100 text-blue-800' 
-          : 'bg-green-100 text-green-800'
+          ? 'bg-blue-200 text-blue-800' 
+          : 'bg-red-100 text-red-800'
       }`}>
         {params.value}
       </span>
@@ -39,10 +39,9 @@ function RecentTransaction() {
         columns={columns}
         getRowId={(row) => row.goodsNo}
         loading={isLoading}
-        pageSizeOptions={[5, 10]}
         initialState={{
           pagination: {
-            paginationModel: { pageSize: 5 },
+            paginationModel: { pageSize: 20},
           },
         }}
         disableRowSelectionOnClick
