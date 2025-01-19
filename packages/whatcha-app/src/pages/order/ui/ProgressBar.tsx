@@ -10,35 +10,35 @@ const processes = [
 ];
 
 interface ProgressBarProps {
-  progress: number;
+  process: number;
 }
 
-export function ProgressBar({ progress }: ProgressBarProps) {
+export function ProgressBar({ process }: ProgressBarProps) {
   return (
     <div className={styles.container}>
       <div className={styles["progress-bar"]}>
         <div className={styles["progress-bar-background"]} />
         <div
           className={styles["progress-bar-foreground"]}
-          style={{ width: `${progress * 25}%` }}
+          style={{ width: `${Math.max(process, 0) * 25}%` }}
         />
         <div
           className={styles["car-pin"]}
-          style={{ left: `calc(${progress * 25}% - 10px)` }}
+          style={{ left: `calc(${Math.max(process, 0) * 25}% - 10px)` }}
         >
           <img src={CarSideIcon} alt="CarSide" />
         </div>
 
         <div className={styles["process-box"]}>
-          {processes.map((process, i) => (
+          {processes.map((processStr, i) => (
             <span
               className={`${styles.process} ${
-                i === progress ? "font-b-sm color-primary" : "font-r-xs"
+                i === process ? "font-b-sm color-primary" : "font-r-xs"
               }`}
               style={{ left: `${i * 25}%` }}
               key={i}
             >
-              {process}
+              {processStr}
             </span>
           ))}
         </div>

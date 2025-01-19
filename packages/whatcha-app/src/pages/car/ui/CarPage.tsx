@@ -46,6 +46,10 @@ export function CarPage() {
     []
   );
 
+  const handleClickPayButton = useCallback(() => {
+    navigate(`/pay/${params.carId}`);
+  }, [navigate, params]);
+
   return (
     <div className={styles.container}>
       <div className={styles.content} onScroll={handleContentScroll}>
@@ -196,7 +200,9 @@ export function CarPage() {
           </>
         )}
       </div>
-      <BottomButton>계약금 결제하기</BottomButton>
+      <BottomButton onClick={handleClickPayButton}>
+        계약금 결제하기
+      </BottomButton>
     </div>
   );
 }

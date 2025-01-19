@@ -43,6 +43,11 @@ export function MainPage() {
       sessionStorage.setItem("pm1", ai.getPrefer1());
       sessionStorage.setItem("pm2", ai.getPrefer2());
       sessionStorage.setItem("pm3", ai.getPrefer3());
+      sessionStorage.setItem("name", ai.getName());
+      sessionStorage.setItem("email", ai.getEmail());
+      sessionStorage.setItem("phone", ai.getPhone());
+      sessionStorage.setItem("lat", String(ai.getLatitude()));
+      sessionStorage.setItem("lng", String(ai.getLongitude()));
     }
 
     getRecommendations();

@@ -51,8 +51,12 @@ export function CouponPage() {
   const getCouponList = async () => {
     const response = await getAllCoupon(page);
 
-    setCouponList(response.content);
-    setHasNextPage(!response.last);
+    if (response.content === undefined) {
+      setHasNextPage(false);
+    } else {
+      setCouponList((prev) => [...prev, ...response.content]);
+      setHasNextPage(!response.last);
+    }
     setLoading(false);
   };
 

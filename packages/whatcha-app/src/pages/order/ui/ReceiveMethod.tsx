@@ -4,27 +4,43 @@ import { RadioButton } from "@shared/radio-button";
 import MarkerIcon from "@common/assets/marker.png";
 import axios from "axios";
 
-export function ReceiveMethod() {
+interface ReceiveMethodProps {
+  fromLat: number;
+  fromLng: number;
+  toLat: number;
+  toLng: number;
+  address: string;
+}
+
+export function ReceiveMethod({
+  fromLat,
+  fromLng,
+  toLat,
+  toLng,
+  address,
+}: ReceiveMethodProps) {
   const [receiveMethod, setReceiveMethod] = useState<"pickUp" | "delivery">(
-    "delivery"
+    "pickUp"
   );
   const [distance, setDistance] = useState<number>();
   const [duration, setDuration] = useState<number>();
 
   const mapRef = useRef<naver.maps.Map>();
 
-  const paintMap = useCallback(() => {
+  console.log(fromLat, fromLng);
+
+  const paintMap = useCallback((lat: number, lng: number) => {
     mapRef.current = new naver.maps.Map("map", {
-      center: new naver.maps.LatLng(37.48152, 126.882625),
-      zoom: 13,
+      center: new naver.maps.LatLng(lat, lng),
+      zoom: 7,
     });
   }, []);
 
-  const getLocation = useCallback(() => {
-    setTimeout(() => {
+  const paintMarker = useCallback(
+    (fromLat: number, fromLng: number, toLat: number, toLng: number) => {
       if (mapRef.current) {
-        const markerOptions = {
-          position: new naver.maps.LatLng(37.48152, 126.882625),
+        const branchMarker = {
+          position: new naver.maps.LatLng(toLat, toLng),
           map: mapRef.current,
           icon: {
             url: MarkerIcon,
@@ -34,45 +50,61 @@ export function ReceiveMethod() {
           },
         };
 
-        new naver.maps.Marker(markerOptions);
+        const myMarker = {
+          position: new naver.maps.LatLng(fromLat, fromLng),
+          map: mapRef.current,
+          icon: {
+            url: MarkerIcon,
+            size: new naver.maps.Size(50, 50),
+            origin: new naver.maps.Point(0, 0),
+            anchor: new naver.maps.Point(25, 25),
+          },
+        };
+
+        new naver.maps.Marker(branchMarker);
+        new naver.maps.Marker(myMarker);
       }
-    }, 2000);
-  }, []);
+    },
+    []
+  );
 
-  const getPath = useCallback(async () => {
-    const clientId = import.meta.env.VITE_NAVER_CLIENT_ID;
-    const clientSecrert = import.meta.env.VITE_NAVER_CLIENT_SECRET;
+  const getPath = useCallback(
+    async (fromLat: number, fromLng: number, toLat: number, toLng: number) => {
+      const clientId = import.meta.env.VITE_NAVER_CLIENT_ID;
+      const clientSecrert = import.meta.env.VITE_NAVER_CLIENT_SECRET;
 
-    const start = "126.882625,37.48152";
-    const goal = "126.972683,37.300279";
+      const start = `${fromLng},${fromLat}`;
+      const goal = `${toLng},${toLat}`;
 
-    const response = await axios.get(
-      `/map-direction/v1/driving?start=${start}&goal=${goal}`,
-      {
-        headers: {
-          "x-ncp-apigw-api-key-id": clientId,
-          "x-ncp-apigw-api-key": clientSecrert,
-        },
-      }
-    );
+      const response = await axios.get(
+        `/map-direction/v1/driving?start=${start}&goal=${goal}`,
+        {
+          headers: {
+            "x-ncp-apigw-api-key-id": clientId,
+            "x-ncp-apigw-api-key": clientSecrert,
+          },
+        }
+      );
 
-    const summary = response.data.route.traoptimal[0].summary;
-    setDistance(summary.distance);
-    setDuration(summary.duration);
+      const summary = response.data.route.traoptimal[0].summary;
+      setDistance(summary.distance);
+      setDuration(summary.duration);
 
-    const paths: naver.maps.ArrayOfCoords =
-      response.data.route.traoptimal[0].path;
-    new naver.maps.Polyline({
-      map: mapRef.current,
-      path: paths,
-    });
-  }, []);
+      const paths: naver.maps.ArrayOfCoords =
+        response.data.route.traoptimal[0].path;
+      new naver.maps.Polyline({
+        map: mapRef.current,
+        path: paths,
+      });
+    },
+    []
+  );
 
   useEffect(() => {
-    paintMap();
-    getLocation();
-    getPath();
-  }, []);
+    paintMap(toLat, toLng);
+    paintMarker(fromLat, fromLng, toLat, toLng);
+    getPath(fromLat, fromLng, toLat, toLng);
+  }, [toLat, toLng, fromLng, fromLat, paintMap, paintMarker, getPath]);
 
   const handleChangeReceiveMethod = useCallback(() => {
     setReceiveMethod((prev) => (prev === "delivery" ? "pickUp" : "delivery"));
@@ -93,20 +125,20 @@ export function ReceiveMethod() {
         />
       </div>
       <p className="font-b-md" style={{ marginTop: "16px" }}>
-        지점 위치
+        지점 위치 <span className="font-r-sm">({address})</span>
       </p>
       <div className={styles["map-wrapper"]}>
         <div id="map"></div>
       </div>
       <div className="layout-line">
-        <span className="font-r-sm">거리</span>
-        <span className="font-r-sm">
+        <span className="font-b-md">거리</span>
+        <span className="font-r-md">
           {distance && (distance / 1000).toFixed(1)}km
         </span>
       </div>
       <div className="layout-line">
-        <span className="font-r-sm">예상 시간</span>
-        <span className="font-r-sm">
+        <span className="font-b-md">예상 시간(차량 주행)</span>
+        <span className="font-r-md">
           약 {duration && (duration / 1000 / 60 / 60).toFixed(1)}시간
         </span>
       </div>
