@@ -24,6 +24,9 @@ import { Footer } from "@/shared/footer";
 import { calculateEMI } from "@/widgets/installment-calculator/model/constant";
 import LikeIcon from "@common/assets/icons/like.svg";
 import LikeFilledIcon from "@common/assets/icons/like-filled.svg";
+import { MainButton } from "@/shared/main-button";
+import { AlarmSheet } from "@/widgets/alarm-sheet";
+import { AlarmCreateDTO, createAlarm } from "@/features/alarm";
 
 export function CarPage() {
   const navigate = useNavigate();
@@ -32,6 +35,7 @@ export function CarPage() {
     return params.carId ? parseInt(params.carId) : 0;
   }, [params]);
 
+  const [isAlarmSheetOpen, setAlarmSheetOpen] = useState(false);
   const [car, setCar] = useState<UsedCarDetailDTO>();
   const [isTop, setTop] = useState(true);
 
@@ -73,6 +77,29 @@ export function CarPage() {
       else return prev;
     });
   }, [usedCarId]);
+
+  const handleOpenAlarmSheet = useCallback(() => {
+    setAlarmSheetOpen(true);
+  }, []);
+
+  const handleCloseAlarmSheet = useCallback(() => {
+    setAlarmSheetOpen(false);
+  }, []);
+
+  const handleClickCreateAlarm = useCallback(
+    async (alertExpirationDate: string) => {
+      if (!car) return;
+      const newAlarmInfo: AlarmCreateDTO = {
+        modelName: car.modelName,
+        alertExpirationDate,
+      };
+      const response = await createAlarm(newAlarmInfo);
+
+      console.log(response);
+      //TODO 후처리
+    },
+    [car]
+  );
 
   return (
     <div className={styles.container}>
@@ -124,6 +151,9 @@ export function CarPage() {
                 <InnerBox>
                   <BasicInfoContent car={car} />
                 </InnerBox>
+                <MainButton onClick={handleOpenAlarmSheet}>
+                  입고 알림 신청
+                </MainButton>
               </ContentBox>
               <ContentBox title="신차가격대비">
                 <p className="font-r-md">
@@ -233,6 +263,13 @@ export function CarPage() {
       <BottomButton onClick={handleClickPayButton}>
         계약금 결제하기
       </BottomButton>
+
+      {isAlarmSheetOpen && (
+        <AlarmSheet
+          onClose={handleCloseAlarmSheet}
+          onCreateAlarm={handleClickCreateAlarm}
+        />
+      )}
     </div>
   );
 }
