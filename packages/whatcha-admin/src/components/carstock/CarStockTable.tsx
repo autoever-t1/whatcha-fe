@@ -42,6 +42,7 @@ function CarStockTable() {
   const filteredCars = useMemo(() => {
     if (!searchValue) return usedCars;
     return usedCars.filter(car => {
+      // @ts-ignore
       const searchTarget = String(car[searchField]).toLowerCase();
       return searchTarget.includes(searchValue.toLowerCase());
     });
