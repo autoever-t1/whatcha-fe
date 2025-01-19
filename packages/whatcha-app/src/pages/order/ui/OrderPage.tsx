@@ -51,6 +51,24 @@ export function OrderPage() {
     };
   }, [usedCar]);
 
+  const fullPayPrice = useMemo(() => {
+    if (usedCar) {
+      return (
+        usedCar.price -
+        (coupon
+          ? Math.min(
+              coupon.maxDiscountAmount,
+              Math.round((coupon.discountPercentage! / 100) * usedCar.price)
+            )
+          : 0) +
+        1330000 +
+        2500000
+      );
+    }
+
+    return 0;
+  }, [usedCar, coupon]);
+
   const [isPayModalOpen, setPayModalOpen] = useState(false);
 
   const getOrderData = useCallback(async (orderId: number) => {
@@ -66,6 +84,7 @@ export function OrderPage() {
       mileage: parseInt(response.mileage),
     });
     setProcessInfo(response.orderProcessInfo);
+    response.orderInfo.fullPayment;
     setCoupon(response.couponInfo);
     setBranch(response.branchStoreInfo);
   }, []);
@@ -213,7 +232,7 @@ export function OrderPage() {
       {isPayModalOpen && (
         <PayModal
           title="잔금 결제"
-          price={30000000}
+          price={fullPayPrice}
           onClickBack={handleClickPayModalBackButton}
           onClickNext={handleClickPayModalNextButton}
         />

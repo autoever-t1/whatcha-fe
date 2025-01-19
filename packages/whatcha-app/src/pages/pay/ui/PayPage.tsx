@@ -48,8 +48,8 @@ export function PayPage() {
   }, [getCar]);
 
   const handleClickBackButton = useCallback(() => {
-    navigate(`/car/${usedCarId}`);
-  }, [navigate, usedCarId]);
+    navigate(-1);
+  }, [navigate]);
 
   const handleClickCouponButton = useCallback(() => {
     setCouponModalOpen(true);

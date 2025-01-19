@@ -26,9 +26,7 @@ export function BillContent({
       const a = coupon.maxDiscountAmount;
       const b = Math.round((coupon.discountPercentage! / 100) * price);
 
-      console.log(a, b);
-
-      return a !== null ? Math.min(a, b) : b;
+      return Math.min(a, b);
     } else return 0;
   }, [price, coupon]);
 

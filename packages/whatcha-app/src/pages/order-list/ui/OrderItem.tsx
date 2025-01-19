@@ -32,7 +32,13 @@ export function OrderItem({ order }: OrderItemProps) {
         </div>
         <div className={styles.info}>
           <p className="font-b-md">{modelName}</p>
-          <p className="font-b-md color-primary">{processMessages[process]}</p>
+          <p
+            className={`font-b-md ${
+              process === 4 ? "color-secondary" : "color-primary"
+            }`}
+          >
+            {processMessages[process]}
+          </p>
           <p className="font-r-sm color-gray-600">{orderDate}</p>
         </div>
       </div>
