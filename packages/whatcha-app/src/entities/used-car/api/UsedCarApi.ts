@@ -56,3 +56,19 @@ export const getUsedCarPay = async (usedCarId: number) => {
 
   return response.data;
 };
+
+export const likeUsedCar = async (usedCarId: number) => {
+  const response = await authAxios.post<boolean>(
+    `api/interest/liked-cars/${usedCarId}`
+  );
+
+  return response.data;
+};
+
+export const getLikedCar = async (page: number) => {
+  const response = await authAxios.get<PageResponse<UsedCarListDto>>(
+    `api/interest/liked-cars?page=${page}`
+  );
+
+  return response.data;
+};

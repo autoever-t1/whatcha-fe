@@ -7,6 +7,7 @@ interface OrderResultProps {
 }
 
 export function OrderResult({ usedCar }: OrderResultProps) {
+  console.log(usedCar);
   return (
     <div className={styles.container}>
       <div className={`${styles.message} font-h2`}>

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import styles from "./ReceiveMethod.module.css";
 import { RadioButton } from "@shared/radio-button";
 import MarkerIcon from "@common/assets/marker.png";
-import axios from "axios";
+import { getPathAPI, PathReqDTO } from "@/features/order";
 
 interface ReceiveMethodProps {
   fromLat: number;
@@ -68,28 +68,20 @@ export function ReceiveMethod({
 
   const getPath = useCallback(
     async (fromLat: number, fromLng: number, toLat: number, toLng: number) => {
-      const clientId = import.meta.env.VITE_NAVER_CLIENT_ID;
-      const clientSecrert = import.meta.env.VITE_NAVER_CLIENT_SECRET;
+      const pathData: PathReqDTO = {
+        fromLng,
+        fromLat,
+        toLng,
+        toLat,
+      };
 
-      const start = `${fromLng},${fromLat}`;
-      const goal = `${toLng},${toLat}`;
+      const response = await getPathAPI(pathData);
 
-      const response = await axios.get(
-        `https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=${start}&goal=${goal}`,
-        {
-          headers: {
-            "x-ncp-apigw-api-key-id": clientId,
-            "x-ncp-apigw-api-key": clientSecrert,
-          },
-        }
-      );
-
-      const summary = response.data.route.traoptimal[0].summary;
+      const summary = response.route.traoptimal[0].summary;
       setDistance(summary.distance);
       setDuration(summary.duration);
 
-      const paths: naver.maps.ArrayOfCoords =
-        response.data.route.traoptimal[0].path;
+      const paths: naver.maps.ArrayOfCoords = response.route.traoptimal[0].path;
       new naver.maps.Polyline({
         map: mapRef.current,
         path: paths,
