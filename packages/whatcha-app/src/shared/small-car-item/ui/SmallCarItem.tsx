@@ -11,7 +11,7 @@ interface SmallCarItemProps {
 export function SmallCarItem({ car, color = "default" }: SmallCarItemProps) {
   const {
     usedCarId,
-    thumbnailUrl,
+    mainImage,
     modelName,
     registrationDate,
     mileage,
@@ -28,7 +28,7 @@ export function SmallCarItem({ car, color = "default" }: SmallCarItemProps) {
   return (
     <div className={styles.container} onClick={handleClick}>
       <div className={styles["img-wrapper"]}>
-        <img src={thumbnailUrl} alt="car" />
+        <img src={mainImage} alt="car" />
       </div>
       <div className={styles.info}>
         <p

@@ -68,7 +68,7 @@ export interface UsedCarListDto {
 
 export interface UsedCarSmallListDto {
   usedCarId: number;
-  thumbnailUrl: string;
+  mainImage: string;
   modelName: string;
   registrationDate: string;
   mileage: number;

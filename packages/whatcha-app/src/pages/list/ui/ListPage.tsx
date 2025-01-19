@@ -188,6 +188,7 @@ export function ListPage() {
       if (!target) return prev;
       else {
         target.isLiked = response;
+        target.likeCount += response ? 1 : -1;
         return newList;
       }
     });
