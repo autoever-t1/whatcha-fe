@@ -1,16 +1,23 @@
 import UserPieChart from '../components/member/UserPieChart';
 import UserTable from '../components/member/UserTable';
+import { useUserAgeStats, useUserGenderStats } from '../hooks/useMember';
 
 function Member() {
+  const { data: ageStats, isLoading: ageLoading } = useUserAgeStats();
+  const { data: genderStats, isLoading: genderLoading } = useUserGenderStats();
+
   const ageData = {
-    labels: ['20대', '30대', '40대', '50대', '60대 이상'],
-    data: [30, 25, 20, 15, 10]
+    labels: ageStats?.statistics.map(stat => `${stat.ageRange}대`) ?? [],
+    data: ageStats?.statistics.map(stat => stat.count) ?? []
   };
 
   const genderData = {
-    labels: ['남성', '여성'],
-    data: [60, 40]
+    labels: genderStats?.statistics.map(stat => stat.gender) ?? [],
+    data: genderStats?.statistics.map(stat => stat.count) ?? []
   };
+
+  if (ageLoading || genderLoading) return <div>로딩 중...</div>;
+
 
   return (
     <div>

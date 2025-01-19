@@ -2,7 +2,7 @@ import axios from "axios";
 
 const BASE_URL =
   window.location.hostname === "localhost"
-    ? "http://localhost:8080/api"
+    ? "https://api.whatcha.site/api"
     : "https://api.whatcha.site/api";
 
 const client = axios.create({
@@ -13,5 +13,6 @@ const client = axios.create({
   },
   withCredentials: true, // 쿠키 및 인증 정보 전송을 위해 설정
 });
+
 
 export default client;

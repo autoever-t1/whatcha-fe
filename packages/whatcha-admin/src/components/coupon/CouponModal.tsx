@@ -1,13 +1,18 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
-import { AddCouponRequest, addCoupon } from '../../api/coupon';
+import { AddCouponRequest} from '../../api/coupon';
+import { useAddCoupon } from '../../hooks/useCoupon';
+
 
 interface CouponModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+// 초기값 설정
 const CouponModal = ({ isOpen, onClose }: CouponModalProps): JSX.Element => {
+  const { mutate: addCouponMutation } = useAddCoupon();
+
   const [formData, setFormData] = useState<AddCouponRequest>({
     couponCode: '',
     couponName: '',
@@ -19,7 +24,7 @@ const CouponModal = ({ isOpen, onClose }: CouponModalProps): JSX.Element => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await addCoupon(formData);
+      await addCouponMutation(formData);
       onClose();
     } catch (error) {
       console.error('쿠폰 등록 실패:', error);
@@ -68,21 +73,8 @@ const CouponModal = ({ isOpen, onClose }: CouponModalProps): JSX.Element => {
                   쿠폰 등록
                 </Dialog.Title>
                 
+                {/* 모달 입력 폼 */}
                 <form onSubmit={handleSubmit} className="mt-4 space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      쿠폰 코드
-                    </label>
-                    <input
-                      type="text"
-                      name="couponCode"
-                      value={formData.couponCode}
-                      onChange={handleChange}
-                      className="w-full px-3 py-2 mt-1 border rounded-md"
-                      required
-                    />
-                  </div>
-
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
                       쿠폰명
@@ -120,7 +112,7 @@ const CouponModal = ({ isOpen, onClose }: CouponModalProps): JSX.Element => {
                       value={formData.maxDiscountAmount}
                       onChange={handleChange}
                       className="w-full px-3 py-2 mt-1 border rounded-md"
-                      required
+                      required 
                     />
                   </div>
 

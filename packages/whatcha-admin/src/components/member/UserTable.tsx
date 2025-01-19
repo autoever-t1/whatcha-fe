@@ -1,128 +1,71 @@
-import { DataGrid, GridColDef} from '@mui/x-data-grid';
-import { format} from 'date-fns';
-import { ko } from 'date-fns/locale';
-
-
-interface User {
-  userId: number;
-  name: string;
-  email: string;
-  address: string;
-  userType: string;
-  phone: string;
-  isNotificationAgreed: boolean;
-  isLocationAgreed: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+import { useEffect, useState } from 'react';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+// import { format } from 'date-fns';
+// import { ko } from 'date-fns/locale';
+import { User, getAllUsers } from '../../api/member';
 
 const columns: GridColDef[] = [
-  { field: 'userId', headerName: '회원 ID', width: 100 },
-  { field: 'name', headerName: '이름', width: 120 },
+  { field: 'userId', headerName: '회원 ID', width: 70 },
+  { field: 'name', headerName: '이름', width: 80 },
   { field: 'email', headerName: '이메일', width: 200 },
-  { field: 'phone', headerName: '연락처', width: 150 },
-  { field: 'address', headerName: '주소', width: 250 },
-  { field: 'userType', headerName: '회원 유형', width: 120 },
+  { field: 'phone', headerName: '연락처', width: 110 },
+  { field: 'address', headerName: '주소', width: 150 },
   { 
     field: 'isNotificationAgreed', 
     headerName: '알림 동의', 
-    width: 120,
+    width: 80,
     renderCell: (params) => params.value ? '동의' : '미동의'
   },
   { 
     field: 'isLocationAgreed', 
     headerName: '위치 동의', 
-    width: 120,
+    width: 80,
     renderCell: (params) => params.value ? '동의' : '미동의'
-  },
-  {
-    field: 'createdAt',
-    headerName: '가입일',
-    width: 120,
-    renderCell: (params) => format(new Date(params.value), 'yyyy-MM-dd', { locale: ko })
-  },
-];
-
-const sampleData: User[] = [
-  {
-    userId: 1,
-    name: "홍길동",
-    email: "hong@example.com",
-    address: "서울시 강남구",
-    userType: "일반회원",
-    phone: "010-1234-5678",
-    isNotificationAgreed: true,
-    isLocationAgreed: false,
-    createdAt: "2022-12-12",
-    updatedAt: "2024-03-14"
-  },
-  {
-    userId: 2,
-    name: "홍길동",
-    email: "hong@example.com",
-    address: "서울시 강남구",
-    userType: "일반회원",
-    phone: "010-1234-5678",
-    isNotificationAgreed: true,
-    isLocationAgreed: false,
-    createdAt: "2021-06-12",
-    updatedAt: "2024-03-14"
-  },
-  {
-    userId: 3,
-    name: "홍길동",
-    email: "hong@example.com",
-    address: "서울시 강남구",
-    userType: "일반회원",
-    phone: "010-1234-5678",
-    isNotificationAgreed: true,
-    isLocationAgreed: false,
-    createdAt: "2023-06-12",
-    updatedAt: "2024-03-14"
-  },
-  {
-    userId: 4,
-    name: "홍길동",
-    email: "hong@example.com",
-    address: "서울시 강남구",
-    userType: "일반회원",
-    phone: "010-1234-5678",
-    isNotificationAgreed: true,
-    isLocationAgreed: false,
-    createdAt: "2022-12-12",
-    updatedAt: "2024-03-14"
-  },
-  {
-    userId: 5,
-    name: "홍길동",
-    email: "hong@example.com",
-    address: "서울시 강남구",
-    userType: "일반회원",
-    phone: "010-1234-5678",
-    isNotificationAgreed: true,
-    isLocationAgreed: false,
-    createdAt: "2022-08-12",
-    updatedAt: "2024-03-14"
   },
 ];
 
 function UserTable() {
+
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      setLoading(true);
+      try {
+        console.log('API 호출 시작');  // 디버깅 로그 1
+        const data = await getAllUsers();
+        console.log('받은 데이터:', data);  // 디버깅 로그 2
+        setUsers(data);
+      } catch (err) {
+        console.error('에러 상세:', err);  // 상세 에러 로깅
+        setError('회원 목록을 불러오는데 실패했습니다.');
+      } finally {
+        setLoading(false);
+      }
+    };
+  
+    fetchUsers();
+  }, []);
+  
   return (
     <div className="w-full">
       <div style={{ height: 600, width: '100%' }}>
         <DataGrid
-          rows={sampleData}
+          rows={users}
           columns={columns}
           getRowId={(row) => row.userId}
+          loading={loading}
           initialState={{
             pagination: {
-              paginationModel: { page: 0, pageSize: 10 },
+              paginationModel: { page: 0, pageSize: 20 },
             },
           }}
-          pageSizeOptions={[10, 20, 30]}
           disableRowSelectionOnClick
         />
       </div>
+      {error && <p className="mt-2 text-red-500">{error}</p>}
     </div>
   );
 }
