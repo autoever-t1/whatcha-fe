@@ -1,10 +1,20 @@
-import { UIEventHandler, useCallback, useEffect, useState } from "react";
+import {
+  UIEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import styles from "./CarPage.module.css";
 import ArrowBackIcon from "@common/assets/icons/arrow-back.svg";
 import { BottomButton } from "@shared/bottom-button";
 import { RotateView } from "@widgets/rotate-view";
 import { useNavigate, useParams } from "react-router";
-import { getUsedCarDetail, UsedCarDetailDTO } from "@/entities/used-car";
+import {
+  getUsedCarDetail,
+  likeUsedCar,
+  UsedCarDetailDTO,
+} from "@/entities/used-car";
 import { ContentBox } from "@/shared/content-box";
 import { InnerBox } from "@/shared/inner-box";
 import { BasicInfoContent } from "./BasicInfoContent";
@@ -12,10 +22,15 @@ import { OptionContent } from "./OptionContent";
 import { InstallmentCalculator } from "@/widgets/installment-calculator";
 import { Footer } from "@/shared/footer";
 import { calculateEMI } from "@/widgets/installment-calculator/model/constant";
+import LikeIcon from "@common/assets/icons/like.svg";
+import LikeFilledIcon from "@common/assets/icons/like-filled.svg";
 
 export function CarPage() {
   const navigate = useNavigate();
   const params = useParams();
+  const usedCarId = useMemo(() => {
+    return params.carId ? parseInt(params.carId) : 0;
+  }, [params]);
 
   const [car, setCar] = useState<UsedCarDetailDTO>();
   const [isTop, setTop] = useState(true);
@@ -47,8 +62,17 @@ export function CarPage() {
   );
 
   const handleClickPayButton = useCallback(() => {
-    navigate(`/pay/${params.carId}`);
-  }, [navigate, params]);
+    navigate(`/pay/${usedCarId}`);
+  }, [navigate, usedCarId]);
+
+  const handleClickLikeButton = useCallback(async () => {
+    const response = await likeUsedCar(usedCarId);
+
+    setCar((prev) => {
+      if (prev) return { ...prev, isLiked: response };
+      else return prev;
+    });
+  }, [usedCarId]);
 
   return (
     <div className={styles.container}>
@@ -66,6 +90,12 @@ export function CarPage() {
           <>
             <div className={styles["car-img"]}>
               <RotateView goodsNo={car?.goodsNo} />
+              <button
+                className={styles["like-button"]}
+                onClick={handleClickLikeButton}
+              >
+                <img src={car.isLiked ? LikeFilledIcon : LikeIcon} alt="Like" />
+              </button>
             </div>
             <div className={styles["inner-content"]}>
               <ContentBox title={car.modelName}>

@@ -7,10 +7,10 @@ import { UsedCarListDto } from "@/entities/used-car";
 
 interface CarItemProps {
   car: UsedCarListDto;
-  liked: boolean;
+  onClickLike: () => void;
 }
 
-export function CarItem({ car, liked }: CarItemProps) {
+export function CarItem({ car, onClickLike }: CarItemProps) {
   const {
     usedCarId,
     mainImage,
@@ -20,6 +20,7 @@ export function CarItem({ car, liked }: CarItemProps) {
     vhclRegNo,
     price,
     likeCount,
+    isLiked,
   } = car;
 
   const navigate = useNavigate();
@@ -43,9 +44,15 @@ export function CarItem({ car, liked }: CarItemProps) {
         ).toLocaleString()}km | ${vhclRegNo}`}</p>
         <div className="layout-line">
           <p className="font-b-lg">{(price / 10000).toLocaleString()}만원</p>
-          <button className={styles["like-button"]}>
+          <button
+            className={styles["like-button"]}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClickLike();
+            }}
+          >
             <div className={styles["icon-wrapper"]}>
-              <img src={liked ? LikeFilledIcon : LikeIcon} alt="like" />
+              <img src={isLiked ? LikeFilledIcon : LikeIcon} alt="like" />
             </div>
             {likeCount}
           </button>

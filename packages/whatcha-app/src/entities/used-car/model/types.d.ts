@@ -40,6 +40,7 @@ export interface UsedCarDetailDTO {
   hasLaneDepartureWarning: boolean;
   hasSmartCruiseControl: boolean;
   hasFrontParkingWarning: boolean;
+  isLiked: boolean;
 }
 
 export interface UsedCarPayDTO {
@@ -62,6 +63,7 @@ export interface UsedCarListDto {
   goodsNo: string;
   mainImage: string;
   likeCount: number;
+  isLiked: boolean;
 }
 
 export interface UsedCarSmallListDto {

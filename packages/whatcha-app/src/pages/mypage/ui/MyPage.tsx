@@ -13,7 +13,7 @@ export function MyPage() {
   const navigate = useNavigate();
 
   const handleClickFavorite = useCallback(() => {
-    navigate("/mypage/favorite");
+    navigate("/list?type=like");
   }, [navigate]);
 
   const handleClickCoupon = useCallback(() => {
@@ -53,7 +53,9 @@ export function MyPage() {
       </div>
       <div className={styles["menu-box-wrapper"]}>
         <div className={styles["menu-box"]}>
-          <MenuItem icon={CarIcon}>찜한 매물</MenuItem>
+          <MenuItem icon={CarIcon} onClick={handleClickFavorite}>
+            찜한 매물
+          </MenuItem>
           <MenuItem icon={CouponIcon} onClick={handleClickCoupon}>
             쿠폰함
           </MenuItem>
