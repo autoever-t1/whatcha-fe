@@ -1,10 +1,21 @@
-import { UIEventHandler, useCallback, useEffect, useState } from "react";
+import {
+  UIEventHandler,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import styles from "./CarPage.module.css";
 import ArrowBackIcon from "@common/assets/icons/arrow-back.svg";
 import { BottomButton } from "@shared/bottom-button";
 import { RotateView } from "@widgets/rotate-view";
 import { useNavigate, useParams } from "react-router";
-import { getUsedCarDetail, UsedCarDetailDTO } from "@/entities/used-car";
+import {
+  getUsedCarDetail,
+  likeUsedCar,
+  models,
+  UsedCarDetailDTO,
+} from "@/entities/used-car";
 import { ContentBox } from "@/shared/content-box";
 import { InnerBox } from "@/shared/inner-box";
 import { BasicInfoContent } from "./BasicInfoContent";
@@ -12,11 +23,20 @@ import { OptionContent } from "./OptionContent";
 import { InstallmentCalculator } from "@/widgets/installment-calculator";
 import { Footer } from "@/shared/footer";
 import { calculateEMI } from "@/widgets/installment-calculator/model/constant";
+import LikeIcon from "@common/assets/icons/like.svg";
+import LikeFilledIcon from "@common/assets/icons/like-filled.svg";
+import { MainButton } from "@/shared/main-button";
+import { AlarmSheet } from "@/widgets/alarm-sheet";
+import { AlarmCreateDTO, createAlarm } from "@/features/alarm";
 
 export function CarPage() {
   const navigate = useNavigate();
   const params = useParams();
+  const usedCarId = useMemo(() => {
+    return params.carId ? parseInt(params.carId) : 0;
+  }, [params]);
 
+  const [isAlarmSheetOpen, setAlarmSheetOpen] = useState(false);
   const [car, setCar] = useState<UsedCarDetailDTO>();
   const [isTop, setTop] = useState(true);
 
@@ -47,13 +67,49 @@ export function CarPage() {
   );
 
   const handleClickPayButton = useCallback(() => {
-    navigate(`/pay/${params.carId}`);
-  }, [navigate, params]);
+    navigate(`/pay/${usedCarId}`);
+  }, [navigate, usedCarId]);
+
+  const handleClickLikeButton = useCallback(async () => {
+    const response = await likeUsedCar(usedCarId);
+
+    setCar((prev) => {
+      if (prev) return { ...prev, isLiked: response };
+      else return prev;
+    });
+  }, [usedCarId]);
+
+  const handleOpenAlarmSheet = useCallback(() => {
+    setAlarmSheetOpen(true);
+  }, []);
+
+  const handleCloseAlarmSheet = useCallback(() => {
+    setAlarmSheetOpen(false);
+  }, []);
+
+  const handleClickCreateAlarm = useCallback(
+    async (alertExpirationDate: string) => {
+      if (!car) return;
+      const newAlarmInfo: AlarmCreateDTO = {
+        modelName: models
+          .map((model) => model.modelName)
+          .filter((modelName) => car.modelName.includes(modelName))[0],
+        alertExpirationDate,
+      };
+      const response = await createAlarm(newAlarmInfo);
+
+      console.log(response);
+      //TODO 후처리
+    },
+    [car]
+  );
 
   return (
     <div className={styles.container}>
       <div className={styles.content} onScroll={handleContentScroll}>
-        <div className={`${styles.header} ${isTop ? styles.top : ""}`}>
+        <div
+          className={`${styles.header} ${isTop ? styles.top : ""} font-r-lg`}
+        >
           <button
             className={styles["icon-button"]}
             onClick={handleClickBackButton}
@@ -66,6 +122,12 @@ export function CarPage() {
           <>
             <div className={styles["car-img"]}>
               <RotateView goodsNo={car?.goodsNo} />
+              <button
+                className={styles["like-button"]}
+                onClick={handleClickLikeButton}
+              >
+                <img src={car.isLiked ? LikeFilledIcon : LikeIcon} alt="Like" />
+              </button>
             </div>
             <div className={styles["inner-content"]}>
               <ContentBox title={car.modelName}>
@@ -94,6 +156,9 @@ export function CarPage() {
                 <InnerBox>
                   <BasicInfoContent car={car} />
                 </InnerBox>
+                <MainButton onClick={handleOpenAlarmSheet}>
+                  입고 알림 신청
+                </MainButton>
               </ContentBox>
               <ContentBox title="신차가격대비">
                 <p className="font-r-md">
@@ -203,6 +268,13 @@ export function CarPage() {
       <BottomButton onClick={handleClickPayButton}>
         계약금 결제하기
       </BottomButton>
+
+      {isAlarmSheetOpen && (
+        <AlarmSheet
+          onClose={handleCloseAlarmSheet}
+          onCreateAlarm={handleClickCreateAlarm}
+        />
+      )}
     </div>
   );
 }

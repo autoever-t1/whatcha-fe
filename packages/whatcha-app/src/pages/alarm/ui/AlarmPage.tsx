@@ -1,11 +1,25 @@
 import { MainHeader } from "@shared/main-header";
 import styles from "./AlarmPage.module.css";
 import { useNavigate } from "react-router";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AlarmItem } from "./AlarmItem";
+import { AlarmListItemDTO, getAlarms } from "@/features/alarm";
 
 export function AlarmPage() {
   const navigate = useNavigate();
+
+  const [alarms, setAlarms] = useState<AlarmListItemDTO[]>([]);
+
+  const getAlarmList = useCallback(async () => {
+    const response = await getAlarms();
+
+    console.log(response);
+    setAlarms(response);
+  }, []);
+
+  useEffect(() => {
+    getAlarmList();
+  }, [getAlarmList]);
 
   const handleClickBackButton = useCallback(() => {
     navigate("/mypage");
@@ -18,12 +32,9 @@ export function AlarmPage() {
         onClickBack={handleClickBackButton}
       />
       <div className={styles.content}>
-        <AlarmItem
-          alarm={{
-            model: "쏘나타 하이브리드 르블랑",
-            expireDate: "2025-01-15",
-          }}
-        />
+        {alarms.map((alarm) => (
+          <AlarmItem key={alarm.userCarAlertId} alarm={alarm} />
+        ))}
       </div>
     </div>
   );

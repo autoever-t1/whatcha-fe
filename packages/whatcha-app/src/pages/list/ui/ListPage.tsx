@@ -4,8 +4,10 @@ import { MainHeader } from "@shared/main-header";
 import { CarItem } from "@shared/car-item";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
+  getLikedCar,
   getUsedCarByConditions,
   getUsedCarByKeyword,
+  likeUsedCar,
   options,
   UsedCarListDto,
 } from "@/entities/used-car";
@@ -130,7 +132,11 @@ export function ListPage() {
   ]);
 
   const headerTitle = useMemo(() => {
-    return type === "search" && keyword ? keyword : "검색 결과";
+    return type === "like"
+      ? "나의 찜 목록"
+      : type === "search" && keyword
+      ? keyword
+      : "검색 결과";
   }, [type, keyword]);
 
   const observer = useRef<IntersectionObserver | null>(null);
@@ -159,6 +165,8 @@ export function ListPage() {
       } else {
         response = await getUsedCarByConditions(queries, page);
       }
+    } else if (type === "like") {
+      response = await getLikedCar(page);
     }
 
     setCarList((prev) => [...prev, ...response!.content]);
@@ -171,6 +179,21 @@ export function ListPage() {
     getData();
   }, [page]);
 
+  const handleClickLike = useCallback(async (usedCarId: number) => {
+    const response = await likeUsedCar(usedCarId);
+
+    setCarList((prev) => {
+      const newList = [...prev];
+      const target = newList.find((car) => car.usedCarId === usedCarId);
+      if (!target) return prev;
+      else {
+        target.isLiked = response;
+        target.likeCount += response ? 1 : -1;
+        return newList;
+      }
+    });
+  }, []);
+
   const handleClickBackButton = useCallback(() => {
     navigate(-1);
   }, [navigate]);
@@ -182,7 +205,11 @@ export function ListPage() {
         <div className={styles.content}>
           <div className={styles.list}>
             {carList.map((car) => (
-              <CarItem key={car.usedCarId} car={car} liked />
+              <CarItem
+                key={car.usedCarId}
+                car={car}
+                onClickLike={() => handleClickLike(car.usedCarId)}
+              />
             ))}
             <div ref={lastItemRef} style={{ height: "1px" }} />
           </div>
