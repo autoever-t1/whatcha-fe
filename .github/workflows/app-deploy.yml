@@ -27,6 +27,8 @@ jobs:
         run: |
           cd packages/whatcha-app
           echo "VITE_SERVER_URL=${{ secrets.VITE_SERVER_URL }}" >> .env
+          echo "VITE_NAVER_CLIENT_ID=${{ secrets.VITE_NAVER_CLIENT_ID }}" >> .env
+          echo "VITE_NAVER_CLIENT_SECRET=${{ secrets.VITE_NAVER_CLIENT_SECRET }}" >> .env
 
       - name: Build React App
         run: |
