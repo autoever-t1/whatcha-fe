@@ -14,6 +14,7 @@ import {
 } from "@/entities/used-car";
 
 export function MainPage() {
+  console.log(location.href);
   const [isFavoriteSheetOpen, setFavoriteSheetOpen] = useState(false);
   const [recommendations, setRecommnedations] = useState<UsedCarSmallListDto[]>(
     []
@@ -33,6 +34,10 @@ export function MainPage() {
   }, []);
 
   useEffect(() => {
+    console.log("asdf");
+    console.log(window.AndroidInterface.getLatitude());
+    console.log(window.AndroidInterface.getLongitude());
+
     if (window.AndroidInterface && !Boolean(sessionStorage.getItem("at"))) {
       const ai = window.AndroidInterface;
       ai.log("Connect to AndroidInterface");
