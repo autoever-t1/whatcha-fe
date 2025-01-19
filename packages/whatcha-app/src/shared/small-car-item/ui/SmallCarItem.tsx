@@ -1,35 +1,34 @@
 import { useCallback } from "react";
 import styles from "./SmallCarItem.module.css";
 import { useNavigate } from "react-router";
-
-interface Car {
-  carId: number;
-  img: string;
-  name: string;
-  date: string;
-  mileage: number;
-  vhclRegNo: string;
-  price: number;
-}
+import { UsedCarSmallListDto } from "@/entities/used-car";
 
 interface SmallCarItemProps {
-  car: Car;
+  car: UsedCarSmallListDto;
   color?: "default" | "primary";
 }
 
 export function SmallCarItem({ car, color = "default" }: SmallCarItemProps) {
-  const { carId, img, name, date, mileage, vhclRegNo, price } = car;
+  const {
+    usedCarId,
+    thumbnailUrl,
+    modelName,
+    registrationDate,
+    mileage,
+    vhclRegNo,
+    price,
+  } = car;
 
   const navigate = useNavigate();
 
   const handleClick = useCallback(() => {
-    navigate(`/car/${carId}`);
-  }, [carId, navigate]);
+    navigate(`/car/${usedCarId}`);
+  }, [usedCarId, navigate]);
 
   return (
     <div className={styles.container} onClick={handleClick}>
       <div className={styles["img-wrapper"]}>
-        <img src={img} alt="car" />
+        <img src={thumbnailUrl} alt="car" />
       </div>
       <div className={styles.info}>
         <p
@@ -37,20 +36,20 @@ export function SmallCarItem({ car, color = "default" }: SmallCarItemProps) {
             color === "primary" ? styles.primary : ""
           } font-b-sm`}
         >
-          {name}
+          {modelName}
         </p>
         <p
           className={`${styles["sub-info"]} ${
             color === "primary" ? styles.primary : ""
           } font-r-xs`}
         >
-          {date} | {`${mileage.toLocaleString()}km`} | {vhclRegNo}
+          {registrationDate} | {`${mileage.toLocaleString()}km`} | {vhclRegNo}
         </p>
         <p
           className={`${styles.price} ${
             color === "primary" ? styles.primary : ""
           } font-b-sm`}
-        >{`${(price / 1000).toLocaleString()}만원`}</p>
+        >{`${(price / 10000).toLocaleString()}만원`}</p>
       </div>
     </div>
   );

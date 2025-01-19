@@ -7,18 +7,6 @@ const authAxios = axios.create({
 });
 
 authAxios.interceptors.request.use((config) => {
-  // const sessionValue = sessionStorage.getItem("user-storage");
-
-  // if (sessionValue) {
-  //   const sessionObj = JSON.parse(sessionValue);
-
-  //   const token = sessionObj?.state?.user?.token;
-
-  //   if (token) {
-  //     config.headers.setAuthorization(`Bearer ${token}`);
-  //   }
-  // }
-
   const at = sessionStorage.getItem("at");
 
   if (at) {

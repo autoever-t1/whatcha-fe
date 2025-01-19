@@ -1,30 +1,23 @@
+import { UsedCarDetailDTO } from "@/entities/used-car";
 import styles from "./CarInfo.module.css";
 
-interface Car {
-  img: string;
-  model: string;
-  date: string;
-  mileage: number;
-  price: number;
-}
-
 interface CarInfoProps {
-  car: Car;
+  car: UsedCarDetailDTO;
 }
 
 export function CarInfo({ car }: CarInfoProps) {
-  const { img, model, date, mileage, price } = car;
+  const { mainImage, modelName, registrationDate, mileage, price } = car;
   return (
     <div className={styles.container}>
       <div className={styles["img-wrapper"]}>
-        <img src={img} alt="Img" />
+        <img src={mainImage} alt="Img" />
       </div>
       <div className={styles.info}>
-        <p className="font-r-sm">{model}</p>
+        <p className="font-r-sm">{modelName}</p>
         <p className="font-r-sm color-gray-400">
-          {date} {mileage.toLocaleString()}km
+          {registrationDate} {parseInt(mileage).toLocaleString()}km
         </p>
-        <p className="font-b-md">{price.toLocaleString()}만원</p>
+        <p className="font-b-md">{(price / 10000).toLocaleString()}만원</p>
       </div>
     </div>
   );

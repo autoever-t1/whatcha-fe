@@ -1,19 +1,11 @@
 import { BaseModal } from "@shared/base-modal";
 import styles from "./CouponModal.module.css";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CouponItem } from "@shared/coupon-item";
-
-interface Coupon {
-  couponId: number;
-  couponName: string;
-  discountPercentage: number | null;
-  discountValue: number | null;
-  maxDiscountAmount: number | null;
-  expiryDate: string;
-}
+import { CouponDTO, getAllCoupon } from "@/entities/coupon";
 
 interface CouponModalProps {
-  onClickCoupon: (couponId: number) => void;
+  onClickCoupon: (coupon: CouponDTO) => void;
   title: string;
   onClickBack: () => void;
 }
@@ -23,99 +15,57 @@ export function CouponModal({
   title,
   onClickBack,
 }: CouponModalProps) {
-  const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const [couponList, setCouponList] = useState<CouponDTO[]>([]);
+  const [page, setPage] = useState(0);
+  const [hasNextPage, setHasNextPage] = useState(true);
+  const [isLoading, setLoading] = useState(false);
 
-  const getCoupons = useCallback(async () => {
-    setCoupons([
-      {
-        couponId: 1,
-        couponName: "신규 가입 축하 쿠폰",
-        discountPercentage: 10,
-        discountValue: null,
-        maxDiscountAmount: 100000,
-        expiryDate: "2025-01-16",
-      },
-      {
-        couponId: 2,
-        couponName: "신규 가입 축하 쿠폰",
-        discountPercentage: 10,
-        discountValue: null,
-        maxDiscountAmount: 100000,
-        expiryDate: "2025-01-16",
-      },
-      {
-        couponId: 3,
-        couponName: "신규 가입 축하 쿠폰",
-        discountPercentage: 10,
-        discountValue: null,
-        maxDiscountAmount: 100000,
-        expiryDate: "2025-01-16",
-      },
-      {
-        couponId: 4,
-        couponName: "신규 가입 축하 쿠폰",
-        discountPercentage: 10,
-        discountValue: null,
-        maxDiscountAmount: 100000,
-        expiryDate: "2025-01-16",
-      },
-      {
-        couponId: 5,
-        couponName: "신규 가입 축하 쿠폰",
-        discountPercentage: 10,
-        discountValue: null,
-        maxDiscountAmount: 100000,
-        expiryDate: "2025-01-16",
-      },
-      {
-        couponId: 6,
-        couponName: "신규 가입 축하 쿠폰",
-        discountPercentage: 10,
-        discountValue: null,
-        maxDiscountAmount: 100000,
-        expiryDate: "2025-01-16",
-      },
-      {
-        couponId: 7,
-        couponName: "신규 가입 축하 쿠폰",
-        discountPercentage: 10,
-        discountValue: null,
-        maxDiscountAmount: 100000,
-        expiryDate: "2025-01-16",
-      },
-      {
-        couponId: 8,
-        couponName: "신규 가입 축하 쿠폰",
-        discountPercentage: 10,
-        discountValue: null,
-        maxDiscountAmount: 100000,
-        expiryDate: "2025-01-16",
-      },
-      {
-        couponId: 9,
-        couponName: "신규 가입 축하 쿠폰",
-        discountPercentage: 10,
-        discountValue: null,
-        maxDiscountAmount: 100000,
-        expiryDate: "2025-01-16",
-      },
-    ]);
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastItemRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isLoading) return;
+
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          setPage((prevPage) => prevPage + 1);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasNextPage]
+  );
+
+  const getCoupons = useCallback(async (page: number) => {
+    const response = await getAllCoupon(page);
+
+    if (response.content === undefined) {
+      setHasNextPage(false);
+    } else {
+      setCouponList((prev) => [...prev, ...response.content]);
+      setHasNextPage(!response.last);
+    }
+    setLoading(false);
   }, []);
 
   useEffect(() => {
-    getCoupons();
-  }, [getCoupons]);
+    setLoading(true);
+    getCoupons(page);
+  }, [getCoupons, page]);
 
   return (
     <BaseModal title={title} onClickBack={onClickBack}>
       <div className={styles.content}>
-        {coupons.map((coupon, i) => (
+        {couponList.map((coupon, i) => (
           <CouponItem
             key={i}
             coupon={coupon}
-            onClick={() => onClickCoupon(coupon.couponId)}
+            onClick={() => onClickCoupon(coupon)}
           />
         ))}
+        <div style={{ height: "1px" }} ref={lastItemRef} />
       </div>
     </BaseModal>
   );

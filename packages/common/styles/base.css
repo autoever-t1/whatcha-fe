@@ -234,6 +234,14 @@ img {
   color: var(--color-primary);
 }
 
+.color-secondary {
+  color: var(--color-secondary);
+}
+
+.color-gray-50 {
+  color: var(--color-gray-50);
+}
+
 .color-gray-400 {
   color: var(--color-gray-400);
 }

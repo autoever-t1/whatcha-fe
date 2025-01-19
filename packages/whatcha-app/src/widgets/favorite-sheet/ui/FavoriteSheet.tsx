@@ -1,7 +1,9 @@
 import { RangeInput } from "@shared/range-input";
 import styles from "./FavoriteSheet.module.css";
 import { useCallback, useState } from "react";
-import GrandeurImg from "@common/assets/grandeur.png";
+import { updateBudget, updatePreference } from "@/entities/user";
+import { models } from "@/entities/used-car";
+import { FavoriteItem } from "./FavoriteItem";
 
 interface FavoriteSheetProps {
   onClose: () => void;
@@ -9,33 +11,96 @@ interface FavoriteSheetProps {
 
 export function FavoriteSheet({ onClose }: FavoriteSheetProps) {
   const [phase, setPhase] = useState(0);
+  const [priceMin, setPriceMin] = useState("1000");
+  const [priceMax, setPriceMax] = useState("10000");
+  const [selectedModels, setSelectedModels] = useState<string[]>([]);
+
+  const handleChangePriceMin = useCallback((value: string) => {
+    setPriceMin(value);
+  }, []);
+
+  const handleChangePriceMax = useCallback((value: string) => {
+    setPriceMax(value);
+  }, []);
+
+  const handleClickModel = useCallback(
+    (modelName: string) => {
+      const contains = selectedModels.find((model) => model === modelName);
+
+      if (contains) {
+        setSelectedModels((prev) =>
+          prev.filter((model) => model !== modelName)
+        );
+      } else {
+        if (selectedModels.length >= 3) return;
+
+        setSelectedModels((prev) => [...prev, modelName]);
+      }
+    },
+    [selectedModels]
+  );
+
+  const submitBudget = useCallback(async () => {
+    const min = parseInt(priceMin);
+    const max = parseInt(priceMax);
+
+    if (isNaN(min) || isNaN(max)) return;
+
+    await updateBudget(min * 10000, max * 10000);
+    sessionStorage.setItem("bmin", String(min * 10000));
+    sessionStorage.setItem("bmax", String(max * 10000));
+    setPhase(1);
+  }, [priceMin, priceMax]);
+
+  const submitPreferences = useCallback(async () => {
+    if (selectedModels.length < 3) return;
+    await updatePreference(selectedModels);
+    sessionStorage.setItem("pm1", selectedModels[0]);
+    sessionStorage.setItem("pm2", selectedModels[1]);
+    sessionStorage.setItem("pm3", selectedModels[2]);
+    onClose();
+  }, [selectedModels, onClose]);
 
   const handleClickNext = useCallback(() => {
-    if (phase === 0) setPhase(1);
-    else onClose();
-  }, [phase, onClose]);
+    if (phase === 1 && selectedModels.length < 3) return;
+
+    if (phase === 0) submitBudget();
+    else submitPreferences();
+  }, [phase, submitBudget, submitPreferences]);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <div className={`${styles.question} font-h4`}>
-          만약 차를 산다면
-          <br />
-          <span className={styles.strong}>예산</span>은 어느 정도인가요?
+          {phase === 0 ? (
+            <>
+              만약 차를 산다면
+              <br />
+              <span className={styles.strong}>예산</span>은 어느 정도인가요?
+            </>
+          ) : (
+            <>
+              선호하는 모델을 선택해주세요
+              <br />{" "}
+              <span
+                className={styles.strong}
+              >{`( ${selectedModels.length} / 3 )`}</span>{" "}
+            </>
+          )}
         </div>
         <div className={styles.content}>
           {phase === 0 ? (
             <div className="layout-vertical">
               <RangeInput
                 from={{
-                  value: "1000",
-                  onChange: () => {},
+                  value: String(priceMin),
+                  onChange: handleChangePriceMin,
                   unit: "만원",
                   suffix: "부터",
                 }}
                 to={{
-                  value: "1000",
-                  onChange: () => {},
+                  value: String(priceMax),
+                  onChange: handleChangePriceMax,
                   unit: "만원",
                   suffix: "까지",
                 }}
@@ -44,42 +109,16 @@ export function FavoriteSheet({ onClose }: FavoriteSheetProps) {
             </div>
           ) : (
             <div className={styles.grid}>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
-              <div className={styles["car-item"]}>
-                <img src={GrandeurImg} alt="car" />
-              </div>
+              {models.map((model, i) => (
+                <FavoriteItem
+                  key={i}
+                  model={model}
+                  selected={Boolean(
+                    selectedModels.find((m) => m === model.modelName)
+                  )}
+                  onClick={() => handleClickModel(model.modelName)}
+                />
+              ))}
             </div>
           )}
         </div>

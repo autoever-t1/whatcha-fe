@@ -1,12 +1,24 @@
 import { MainHeader } from "@shared/main-header";
 import styles from "./OrderListPage.module.css";
 import { useNavigate } from "react-router";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { OrderItem } from "./OrderItem";
-import GrandeurImg from "@common/assets/grandeur.png";
+import { getOrderList, OrderListItemDTO } from "@/features/order";
 
 export function OrderListPage() {
   const navigate = useNavigate();
+
+  const [orderList, setOrderList] = useState<OrderListItemDTO[]>([]);
+
+  const getOrders = useCallback(async () => {
+    const response = await getOrderList();
+
+    setOrderList(response);
+  }, []);
+
+  useEffect(() => {
+    getOrders();
+  }, [getOrders]);
 
   const handleClickBackButton = useCallback(() => {
     navigate("/mypage");
@@ -16,17 +28,8 @@ export function OrderListPage() {
     <div className={styles.container}>
       <MainHeader title="주문 조회" onClickBack={handleClickBackButton} />
       <div className={styles.content}>
-        {Array.from({ length: 20 }, (_, i) => i).map((_, i) => (
-          <OrderItem
-            key={i}
-            order={{
-              orderId: i,
-              model: "그랜저 하이브리드 르블랑",
-              process: 2,
-              date: "2025-01-16",
-              img: GrandeurImg,
-            }}
-          />
+        {orderList.map((order) => (
+          <OrderItem key={order.orderId} order={order} />
         ))}
       </div>
     </div>

@@ -1,33 +1,19 @@
 import { useMemo } from "react";
 import styles from "./CouponItem.module.css";
-
-interface Coupon {
-  couponName: string;
-  discountPercentage: number | null;
-  discountValue: number | null;
-  maxDiscountAmount: number | null;
-  expiryDate: string;
-}
+import { CouponDTO } from "@/entities/coupon";
 
 interface CouponItemProps {
-  coupon: Coupon;
+  coupon: CouponDTO;
   onClick?: () => void;
 }
 
 export function CouponItem({ coupon, onClick }: CouponItemProps) {
-  const {
-    couponName,
-    discountPercentage,
-    discountValue,
-    maxDiscountAmount,
-    expiryDate,
-  } = coupon;
+  const { couponName, discountPercentage, maxDiscountAmount, expiryDate } =
+    coupon;
 
   const discountMessage = useMemo(() => {
-    return discountPercentage !== null
-      ? `${discountPercentage}%`
-      : `${discountValue}원`;
-  }, [discountPercentage, discountValue]);
+    return `${discountPercentage}%`;
+  }, [discountPercentage]);
 
   return (
     <div className={styles.container} onClick={onClick}>
