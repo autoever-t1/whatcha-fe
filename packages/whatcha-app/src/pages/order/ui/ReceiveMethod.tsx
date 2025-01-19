@@ -27,8 +27,6 @@ export function ReceiveMethod({
 
   const mapRef = useRef<naver.maps.Map>();
 
-  console.log(fromLat, fromLng);
-
   const paintMap = useCallback((lat: number, lng: number) => {
     mapRef.current = new naver.maps.Map("map", {
       center: new naver.maps.LatLng(lat, lng),
@@ -77,7 +75,7 @@ export function ReceiveMethod({
       const goal = `${toLng},${toLat}`;
 
       const response = await axios.get(
-        `/map-direction/v1/driving?start=${start}&goal=${goal}`,
+        `https://naveropenapi.apigw.ntruss.com/map-direction/v1/driving?start=${start}&goal=${goal}`,
         {
           headers: {
             "x-ncp-apigw-api-key-id": clientId,
