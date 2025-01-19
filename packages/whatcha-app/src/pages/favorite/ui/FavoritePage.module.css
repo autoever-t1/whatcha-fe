@@ -5,7 +5,9 @@
 
 .content {
   width: 100%;
-  height: calc(100% - var(--size-main-header-height));
+  height: calc(
+    100% - var(--size-main-header-height) - var(--size-bottom-button-height)
+  );
   overflow-y: auto;
   background-color: var(--color-gray-100);
   display: flex;

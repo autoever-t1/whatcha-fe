@@ -31,7 +31,7 @@ export function OrderItem({ order }: OrderItemProps) {
           <img src={mainImage} alt="CarImg" />
         </div>
         <div className={styles.info}>
-          <p className="font-b-md">{modelName}</p>
+          <p className="font-b-sm">{modelName}</p>
           <p
             className={`font-b-md ${
               process === 4 ? "color-secondary" : "color-primary"

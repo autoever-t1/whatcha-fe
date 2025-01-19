@@ -14,6 +14,7 @@ import {
 } from "@/entities/used-car";
 
 export function MainPage() {
+  console.log(location.href);
   const [isFavoriteSheetOpen, setFavoriteSheetOpen] = useState(false);
   const [recommendations, setRecommnedations] = useState<UsedCarSmallListDto[]>(
     []

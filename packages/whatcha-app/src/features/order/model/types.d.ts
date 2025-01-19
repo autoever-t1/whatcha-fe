@@ -60,3 +60,10 @@ export interface OrderListItemDTO {
   process: number;
   orderDate: string;
 }
+
+export interface PathReqDTO {
+  fromLng: number;
+  fromLat: number;
+  toLng: number;
+  toLat: number;
+}

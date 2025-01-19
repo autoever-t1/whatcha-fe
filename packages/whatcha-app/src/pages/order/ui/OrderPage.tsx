@@ -80,7 +80,7 @@ export function OrderPage() {
       registrationDate: response.registrationDate,
       vhclRegNo: response.vhclRegNo,
       modelName: response.modelName,
-      thumbnailUrl: response.mainImage,
+      mainImage: response.mainImage,
       mileage: parseInt(response.mileage),
     });
     setProcessInfo(response.orderProcessInfo);
