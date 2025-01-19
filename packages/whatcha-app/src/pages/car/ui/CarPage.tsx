@@ -13,6 +13,7 @@ import { useNavigate, useParams } from "react-router";
 import {
   getUsedCarDetail,
   likeUsedCar,
+  models,
   UsedCarDetailDTO,
 } from "@/entities/used-car";
 import { ContentBox } from "@/shared/content-box";
@@ -90,7 +91,9 @@ export function CarPage() {
     async (alertExpirationDate: string) => {
       if (!car) return;
       const newAlarmInfo: AlarmCreateDTO = {
-        modelName: car.modelName,
+        modelName: models
+          .map((model) => model.modelName)
+          .filter((modelName) => car.modelName.includes(modelName))[0],
         alertExpirationDate,
       };
       const response = await createAlarm(newAlarmInfo);
