@@ -28,6 +28,28 @@ export function RotateView({ goodsNo }: RotateViewProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
 
+  const intervalRef = useRef<NodeJS.Timeout>();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      intervalRef.current = setInterval(() => {
+        setCurrentFrame((prev) => {
+          const newFrame = prev + 1;
+          if (newFrame > totalFrames) {
+            clearInterval(intervalRef.current!);
+            return 0;
+          }
+
+          return newFrame;
+        });
+      }, 50);
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
   // 이미지 로드
   useEffect(() => {
     const images: HTMLImageElement[] = [];
