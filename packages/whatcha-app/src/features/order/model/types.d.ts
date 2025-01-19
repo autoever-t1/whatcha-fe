@@ -23,27 +23,34 @@ export interface OrderProcessDTO {
 }
 
 export interface OrderDTO {
+  orderId: number;
+  usedCarId: number;
+  fullPayment: number;
+  deposit: number;
+  errorMessage: string;
+}
+
+export interface BranchStoreDTO {
+  branchStoreId: number;
+  branchStoreName: string;
+  location: string;
+  latitude: number;
+  longitude: number;
+  ownedCarCount: number;
+  phone: string;
+}
+
+export interface OrderSheetDTO {
   price: number;
   registrationDate: string;
   vhclRegNo: string;
+  modelName: string;
+  mainImage: string;
+  mileage: string;
   couponInfo: CouponDTO | null;
   orderProcessInfo: OrderProcessDTO;
-  orderInfo: {
-    orderId: 16;
-    usedCarId: 13;
-    fullPayment: 18530000;
-    deposit: 300000;
-    errorMessage: null;
-  };
-  branchStoreInfo: {
-    branchStoreId: 2;
-    branchStoreName: "현대자동차 인증중고차센터 양산";
-    location: "경남 양산시 하북면 삼동로 44";
-    latitude: 35.497006;
-    longitude: 129.095554;
-    ownedCarCount: 242;
-    phone: "1522-0880";
-  };
+  orderInfo: OrderDTO;
+  branchStoreInfo: BranchStoreDTO;
 }
 
 export interface OrderListItemDTO {
