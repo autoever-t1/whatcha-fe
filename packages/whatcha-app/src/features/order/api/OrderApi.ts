@@ -47,7 +47,7 @@ export const contract = async (orderId: number) => {
 };
 
 export const chooseMethod = async (orderId: number) => {
-  const response = await authAxios.put<void>(
+  const response = await authAxios.post<void>(
     `api/order/${orderId}/deliveryService`
   );
 

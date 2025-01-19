@@ -107,7 +107,9 @@ export function CarPage() {
   return (
     <div className={styles.container}>
       <div className={styles.content} onScroll={handleContentScroll}>
-        <div className={`${styles.header} ${isTop ? styles.top : ""}`}>
+        <div
+          className={`${styles.header} ${isTop ? styles.top : ""} font-r-lg`}
+        >
           <button
             className={styles["icon-button"]}
             onClick={handleClickBackButton}

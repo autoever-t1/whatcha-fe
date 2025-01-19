@@ -22,7 +22,6 @@ import { CouponDTO } from "@/entities/coupon";
 import { UsedCarSmallListDto } from "@/entities/used-car";
 
 export function OrderPage() {
-  alert(location.href);
   const navigate = useNavigate();
   const params = useParams();
   const orderId = useMemo(() => {
@@ -81,7 +80,7 @@ export function OrderPage() {
       registrationDate: response.registrationDate,
       vhclRegNo: response.vhclRegNo,
       modelName: response.modelName,
-      thumbnailUrl: response.mainImage,
+      mainImage: response.mainImage,
       mileage: parseInt(response.mileage),
     });
     setProcessInfo(response.orderProcessInfo);

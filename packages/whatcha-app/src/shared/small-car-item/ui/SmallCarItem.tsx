@@ -19,6 +19,8 @@ export function SmallCarItem({ car, color = "default" }: SmallCarItemProps) {
     price,
   } = car;
 
+  console.log(mainImage);
+
   const navigate = useNavigate();
 
   const handleClick = useCallback(() => {

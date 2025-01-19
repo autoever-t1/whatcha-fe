@@ -17,7 +17,6 @@
   color: var(--color-gray-900);
   display: flex;
   align-items: center;
-  height: 40px;
   padding: 8px;
   gap: 8px;
   transition: background-color 0.25s, color 0.25s, border-color 0.25s;
@@ -30,8 +29,8 @@
 }
 
 .icon-button {
-  flex: 16px 0 0;
-  height: 16px;
+  flex: 20px 0 0;
+  height: 20px;
 
   img {
     width: 100%;
