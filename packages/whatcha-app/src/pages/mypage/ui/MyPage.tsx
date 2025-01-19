@@ -13,6 +13,10 @@ export function MyPage() {
   const navigate = useNavigate();
 
   const handleClickFavorite = useCallback(() => {
+    navigate("/mypage/favorite");
+  }, [navigate]);
+
+  const handleClickLike = useCallback(() => {
     navigate("/list?type=like");
   }, [navigate]);
 
@@ -31,7 +35,7 @@ export function MyPage() {
   return (
     <div className={styles.container}>
       <div className={styles["name-box"]}>
-        <span className="font-b-lg">김길동</span>{" "}
+        <span className="font-b-lg">{sessionStorage.getItem("name")}</span>{" "}
         <span className="font-r-lg">고객님</span>
       </div>
       <div className={styles["favorite-box"]}>
@@ -44,16 +48,28 @@ export function MyPage() {
         </button>
         <div className={styles["favorite-item"]}>
           <p className="font-b-sm">모델</p>
-          <p className="font-r-sm">그랜저 쏘나타 펠리세이드</p>
+          <p className="font-r-sm">
+            {sessionStorage.getItem("pm1")} {sessionStorage.getItem("pm2")}{" "}
+            {sessionStorage.getItem("pm3")}
+          </p>
         </div>
         <div className={styles["favorite-item"]}>
           <p className="font-b-sm">예산</p>
-          <p className="font-r-sm">1,000만원 ~ 3,000만원</p>
+          <p className="font-r-sm">
+            {(
+              parseInt(sessionStorage.getItem("bmin")!) / 10000
+            ).toLocaleString()}
+            만원 ~{" "}
+            {(
+              parseInt(sessionStorage.getItem("bmax")!) / 10000
+            ).toLocaleString()}
+            만원
+          </p>
         </div>
       </div>
       <div className={styles["menu-box-wrapper"]}>
         <div className={styles["menu-box"]}>
-          <MenuItem icon={CarIcon} onClick={handleClickFavorite}>
+          <MenuItem icon={CarIcon} onClick={handleClickLike}>
             찜한 매물
           </MenuItem>
           <MenuItem icon={CouponIcon} onClick={handleClickCoupon}>
