@@ -40,7 +40,7 @@ export const models: { modelName: string; img: string }[] = [
   { modelName: "싼타페", img: Model5Img },
   { modelName: "코나", img: Model6Img },
   { modelName: "투싼", img: Model7Img },
-  { modelName: "펠리세이드", img: Model8Img },
+  { modelName: "팰리세이드", img: Model8Img },
   { modelName: "스타리아", img: Model9Img },
   { modelName: "캐스퍼", img: Model10Img },
   { modelName: "아이오닉6", img: Model11Img },
