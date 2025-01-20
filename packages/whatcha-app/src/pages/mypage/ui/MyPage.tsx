@@ -32,6 +32,12 @@ export function MyPage() {
     navigate("/mypage/orders");
   }, [navigate]);
 
+  const handleClickLogout = useCallback(() => {
+    if (window.AndroidInterface) {
+      window.AndroidInterface.clearAllDataAndRedirect();
+    }
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles["name-box"]}>
@@ -81,7 +87,9 @@ export function MyPage() {
           <MenuItem icon={OrderIcon} onClick={handleClickOrder}>
             주문 조회
           </MenuItem>
-          <MenuItem icon={LogoutIcon}>로그아웃</MenuItem>
+          <MenuItem icon={LogoutIcon} onClick={handleClickLogout}>
+            로그아웃
+          </MenuItem>
         </div>
       </div>
     </div>

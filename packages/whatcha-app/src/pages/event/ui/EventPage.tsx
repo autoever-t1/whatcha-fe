@@ -5,8 +5,12 @@ import { CouponItem } from "@/shared/coupon-item";
 import { useCallback, useState } from "react";
 import { createCoupon } from "@/entities/coupon";
 import { SimpleDialog, SimpleDialogProps } from "@/widgets/simple-dialog";
+import ArrowBackIcon from "@common/assets/icons/arrow-back.svg";
+import { useNavigate } from "react-router";
 
 export function EventPage() {
+  const navigate = useNavigate();
+
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [dialog, setDialog] = useState<SimpleDialogProps | null>(null);
@@ -31,6 +35,10 @@ export function EventPage() {
     });
   }, []);
 
+  const handleClickBackButton = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
+
   const handleSpinStop = useCallback(async () => {
     setMustSpin(false);
     // makeCoupon(`new-coupon${prizeNumber * 5 + 5}`);
@@ -39,6 +47,11 @@ export function EventPage() {
 
   return (
     <div className={styles.container}>
+      <div className={styles.header}>
+        <button onClick={handleClickBackButton}>
+          <img src={ArrowBackIcon} alt="Back" />
+        </button>
+      </div>
       <div className={styles.box}>
         <div className={styles.logo}>
           <img src={Logo} alt="Logo" />

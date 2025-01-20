@@ -2,7 +2,8 @@
   padding: 8px;
   border: 1px solid var(--color-gray-200);
   display: flex;
-  flex: 1;
+  flex-grow: 1;
+  position: relative;
 
   &.dark {
     border: 1px solid var(--color-gray-600);
@@ -11,6 +12,15 @@
   input {
     flex-grow: 1;
     background-color: #00000000;
+  }
+
+  & > span {
+    position: absolute;
+    right: 8px;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 
   &.dark > input {
