@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getDashboardStats, getDailyStats, getModelStats, getTradeHistory} from '../api/dashboard';
+import { getDashboardStats, getDailyStats, getModelStats, getTradeHistory,getRatio} from '../api/dashboard';
 
 export const useDashboardStats = () => {
   return useQuery({
@@ -26,5 +26,12 @@ export const useTradeHistory = () => {
   return useQuery({
     queryKey: ['tradeHistory'],
     queryFn: getTradeHistory,
+  });
+};
+
+export const useRatio = () => {
+  return useQuery({
+    queryKey: ['ratio'],
+    queryFn: getRatio,
   });
 };

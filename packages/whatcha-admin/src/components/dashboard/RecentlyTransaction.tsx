@@ -19,8 +19,9 @@ const columns: GridColDef[] = [
     renderCell: (params) => (
       <span className={`px-2 py-1.5 text-xs rounded-lg ${
         params.value === '판매중' 
-          ? 'bg-blue-200 text-blue-800' 
-          : 'bg-red-100 text-red-800'
+          ? 'bg-blue-200 text-blue-800' : 
+          params.value === '거래 완료' ? 'bg-green-200 text-green-800' :
+          'bg-red-200 text-red-800'
       }`}>
         {params.value}
       </span>

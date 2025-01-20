@@ -21,7 +21,7 @@ function Coupon() {
             <h2 className="text-lg font-semibold">쿠폰 관리</h2>
             <button 
               onClick={() => setIsModalOpen(true)}
-              className="inline-flex items-center px-2 py-1 text-sm font-semibold text-white bg-gray-600 rounded-md hover:bg-gray-700"
+              className="inline-flex items-center px-2 py-1.5 text-sm font-semibold text-white bg-gray-600 rounded-md hover:bg-gray-700"
             >
               <PlusIcon className="w-3 h-3 mr-1" />
               쿠폰 등록

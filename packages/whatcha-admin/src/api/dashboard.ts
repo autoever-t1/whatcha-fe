@@ -34,6 +34,24 @@ interface TradeHistory {
   status: string;
 }
 
+interface TradeHistory {
+  goodsNo: string;
+  modelName: string;
+  years: string;
+  price: number;
+  modelType: string;
+  status: string;
+}
+
+interface RatioResponse {
+  date: string;
+  userCount: number;
+  orderCount: number;
+  totalSales: number;
+  carStock: number;
+}
+
+
 // 차종별 판매 수
 export const getModelStats = async (): Promise<ModelStatsResponse> => {
   const response = await client.get<ModelStatsResponse>('/admin/statistics/model');
@@ -55,5 +73,11 @@ export const getDailyStats = async (): Promise<DailyStatsResponse> => {
 // 최근 거래 내역 조회
 export const getTradeHistory = async (): Promise<TradeHistory[]> => {
   const response = await client.get<TradeHistory[]>('/admin/tradeHistory');
+  return response.data;
+};
+
+// 전날 대비 오늘 거래 비율 퍼센트
+export const getRatio = async (): Promise<RatioResponse[]> => {
+  const response = await client.get<RatioResponse[]>('/admin/dashBoard/ratio');
   return response.data;
 };
