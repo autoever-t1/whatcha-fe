@@ -64,6 +64,23 @@
     );
   }
 
+  .image-button {
+    position: absolute;
+    left: 16px;
+    top: 60px;
+    background-color: var(--color-gray-900-50);
+    color: var(--color-gray-50);
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    & > div {
+      flex: 20px 0 0;
+      height: 20px;
+    }
+  }
+
   .like-button {
     position: absolute;
     right: 16px;

@@ -17,3 +17,11 @@ export const getAlarms = async () => {
 
   return response.data;
 };
+
+export const deleteAlarm = async (modelId: number) => {
+  const response = await authAxios.delete(
+    `/api/interest/alert-cars/${modelId}`
+  );
+
+  return response.data;
+};

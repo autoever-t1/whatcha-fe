@@ -5,8 +5,10 @@ import SampleImage from "@assets/sample-image.png";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
+import { useNavigate } from "react-router";
 
 export function Banner() {
+  const navigate = useNavigate();
   return (
     <div className={styles.container}>
       <Swiper
@@ -19,7 +21,9 @@ export function Banner() {
         loop={true}
       >
         <SwiperSlide>
-          <img src={SampleImage} alt="sample" />
+          <div onClick={() => navigate("/event")}>
+            <img src={SampleImage} alt="sample" />
+          </div>
         </SwiperSlide>
         <SwiperSlide>
           <img src={SampleImage} alt="sample" />

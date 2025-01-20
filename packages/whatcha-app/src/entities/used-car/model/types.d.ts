@@ -98,3 +98,7 @@ export interface Option {
     | "hasSmartCruiseControl"
     | "hasFrontParkingWarning";
 }
+
+export interface ImageDTO {
+  image: string;
+}

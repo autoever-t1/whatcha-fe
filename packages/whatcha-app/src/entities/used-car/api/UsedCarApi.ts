@@ -1,5 +1,6 @@
 import { authAxios, PageResponse } from "@/shared";
 import {
+  ImageDTO,
   UsedCarDetailDTO,
   UsedCarListDto,
   UsedCarPayDTO,
@@ -68,6 +69,14 @@ export const likeUsedCar = async (usedCarId: number) => {
 export const getLikedCar = async (page: number) => {
   const response = await authAxios.get<PageResponse<UsedCarListDto>>(
     `api/interest/liked-cars?page=${page}`
+  );
+
+  return response.data;
+};
+
+export const getImages = async (usedCarId: number) => {
+  const response = await authAxios.get<ImageDTO[]>(
+    `api/used-car/image/${usedCarId}`
   );
 
   return response.data;
