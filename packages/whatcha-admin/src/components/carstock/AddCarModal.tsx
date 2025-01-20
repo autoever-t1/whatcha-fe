@@ -3,6 +3,7 @@ import { Dialog } from '@headlessui/react';
 import { useRegisterCar } from '../../hooks/useCarStock';
 import { CarRegistrationData } from '../../api/carstock';
 import { format, parse } from 'date-fns';
+import { CircularProgress } from '@mui/material';
 import MainImageUpload from './MainImageUpload';
 
 
@@ -13,7 +14,8 @@ interface AddCarModalProps {
 }
 
 export default function AddCarModal({ isOpen, onClose, branchStoreId }: AddCarModalProps) {
-  const { mutate} = useRegisterCar(branchStoreId);
+  const { mutate, isPending } = useRegisterCar(branchStoreId);
+  const [error, setError] = useState<string | null>(null);
   
   const [formData, setFormData] = useState<CarRegistrationData>({
     driveType: "AWD",
@@ -159,7 +161,16 @@ export default function AddCarModal({ isOpen, onClose, branchStoreId }: AddCarMo
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    mutate(formData);
+    setError(null);
+    mutate(formData, {
+      onSuccess: () => {
+        onClose();
+      },
+      onError: (error) => {
+        setError("차량 등록에 실패했습니다.");
+        console.error("등록 실패:", error);
+      }
+    });
   };
 
   const formatDate = (date: string) => {
@@ -177,7 +188,8 @@ export default function AddCarModal({ isOpen, onClose, branchStoreId }: AddCarMo
     <Dialog open={isOpen} onClose={onClose} className="relative z-50">
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center p-4">
-        <Dialog.Panel className="w-full max-w-4xl p-6 bg-white rounded-lg max-h-[90vh] overflow-y-auto">
+        <Dialog.Panel className="relative w-full max-w-4xl p-6 bg-white rounded-lg max-h-[90vh] overflow-y-auto scrollbar-none">
+          
           <Dialog.Title className="mb-4 text-lg font-medium text-gray-900">
             차량 등록
           </Dialog.Title>
@@ -407,23 +419,6 @@ export default function AddCarModal({ isOpen, onClose, branchStoreId }: AddCarMo
                       ))}
                     </select>
                   </label>
-                  {/* <label className="block text-base font-medium text-gray-700">
-                    360view
-                    <select
-                      name="goodsNo"
-                      value={formData.goodsNo}
-                      onChange={handleInputChange}
-                      className="block w-full p-1 mt-1 border-gray-300 rounded-md shadow-md"
-                      required
-                    >
-                      <option value="">선택하세요</option>
-                      {Object.entries(goodsNoLabels).map(([value, label]) => (
-                        <option key={value} value={value}>
-                          {label}
-                        </option>
-                      ))}
-                    </select>
-                  </label> */}
                 </div>
                 <div className="grid grid-cols-4 gap-4">
                   <label className="block text-base font-medium text-gray-700">
@@ -534,22 +529,48 @@ export default function AddCarModal({ isOpen, onClose, branchStoreId }: AddCarMo
               </div>
             </div>
 
-            <div className="flex justify-end space-x-3">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-red-100"
-              >
-                취소
-              </button>
-              <button
-                type="submit"
-                className="px-3 py-2 text-sm font-medium text-white bg-gray-600 rounded-md hover:bg-gray-700 disabled:opacity-50"
-              >
-                등록하기
-              </button>
+            <div className="sticky p-2 mt-2 bg-gray-100 rounded-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                {error && (
+                  <div className="ml-1 text-base font-medium text-red-600">
+                    ⚠️ {error}
+                  </div>
+                )}
+              </div>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                  disabled={isPending}
+                >
+                  취소
+                </button>
+                <button
+                  type="submit"
+                  className="px-6 py-2 text-sm font-medium text-white bg-gray-600 rounded-md hover:bg-gray-700 disabled:opacity-50 min-w-[100px]"
+                  disabled={isPending}
+                >
+                  {isPending ? (
+                    <span className="flex items-center justify-center gap-2">
+                      <CircularProgress size={16} thickness={4} className="text-red-700" />
+                      등록 중...
+                    </span>
+                  ) : (
+                    "등록하기"
+                  )}
+                </button>
+              </div>
             </div>
-          </form>
+          </div>
+        </form>
+
+          {isPending && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center">
+              <CircularProgress />
+            </div>
+          )}
         </Dialog.Panel>
       </div>
     </Dialog>
