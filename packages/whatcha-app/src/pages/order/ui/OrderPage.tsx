@@ -22,7 +22,6 @@ import { CouponDTO } from "@/entities/coupon";
 import { UsedCarSmallListDto } from "@/entities/used-car";
 
 export function OrderPage() {
-  alert(location.href);
   const navigate = useNavigate();
   const params = useParams();
   const orderId = useMemo(() => {

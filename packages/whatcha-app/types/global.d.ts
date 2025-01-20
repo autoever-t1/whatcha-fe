@@ -21,5 +21,6 @@ interface Window {
     setBudgetMin: (newBudgetMin: number) => void;
     setBudgetMax: (newBudgetMax: number) => void;
     log: (message: string) => void;
+    clearAllDataAndRedirect: () => void;
   };
 }
