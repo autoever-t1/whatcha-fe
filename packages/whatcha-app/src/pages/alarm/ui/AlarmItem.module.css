@@ -1,0 +1,48 @@
+.container {
+  width: 100%;
+  padding: 0 16px;
+}
+
+.box {
+  padding: 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--color-gray-200);
+  position: relative;
+}
+
+.img-wrapper {
+  flex: 80px 0 0;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+
+  img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+  }
+}
+
+.info-wrapper {
+  display: flex;
+  flex-grow: 1;
+}
+
+.info {
+  flex-grow: 1;
+}
+
+.icon-button {
+  flex: 20px 0 0;
+  height: 20px;
+  z-index: 1;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}

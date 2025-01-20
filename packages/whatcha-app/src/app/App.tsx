@@ -7,7 +7,7 @@ export function App() {
   const { pathname } = useLocation();
 
   const hasHeader = useMemo(() => {
-    return ["/", "/mypage", "/search"].includes(pathname);
+    return ["/", "/mypage"].includes(pathname);
   }, [pathname]);
 
   return (

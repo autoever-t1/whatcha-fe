@@ -1,4 +1,5 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+@import url("//fonts.googleapis.com/earlyaccess/nanummyeongjo.css");
 
 :root {
   --color-gray-50: #f8fafc;
@@ -12,6 +13,7 @@
   --color-gray-800: #1e293b;
   --color-gray-900: #0f172a;
 
+  --color-gray-50-0: #f8fafc00;
   --color-gray-900-50: #0f172a80;
   --color-gray-900-75: #0f172ac0;
 
@@ -61,6 +63,10 @@
   --font-weight-extralight: 200;
   --font-weight-regular: 400;
   --font-weight-bold: 700;
+
+  /* Size */
+  --size-main-header-height: 44px;
+  --size-bottom-button-height: 60px;
 }
 
 * {
@@ -225,6 +231,26 @@ img {
   font-weight: var(--font-weight-bold);
 }
 
+.color-primary {
+  color: var(--color-primary);
+}
+
+.color-secondary {
+  color: var(--color-secondary);
+}
+
+.color-gray-50 {
+  color: var(--color-gray-50);
+}
+
+.color-gray-400 {
+  color: var(--color-gray-400);
+}
+
+.color-gray-600 {
+  color: var(--color-gray-600);
+}
+
 .layout-line {
   width: 100%;
   display: flex;
@@ -232,8 +258,21 @@ img {
   align-items: center;
 }
 
+.layout-vertical {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
 .div-line {
   width: 100%;
   height: 0;
   border-bottom: 1px solid var(--color-gray-200);
+}
+
+.div-line-400 {
+  width: 100%;
+  height: 0;
+  border-bottom: 1px solid var(--color-gray-400);
 }

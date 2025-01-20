@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "target": "ES2020",
+    "target": "ES2021",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "types": ["node"],
+    "typeRoots": ["types", "../../node_modules/@types"],
+    "types": ["node", "main", "navermaps", "global"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -25,6 +26,7 @@
 
     "baseUrl": ".",
     "paths": {
+      "@/*": ["src/*"],
       "@common/*": ["../common/*"],
       "@assets/*": ["src/assets/*"],
       "@app/*": ["src/app/*"],
@@ -35,5 +37,5 @@
       "@shared/*": ["src/shared/*"]
     }
   },
-  "include": ["src/**/*", "global.d.ts"]
+  "include": ["src/**/*"]
 }

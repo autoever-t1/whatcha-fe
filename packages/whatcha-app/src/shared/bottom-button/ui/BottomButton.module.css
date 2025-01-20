@@ -1,2 +1,12 @@
 .container {
+  width: 100%;
+  height: 56px;
+  padding: 16px 0;
+  background-color: var(--color-primary);
+  color: var(--color-gray-50);
+
+  &:disabled {
+    background-color: var(--color-gray-400);
+    color: var(--color-gray-300);
+  }
 }

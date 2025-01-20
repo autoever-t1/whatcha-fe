@@ -3,6 +3,7 @@ import styles from "./RangeInput.module.css";
 
 interface RangeInputItem {
   value: string;
+  onChange: (value: string) => void;
   unit: string;
   suffix: string;
 }
@@ -10,17 +11,28 @@ interface RangeInputItem {
 interface RangeInputProps {
   from: RangeInputItem;
   to: RangeInputItem;
+  dark?: boolean;
 }
 
-export function RangeInput({ from, to }: RangeInputProps) {
+export function RangeInput({ from, to, dark }: RangeInputProps) {
   return (
     <>
-      <div className={styles.container}>
-        <BoxInput value={from.value} unit={from.unit} />
+      <div className={`${styles.container} ${dark ? styles.dark : ""}`}>
+        <BoxInput
+          value={from.value}
+          onChange={from.onChange}
+          unit={from.unit}
+          dark={dark}
+        />
         <div className={`${styles.suffix} font-r-sm`}>{from.suffix}</div>
       </div>
-      <div className={styles.container}>
-        <BoxInput value={to.value} unit={to.unit} />
+      <div className={`${styles.container} ${dark ? styles.dark : ""}`}>
+        <BoxInput
+          value={to.value}
+          onChange={to.onChange}
+          unit={to.unit}
+          dark={dark}
+        />
         <div className={`${styles.suffix} font-r-sm`}>{to.suffix}</div>
       </div>
     </>
