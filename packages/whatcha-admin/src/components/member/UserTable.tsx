@@ -5,23 +5,16 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { User, getAllUsers } from '../../api/member';
 
 const columns: GridColDef[] = [
-  { field: 'userId', headerName: '회원 ID', width: 70 },
   { field: 'name', headerName: '이름', width: 80 },
   { field: 'email', headerName: '이메일', width: 200 },
-  { field: 'phone', headerName: '연락처', width: 110 },
+  { field: 'phone', headerName: '연락처', width: 120 },
   { field: 'address', headerName: '주소', width: 150 },
-  { 
-    field: 'isNotificationAgreed', 
-    headerName: '알림 동의', 
-    width: 80,
-    renderCell: (params) => params.value ? '동의' : '미동의'
-  },
-  { 
-    field: 'isLocationAgreed', 
-    headerName: '위치 동의', 
-    width: 80,
-    renderCell: (params) => params.value ? '동의' : '미동의'
-  },
+  { field: 'ageGroup', headerName: '연령대', width: 80 },
+  { field: 'gender', headerName: '성별', width: 80 },
+  { field: 'preferenceModel1', headerName: '선호 모델 1', width: 110 },
+  { field: 'preferenceModel2', headerName: '선호 모델 2', width: 110 },
+  { field: 'preferenceModel3', headerName: '선호 모델 3', width: 108 },
+
 ];
 
 function UserTable() {

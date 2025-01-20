@@ -1,6 +1,10 @@
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowSelectionModel} from '@mui/x-data-grid';
 import { useCoupons } from '../../hooks/useCoupon';
-import { useState } from 'react';
+import { useState} from 'react';
+
+interface CouponTableProps {
+  onDelete: (couponIds: number[]) => void;
+}
 
 const columns: GridColDef[] = [
   { field: "couponId", 
@@ -33,7 +37,8 @@ const columns: GridColDef[] = [
   },
 ];
 
-function CouponTable() {
+function CouponTable({ onDelete }: CouponTableProps) {
+  const [selectionModel, setSelectionModel] = useState<GridRowSelectionModel>([]);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(20);
   const { data, isLoading } = useCoupons(page, pageSize);
@@ -41,6 +46,11 @@ function CouponTable() {
   const handlePaginationModelChange = (model: { page: number; pageSize: number }) => {
     setPage(model.page);
     setPageSize(model.pageSize);
+  };
+
+  const handleSelectionChange = (newSelectionModel: GridRowSelectionModel) => {
+    setSelectionModel(newSelectionModel);
+    onDelete(newSelectionModel as number[]); // 선택된 쿠폰 ID 전달
   };
 
   return (
@@ -55,53 +65,14 @@ function CouponTable() {
           paginationMode="server"
           paginationModel={{ page, pageSize }}
           onPaginationModelChange={handlePaginationModelChange}
+          checkboxSelection
+          disableRowSelectionOnClick
+          onRowSelectionModelChange={handleSelectionChange}
+          rowSelectionModel={selectionModel}
         />
       </div>
     </div>
   );
 }
-
-// function CouponTable() {
-//   const [coupons, setCoupons] = useState<Coupon[]>([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState<string | null>(null);
-
-//   useEffect(() => {
-//     const fetchCoupons = async () => {
-//       setLoading(true);
-//       try {
-//         const data = await AllCoupon();
-//         setCoupons(data || []);
-//       } catch (err) {
-//         setError('쿠폰 목록을 불러오는데 실패했습니다.');
-//         setCoupons([]); 
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchCoupons();
-//   }, []);
-
-//   return (
-//     <div className="w-full">
-//       <div style={{ height: 400, width: "100%" }}>
-//         <DataGrid
-//           rows={coupons}
-//           columns={columns}
-//           getRowId={(row) => row.couponId}
-//           loading={loading}
-//           initialState={{
-//             pagination: {
-//               paginationModel: { page: 0, pageSize: 10 },
-//             },
-//           }}
-//           pageSizeOptions={[10, 20, 30]}
-//         />
-//       </div>
-//       {error && <p className="mt-2 text-red-500">{error}</p>}
-//     </div>
-//   );
-// }
 
 export default CouponTable;
