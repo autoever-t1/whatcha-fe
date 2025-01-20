@@ -28,6 +28,8 @@ import { MainButton } from "@/shared/main-button";
 import { AlarmSheet } from "@/widgets/alarm-sheet";
 import { AlarmCreateDTO, createAlarm } from "@/features/alarm";
 import { SimpleDialog, SimpleDialogProps } from "@/widgets/simple-dialog";
+import ImageIcon from "@common/assets/icons/image.svg";
+import { ImageModal } from "@/widgets/image-modal/ui/ImageModal";
 
 export function CarPage() {
   const navigate = useNavigate();
@@ -37,6 +39,7 @@ export function CarPage() {
   }, [params]);
 
   const [isAlarmSheetOpen, setAlarmSheetOpen] = useState(false);
+  const [isImageModalOpen, setImageModalOpen] = useState(false);
   const [car, setCar] = useState<UsedCarDetailDTO>();
   const [isTop, setTop] = useState(true);
   const [dialog, setDialog] = useState<SimpleDialogProps | null>(null);
@@ -109,6 +112,14 @@ export function CarPage() {
     [car]
   );
 
+  const handleClickImageButton = useCallback(() => {
+    setImageModalOpen(true);
+  }, []);
+
+  const handleClickImageModalBackButton = useCallback(() => {
+    setImageModalOpen(false);
+  }, []);
+
   return (
     <div className={styles.container}>
       <div className={styles.content} onScroll={handleContentScroll}>
@@ -127,6 +138,15 @@ export function CarPage() {
           <>
             <div className={styles["car-img"]}>
               <RotateView goodsNo={car?.goodsNo} />
+              <button
+                className={`${styles["image-button"]} font-r-sm`}
+                onClick={handleClickImageButton}
+              >
+                <div>
+                  <img src={ImageIcon} alt="ImageIcon" />
+                </div>
+                이미지 보기
+              </button>
               <button
                 className={styles["like-button"]}
                 onClick={handleClickLikeButton}
@@ -278,6 +298,12 @@ export function CarPage() {
         <AlarmSheet
           onClose={handleCloseAlarmSheet}
           onCreateAlarm={handleClickCreateAlarm}
+        />
+      )}
+      {isImageModalOpen && (
+        <ImageModal
+          onClickBack={handleClickImageModalBackButton}
+          usedCarId={usedCarId}
         />
       )}
       {dialog && (
