@@ -1,6 +1,8 @@
 import { useState,useMemo } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useBranchStores, useBranchStoreUsedCars } from '../../hooks/useCarStock';
+import AddCarModal from './AddCarModal';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 const columns: GridColDef[] = [
   { field: 'vhclRegNo', headerName: '차량 번호', width: 120 },
@@ -33,6 +35,7 @@ const columns: GridColDef[] = [
 ];
 
 function CarStockTable() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBranch, setSelectedBranch] = useState<number>(0);
   const [searchValue, setSearchValue] = useState('');
   const [searchField, setSearchField] = useState('vhclRegNo');
@@ -62,7 +65,14 @@ function CarStockTable() {
       <div className="bg-white rounded-lg shadow-sm">
         <div className="p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">매물 관리</h2>
+            <h2 className="mr-4 text-lg font-semibold">매물 관리</h2>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="flex items-center px-2 py-1.5 mr-auto text-sm font-semibold text-white bg-gray-600 rounded-md hover:bg-gray-700"
+            >
+              <PlusIcon className="w-3 h-3 mr-1" />
+              차량 등록
+            </button>
             <div className="flex gap-4">
               <div className="flex gap-2">
                 <select
@@ -76,7 +86,7 @@ function CarStockTable() {
                 <input
                   type="text"
                   placeholder={`${
-                    searchField === 'vhclRegNo' ? '차량번호' : '모델명'
+                    searchField === "vhclRegNo" ? "차량번호" : "모델명"
                   } 검색`}
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
@@ -90,15 +100,18 @@ function CarStockTable() {
               >
                 <option value={0}>지점 선택</option>
                 {branches.map((branch) => (
-                  <option key={branch.branchStoreId} value={branch.branchStoreId}>
+                  <option
+                    key={branch.branchStoreId}
+                    value={branch.branchStoreId}
+                  >
                     {branch.branchStoreName}
                   </option>
                 ))}
               </select>
             </div>
           </div>
-          
-          <div style={{ height: 600, width: '100%' }}>
+
+          <div style={{ height: 600, width: "100%" }}>
             <DataGrid
               rows={filteredCars}
               columns={columns}
@@ -111,6 +124,11 @@ function CarStockTable() {
             />
           </div>
         </div>
+        <AddCarModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          branchStoreId={selectedBranch}
+        />
       </div>
     );
 }

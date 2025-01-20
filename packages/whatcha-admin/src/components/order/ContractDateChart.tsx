@@ -25,17 +25,17 @@ const ContractDateChart = () => {
   const { data: dailyStats, isLoading } = useDailyStats();
 
   const chartData = {
-    labels:
-      dailyStats?.statistics.map((stat) =>
-        format(new Date(stat.date), "M/d")
-      ) ?? [],
+    labels: dailyStats?.statistics.map(stat => 
+      format(new Date(stat.date), 'M/d')
+    ) ?? [],
     datasets: [
       {
-        label: "계약 건수",
-        data: dailyStats?.statistics.map((stat) => stat.count) ?? [],
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-        borderColor: "rgb(53, 162, 235)",
-        borderWidth: 1,
+        label: '계약 건수',
+        data: dailyStats?.statistics.map(stat => stat.count) ?? [],
+        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        borderColor: 'rgb(53, 162, 235)',
+        // borderWidth: 0,
+        barThickness: 30, // 막대 두께 설정
       },
     ],
   };
@@ -44,7 +44,7 @@ const ContractDateChart = () => {
     responsive: true,
     plugins: {
       legend: {
-        position: "top" as const,
+        position: 'bottom' as const,
       },
       title: {
         display: false,
@@ -58,6 +58,7 @@ const ContractDateChart = () => {
         },
       },
     },
+    maintainAspectRatio: false,
   };
 
   if (isLoading) {
