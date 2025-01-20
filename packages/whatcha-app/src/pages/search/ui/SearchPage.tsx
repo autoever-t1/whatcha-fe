@@ -16,6 +16,7 @@ import {
 import { BottomButton } from "@shared/bottom-button";
 import { useNavigate } from "react-router";
 import { Option, options as optionStr } from "@entities/used-car";
+import { getNewAccessToken } from "@/entities/user";
 
 interface Color {
   colorId: number;
@@ -160,7 +161,18 @@ export function SearchPage() {
     optionQuery,
   ]);
 
-  console.log(queries);
+  const reissueAccesToken = useCallback(async () => {
+    const response = await getNewAccessToken();
+
+    // @ts-ignore
+    const at = (response.headers.getAuthorization() as string).substring(8);
+
+    sessionStorage.setItem("at", at);
+  }, []);
+
+  useEffect(() => {
+    reissueAccesToken();
+  }, [reissueAccesToken]);
 
   const conditionBoxRef = useRef<HTMLDivElement>(null);
   const tabsRef = useRef<(null | HTMLDivElement)[]>([]);

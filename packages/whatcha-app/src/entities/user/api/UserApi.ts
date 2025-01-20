@@ -14,3 +14,7 @@ export const updatePreference = async (preferences: string[]) => {
     preferenceModel3: preferences[2],
   });
 };
+
+export const getNewAccessToken = async () => {
+  return await authAxios.post("api/user/reissue-token");
+};
