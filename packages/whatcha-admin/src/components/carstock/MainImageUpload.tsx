@@ -36,30 +36,31 @@ export default function MainImageUpload({ onImageUpload }: MainImageUploadProps)
   };
 
   return (
-    <div className="space-y-2">
-      <div
-        className="flex flex-col items-center gap-4"
-        onClick={(e) => e.preventDefault()}
-      >
-        {preview && (
-          <img
-            src={preview}
-            alt="Preview"
-            className="object-cover h-48 rounded-lg w-70"
-          />
-        )}
-      </div>
-      <label className="inline-block cursor-pointer">
-        <div className="px-2 py-2 text-sm font-medium bg-gray-600 rounded-md text-gray-50 hover:bg-gray-700 whitespace-nowrap">
-          이미지 업로드
-        </div>
-        <input
-          type="file"
-          className="hidden"
-          accept="image/*"
-          onChange={handleImageUpload}
+    <div className="space-y-2" onClick={(e) => e.preventDefault()}>
+    <div className="flex flex-col items-center gap-4">
+      {preview && (
+        <img
+          src={preview}
+          alt="Preview"
+          className="object-cover h-48 rounded-lg w-70"
+          onClick={(e) => e.stopPropagation()}
         />
-      </label>
+      )}
+    </div>
+    <label className="inline-block cursor-pointer"
+    onClick={(e) => e.stopPropagation()}>
+      <div 
+        className="px-2 py-2 text-sm font-medium bg-gray-600 rounded-md text-gray-50 hover:bg-gray-700 whitespace-nowrap"
+      >
+        이미지 업로드
+      </div>
+      <input
+        type="file"
+        className="hidden"
+        accept="image/*"
+        onChange={handleImageUpload}
+      />
+    </label>
 
       {isPending && (
         <p className="text-sm text-center text-gray-500">이미지 업로드 중...</p>

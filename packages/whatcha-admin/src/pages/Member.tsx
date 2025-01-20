@@ -40,8 +40,8 @@ function Member() {
             labels={genderData.labels} 
             data={genderData.data}
             colors={{
-              background: ['rgba(54, 162, 235, 0.8)', 'rgba(255, 99, 132, 0.8)'],
-              border: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)']
+              background: ['rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)'],
+              border: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)']
             }}
           />
         </div>
