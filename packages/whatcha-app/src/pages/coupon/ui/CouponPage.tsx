@@ -77,7 +77,7 @@ export function CouponPage() {
   const handleClickSubmitButton = useCallback(async () => {
     try {
       await createCoupon(couponCode);
-      navigate(0);
+      window.location.href = window.location.href;
     } catch (e) {
       const error = e as AxiosError;
       if (error.status === 500) {
