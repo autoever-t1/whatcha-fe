@@ -17,6 +17,7 @@ import { BottomButton } from "@shared/bottom-button";
 import { useNavigate } from "react-router";
 import { Option, options as optionStr } from "@entities/used-car";
 import { getNewAccessToken } from "@/entities/user";
+import { models as modelConstant } from "@entities/used-car/model/constant";
 
 interface Color {
   colorId: number;
@@ -40,20 +41,6 @@ const colorStr: Color[] = [
 ];
 
 const carTypeStr = ["승용", "SUV", "승합", "EV"];
-const modelStr = [
-  "아반떼",
-  "쏘나타",
-  "그랜저",
-  "베뉴",
-  "싼타페",
-  "코나",
-  "투싼",
-  "펠리세이드",
-  "스타리아",
-  "아이오닉",
-  "캐스퍼",
-  "벨로스터",
-];
 const fuelStr = ["가솔린", "디젤", "하이브리드", "전기"];
 
 export function SearchPage() {
@@ -180,8 +167,8 @@ export function SearchPage() {
   useEffect(() => {
     setCarTypes(carTypeStr);
     setCarTypeValues(Array.from({ length: carTypeStr.length }, () => false));
-    setModels(modelStr);
-    setModelValues(Array.from({ length: modelStr.length }, () => false));
+    setModels(modelConstant.map((model) => model.modelName));
+    setModelValues(Array.from({ length: modelConstant.length }, () => false));
     setFuels(fuelStr);
     setFuelValues(Array.from({ length: fuelStr.length }, () => false));
     setColors(colorStr);
