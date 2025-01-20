@@ -19,7 +19,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
     <div className="flex">
       <SideMenu />
-      <main className="w-5/6 min-h-screen p-6 bg-gray-50">
+      <main className="ml-[16.666667%] flex-1 min-h-screen p-6 bg-gray-50">
           <Outlet />
       </main>
     </div>

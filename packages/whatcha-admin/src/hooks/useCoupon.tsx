@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { AllCoupon, addCoupon, AddCouponRequest } from '../api/coupon';
+import { AllCoupon, addCoupon, AddCouponRequest,deleteCoupon } from '../api/coupon';
 
 export const useCoupons = (page: number = 0, pageSize: number = 20) => {
   return useQuery({
@@ -13,6 +13,17 @@ export const useAddCoupon = () => {
   
   return useMutation({
     mutationFn: (data: AddCouponRequest) => addCoupon(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['coupons'] });
+    },
+  });
+};
+
+export const useDeleteCoupon = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: (couponId: number) => deleteCoupon(couponId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['coupons'] });
     },

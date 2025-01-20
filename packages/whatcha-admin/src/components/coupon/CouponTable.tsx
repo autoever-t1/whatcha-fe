@@ -53,7 +53,6 @@ function CouponTable() {
           loading={isLoading}
           rowCount={data?.totalElements ?? 0}
           paginationMode="server"
-          pageSizeOptions={[10, 20, 30]}
           paginationModel={{ page, pageSize }}
           onPaginationModelChange={handlePaginationModelChange}
         />

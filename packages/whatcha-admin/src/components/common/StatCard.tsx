@@ -42,7 +42,7 @@ import { motion } from 'framer-motion';
             <span className="text-xl font-bold text-gray-900">{formatNumber(value)}</span>
             {percent && (
               <span 
-                className={`px-2.5 py-1 text-sm rounded-lg ${
+                className={`px-2 py-1 ml-2 text-sm rounded-lg ${
                   percent > 0 
                     ? 'bg-green-100 text-green-800' 
                     : 'bg-red-100 text-red-800'

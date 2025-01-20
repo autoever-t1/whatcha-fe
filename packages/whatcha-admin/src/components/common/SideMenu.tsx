@@ -19,7 +19,7 @@ function SideMenu() {
   const location = useLocation();
 
   return (
-    <div className="w-1/6 min-h-screen bg-white border-r border-gray-100">
+    <div className="fixed top-0 left-0 w-1/6 min-h-screen bg-white border-gray-100">
       <div className="p-6 text-center">
         <span className='text-3xl font-extrabold text-blue-900'>WHAT</span>
         <span className='text-3xl font-extrabold text-gray-900'>CHA</span>

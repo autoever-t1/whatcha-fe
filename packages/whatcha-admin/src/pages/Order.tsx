@@ -1,4 +1,5 @@
 import ContractDateChart from '../components/order/ContractDateChart';
+import RecentTransaction from "../components/dashboard/RecentlyTransaction";
 
 function Order() {
   return (
@@ -21,6 +22,7 @@ function Order() {
       <div className="bg-white rounded-lg shadow-sm">
         <div className="p-6">
           <h2 className="mb-4 text-lg font-semibold">거래 내역</h2>
+          <RecentTransaction />
         </div>
       </div>
     </div>

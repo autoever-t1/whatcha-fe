@@ -1,3 +1,5 @@
+import CarStockTable from '../components/carstock/CarStockTable';
+
 function CarStock() {
   return (
     <div>
@@ -8,11 +10,9 @@ function CarStock() {
 
       {/* 테이블 영역 */}
       <div className="bg-white rounded-lg shadow-sm">
-        <div className="p-6">
-          <h2 className="mb-4 text-lg font-semibold">매물 관리</h2>
+          <CarStockTable />
         </div>
       </div>
-    </div>
   );
 }
 

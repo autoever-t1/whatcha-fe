@@ -41,18 +41,9 @@ interface GenderStatisticsResponse {
   statistics: GenderStatistics[];
 }
 
-
 export const getUserAgeStats = async (): Promise<AgeStatisticsResponse> => {
   try {
-
-    const token = localStorage.getItem('accessToken');
-    console.log('현재 토큰:', token); // 토큰 확인
-
-    const response = await client.get<AgeStatisticsResponse>('/admin/user/statistics/age', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
+    const response = await client.get<AgeStatisticsResponse>('/admin/user/statistics/age');
     return response.data;
   } catch (error) {
     console.error('회원 나이 통계 조회 실패:', error);
@@ -62,11 +53,7 @@ export const getUserAgeStats = async (): Promise<AgeStatisticsResponse> => {
 
 export const getAllUsers = async (): Promise<User[]> => {
   try {
-    const response = await client.get<User[]>('/admin/user', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
+    const response = await client.get<User[]>('/admin/user');
     return response.data;
   } catch (error) {
     console.error('회원 목록 조회 실패:', error);
@@ -76,11 +63,7 @@ export const getAllUsers = async (): Promise<User[]> => {
 
 export const getUserGenderStats = async (): Promise<GenderStatisticsResponse> => {
   try {
-    const response = await client.get<GenderStatisticsResponse>('/admin/user/statistics/gender', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-      },
-    });
+    const response = await client.get<GenderStatisticsResponse>('/admin/user/statistics/gender');
     return response.data;
   } catch (error) {
     console.error('회원 성별 통계 조회 실패:', error);

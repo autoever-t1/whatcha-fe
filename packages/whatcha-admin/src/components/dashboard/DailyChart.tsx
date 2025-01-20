@@ -27,14 +27,20 @@ import {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        position: 'bottom' as const,
+      },
+      title: {
+        display: false,
       },
     },
     scales: {
       y: {
         beginAtZero: true,
-      }
-    }
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
   };
   
   // const data = {
