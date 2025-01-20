@@ -91,9 +91,7 @@ export function CarPage() {
     async (alertExpirationDate: string) => {
       if (!car) return;
       const newAlarmInfo: AlarmCreateDTO = {
-        modelName: models
-          .map((model) => model.modelName)
-          .filter((modelName) => car.modelName.includes(modelName))[0],
+        modelName: car.modelName,
         alertExpirationDate,
       };
       const response = await createAlarm(newAlarmInfo);
