@@ -1,0 +1,12 @@
+.content {
+  width: 100%;
+  height: calc(100% - var(--size-main-header-height));
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+
+  & > img {
+    width: 100%;
+  }
+}

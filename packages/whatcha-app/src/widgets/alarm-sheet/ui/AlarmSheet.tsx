@@ -26,8 +26,10 @@ export function AlarmSheet({ onClose, onCreateAlarm }: AlarmSheetProps) {
     newDate.setDate(now.getDate() + selectedPeriod);
 
     return `${newDate.getFullYear()}-${
-      newDate.getMonth() + 1
-    }-${newDate.getDate()}`;
+      newDate.getMonth() + 1 < 10
+        ? `0${newDate.getMonth() + 1}`
+        : newDate.getMonth() + 1
+    }-${newDate.getDate() < 10 ? `0${newDate.getDate()}` : newDate.getDate()}`;
   }, [now, selectedPeriod]);
 
   const handleClickPeriod = useCallback((period: number) => {

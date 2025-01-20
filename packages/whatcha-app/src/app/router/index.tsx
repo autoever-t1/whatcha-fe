@@ -11,6 +11,7 @@ import { FavoritePage } from "@pages/favorite";
 import { CouponPage } from "@pages/coupon";
 import { OrderListPage } from "@pages/order-list";
 import { AlarmPage } from "@pages/alarm";
+import { EventPage } from "@/pages/event";
 
 const router = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
       {
         path: "/mypage/orders",
         element: <OrderListPage />,
+      },
+      {
+        path: "/event",
+        element: <EventPage />,
       },
     ],
   },
