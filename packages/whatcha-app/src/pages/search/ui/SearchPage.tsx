@@ -121,7 +121,7 @@ export function SearchPage() {
   const colorQuery = useMemo(() => {
     const filtered: number[] = colors
       .filter((_, i) => colorValues[i])
-      .map((color) => color.colorId);
+      .map((color) => color.colorId + 1);
     if (filtered.length === 0) return null;
 
     return `colorIds=${filtered.join(",")}`;
