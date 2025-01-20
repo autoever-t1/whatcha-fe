@@ -3,7 +3,7 @@ import styles from "./AlarmPage.module.css";
 import { useNavigate } from "react-router";
 import { useCallback, useEffect, useState } from "react";
 import { AlarmItem } from "./AlarmItem";
-import { AlarmListItemDTO, getAlarms } from "@/features/alarm";
+import { AlarmListItemDTO, deleteAlarm, getAlarms } from "@/features/alarm";
 
 export function AlarmPage() {
   const navigate = useNavigate();
@@ -25,6 +25,12 @@ export function AlarmPage() {
     navigate("/mypage");
   }, [navigate]);
 
+  const handleClickDeleteButton = useCallback(async (modelId: number) => {
+    await deleteAlarm(modelId);
+
+    setAlarms((prev) => prev.filter((alarm) => alarm.modelId !== modelId));
+  }, []);
+
   return (
     <div className={styles.container}>
       <MainHeader
@@ -33,7 +39,11 @@ export function AlarmPage() {
       />
       <div className={styles.content}>
         {alarms.map((alarm) => (
-          <AlarmItem key={alarm.userCarAlertId} alarm={alarm} />
+          <AlarmItem
+            key={alarm.userCarAlertId}
+            alarm={alarm}
+            onDelete={() => handleClickDeleteButton(alarm.modelId)}
+          />
         ))}
       </div>
     </div>

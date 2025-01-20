@@ -13,7 +13,6 @@ import { useNavigate, useParams } from "react-router";
 import {
   getUsedCarDetail,
   likeUsedCar,
-  models,
   UsedCarDetailDTO,
 } from "@/entities/used-car";
 import { ContentBox } from "@/shared/content-box";
@@ -28,6 +27,7 @@ import LikeFilledIcon from "@common/assets/icons/like-filled.svg";
 import { MainButton } from "@/shared/main-button";
 import { AlarmSheet } from "@/widgets/alarm-sheet";
 import { AlarmCreateDTO, createAlarm } from "@/features/alarm";
+import { SimpleDialog, SimpleDialogProps } from "@/widgets/simple-dialog";
 
 export function CarPage() {
   const navigate = useNavigate();
@@ -39,6 +39,7 @@ export function CarPage() {
   const [isAlarmSheetOpen, setAlarmSheetOpen] = useState(false);
   const [car, setCar] = useState<UsedCarDetailDTO>();
   const [isTop, setTop] = useState(true);
+  const [dialog, setDialog] = useState<SimpleDialogProps | null>(null);
 
   const getCar = useCallback(async () => {
     if (params.carId && parseInt(params.carId)) {
@@ -94,10 +95,16 @@ export function CarPage() {
         modelName: car.modelName,
         alertExpirationDate,
       };
-      const response = await createAlarm(newAlarmInfo);
 
-      console.log(response);
-      //TODO 후처리
+      await createAlarm(newAlarmInfo);
+      setDialog({
+        message: "입고 알림이 신청되었습니다",
+        positiveLabel: "확인",
+        onClickPositive: () => {
+          setDialog(null);
+          setAlarmSheetOpen(false);
+        },
+      });
     },
     [car]
   );
@@ -271,6 +278,13 @@ export function CarPage() {
         <AlarmSheet
           onClose={handleCloseAlarmSheet}
           onCreateAlarm={handleClickCreateAlarm}
+        />
+      )}
+      {dialog && (
+        <SimpleDialog
+          positiveLabel={dialog.positiveLabel}
+          onClickPositive={dialog.onClickPositive}
+          message={dialog.message}
         />
       )}
     </div>
