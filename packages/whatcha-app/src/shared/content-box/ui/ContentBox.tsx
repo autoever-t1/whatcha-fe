@@ -24,7 +24,7 @@ export function ContentBox({
           : ""
       } ${color === "primary" ? styles.primary : ""}`}
     >
-      <h3 className={`font-b-md ${color === "primary" ? styles.primary : ""}`}>
+      <h3 className={`font-b-lg ${color === "primary" ? styles.primary : ""}`}>
         {title}
       </h3>
       {children}

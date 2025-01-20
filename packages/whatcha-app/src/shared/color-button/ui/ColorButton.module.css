@@ -10,4 +10,8 @@
   flex: 32px 0 0;
   border-radius: 16px;
   border: 1px solid var(--color-gray-200);
+
+  &.selected {
+    border: 2px solid var(--color-primary);
+  }
 }

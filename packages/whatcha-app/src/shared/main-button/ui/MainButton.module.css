@@ -1,0 +1,13 @@
+.container {
+  padding: 8px 32px;
+  border-radius: 8px;
+  background-color: var(--color-primary);
+  color: var(--color-gray-50);
+  text-align: center;
+  transition: 0.25s background-color, 0.25s color;
+
+  &:disabled {
+    background-color: var(--color-gray-400);
+    color: var(--color-gray-300);
+  }
+}
