@@ -25,16 +25,7 @@ interface ModelStatsResponse {
   statistics: ModelStat[];
 }
 
-interface TradeHistory {
-  goodsNo: string;
-  modelName: string;
-  years: string;
-  price: number;
-  modelType: string;
-  status: string;
-}
-
-interface TradeHistory {
+export interface TradeHistory {
   goodsNo: string;
   modelName: string;
   years: string;
