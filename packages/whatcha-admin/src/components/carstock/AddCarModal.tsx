@@ -488,7 +488,7 @@ export default function AddCarModal({ isOpen, onClose, branchStoreId }: AddCarMo
 
               {/* 옵션 섹션 */}
               <div className="p-4 mb-2 space-y-4 bg-gray-100 rounded-md">
-                <h3 className="block text-base font-medium text-gray-700">
+                <h3 className="block text-lg font-medium text-gray-700">
                   옵션 정보
                 </h3>
                 <div className="grid grid-cols-4 gap-4 text-lg font-semibold">
