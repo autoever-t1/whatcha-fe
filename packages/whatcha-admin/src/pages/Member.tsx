@@ -7,8 +7,12 @@ function Member() {
   const { data: genderStats, isLoading: genderLoading } = useUserGenderStats();
 
   const ageData = {
-    labels: ageStats?.statistics.map(stat => `${stat.ageRange}대`) ?? [],
-    data: ageStats?.statistics.map(stat => stat.count) ?? []
+    labels: ageStats?.statistics
+      .sort((a, b) => a.ageRange - b.ageRange)
+      .map(stat => `${stat.ageRange}대`) ?? [],
+    data: ageStats?.statistics
+      .sort((a, b) => a.ageRange - b.ageRange)
+      .map(stat => stat.count) ?? []
   };
 
   const genderData = {
