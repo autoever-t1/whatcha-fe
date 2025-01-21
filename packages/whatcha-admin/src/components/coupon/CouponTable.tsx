@@ -7,10 +7,6 @@ interface CouponTableProps {
 }
 
 const columns: GridColDef[] = [
-  { field: "couponId", 
-    headerName: "쿠폰 ID", 
-    width: 100 
-  },
   { field: "couponCode", 
     headerName: "쿠폰 코드", 
     width: 150 
@@ -21,13 +17,6 @@ const columns: GridColDef[] = [
     headerName: "할인율",
     width: 120,
     renderCell: (params) => (params.value ? `${params.value}%` : "-"),
-  },
-  {
-    field: "discountAmount",
-    headerName: "할인금액",
-    width: 120,
-    renderCell: (params) =>
-      params.value ? `${params.value.toLocaleString()}원` : "-",
   },
   {
     field: "maxDiscountAmount",
@@ -50,7 +39,7 @@ function CouponTable({ onDelete }: CouponTableProps) {
 
   const handleSelectionChange = (newSelectionModel: GridRowSelectionModel) => {
     setSelectionModel(newSelectionModel);
-    onDelete(newSelectionModel as number[]); // 선택된 쿠폰 ID 전달
+    onDelete(newSelectionModel as number[]);
   };
 
   return (

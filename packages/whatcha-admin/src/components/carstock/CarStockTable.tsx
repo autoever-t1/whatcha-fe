@@ -121,6 +121,13 @@ function CarStockTable() {
               slots={{
                 noRowsOverlay: CustomNoRowsOverlay,
               }}
+              localeText={{
+                MuiTablePagination: {
+                  labelRowsPerPage: '페이지당 수:',
+                  labelDisplayedRows: ({ from, to, count }) =>
+                    `${count}개 중 ${from}–${to}`,
+                },
+              }}
             />
           </div>
         </div>
