@@ -41,7 +41,7 @@ export function EventPage() {
 
   const handleSpinStop = useCallback(async () => {
     setMustSpin(false);
-    makeCoupon(`new-coupon${prizeNumber * 5 + 5}`);
+    makeCoupon(`RANDOM${prizeNumber * 5 + 5}`);
   }, [prizeNumber, makeCoupon]);
 
   return (

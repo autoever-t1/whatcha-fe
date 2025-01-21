@@ -20,12 +20,7 @@ const secondaryType: StyleType = {
 
 const data: WheelData[] = [
   {
-    option: "20%",
-    optionSize: 1,
-    style: primaryType,
-  },
-  {
-    option: "15%",
+    option: "5%",
     optionSize: 1,
     style: secondaryType,
   },
@@ -35,9 +30,14 @@ const data: WheelData[] = [
     style: primaryType,
   },
   {
-    option: "5%",
+    option: "15%",
     optionSize: 1,
     style: secondaryType,
+  },
+  {
+    option: "20%",
+    optionSize: 1,
+    style: primaryType,
   },
 ];
 
