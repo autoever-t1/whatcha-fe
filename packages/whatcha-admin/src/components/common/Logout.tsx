@@ -9,7 +9,7 @@ const Logout = () => {
   };
 
   return (
-    <div className="fixed top-0 right-0 z-50 p-4">
+    <div className="absolute z-50 p-4 right-2 top-2">
       <button
         onClick={handleLogout}
         className="px-2 py-1.5 text-sm font-medium text-white bg-gray-400 rounded-lg duration-300 hover:bg-gray-500"
