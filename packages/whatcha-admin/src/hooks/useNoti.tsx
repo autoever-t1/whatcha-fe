@@ -12,7 +12,7 @@ export const useTradeNoti = () => {
   useQuery({
     queryKey: ['tradeHistory'],
     queryFn: getTradeHistory,
-    refetchInterval: 20000,
+    refetchInterval: 15000,
     refetchIntervalInBackground: true,
     enabled: isAuthenticated,
   });
