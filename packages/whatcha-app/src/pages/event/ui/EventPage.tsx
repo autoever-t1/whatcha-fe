@@ -3,7 +3,7 @@ import styles from "./EventPage.module.css";
 import Logo from "@common/assets/logo.png";
 import { CouponItem } from "@/shared/coupon-item";
 import { useCallback, useState } from "react";
-import { createCoupon } from "@/entities/coupon";
+import { createCoupon, hasNewCoupon } from "@/entities/coupon";
 import { SimpleDialog, SimpleDialogProps } from "@/widgets/simple-dialog";
 import ArrowBackIcon from "@common/assets/icons/arrow-back.svg";
 import { useNavigate } from "react-router";
@@ -15,11 +15,15 @@ export function EventPage() {
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [dialog, setDialog] = useState<SimpleDialogProps | null>(null);
 
-  const handleSpinClick = () => {
+  const handleSpinClick = async () => {
     if (!mustSpin) {
-      const newPrizeNumber = Math.floor(Math.random() * 4);
-      setPrizeNumber(newPrizeNumber);
-      setMustSpin(true);
+      const canSpin = await hasNewCoupon();
+
+      if (canSpin) {
+        const newPrizeNumber = Math.floor(Math.random() * 4);
+        setPrizeNumber(newPrizeNumber);
+        setMustSpin(true);
+      }
     }
   };
 

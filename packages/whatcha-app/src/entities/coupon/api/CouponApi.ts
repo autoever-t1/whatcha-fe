@@ -16,3 +16,9 @@ export const createCoupon = async (couponCode: string) => {
 
   return response.data;
 };
+
+export const hasNewCoupon = async () => {
+  const response = await authAxios.get<boolean>("api/coupon/roulette");
+
+  return response.data;
+};
