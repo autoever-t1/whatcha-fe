@@ -29,7 +29,7 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-8 bg-gray-300 rounded-lg backdrop-blur-md">
+      <div className="login-comp">
         <div>
           <h2 className="mt-6 text-3xl font-extrabold text-center text-gray-900">
           <span className='text-3xl font-extrabold text-blue-900'>WHAT</span>
@@ -45,7 +45,7 @@ const Login = () => {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="relative block w-full px-3 py-2 mb-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none rounded-t-md focus:outline-none"
+                className="login-input"
                 placeholder="이메일 주소"
               />
             </div>
@@ -56,7 +56,7 @@ const Login = () => {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="relative block w-full px-3 py-2 text-gray-900 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none "
+                className="login-input"
                 placeholder="비밀번호"
               />
             </div>
