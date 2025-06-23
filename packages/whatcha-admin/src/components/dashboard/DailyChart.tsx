@@ -1,5 +1,6 @@
 import { useDailyStats } from '../../hooks/useDashboard';
 import { format } from 'date-fns';
+import { CircularProgress } from '@mui/material';
 
 import {
     Chart as ChartJS,
@@ -75,8 +76,13 @@ import {
     ],
   };
 
-  if (isLoading) return <div>로딩중...</div>;
-
+  // if (isLoading) return <div>로딩중</div>; // 초기 상태 isloading일 때 로딩중 텍스트에서 리턴에서 
+  //CircularProgress로 전환
+    if (isLoading) { 
+    return <div className="flex justify-center items-center h-[300px]">
+      <CircularProgress />  
+    </div>;
+  }
     return (
       <div className="w-full h-[300px] flex items-center justify-center">
         <Line options={options} data={chartData} />

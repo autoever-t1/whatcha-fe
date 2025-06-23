@@ -1,6 +1,7 @@
 import UserPieChart from '../components/member/UserPieChart';
 import UserTable from '../components/member/UserTable';
 import { useUserAgeStats, useUserGenderStats } from '../hooks/useMember';
+import { CircularProgress } from '@mui/material';
 
 function Member() {
   const { data: ageStats, isLoading: ageLoading } = useUserAgeStats();
@@ -20,8 +21,10 @@ function Member() {
     data: genderStats?.statistics.map(stat => stat.count) ?? []
   };
 
-  if (ageLoading || genderLoading) return <div>로딩 중...</div>;
-
+  if (ageLoading || genderLoading) 
+    return <div className="flex justify-center items-center h-[300px]">
+      <CircularProgress />
+    </div>;
 
   return (
     <div>
